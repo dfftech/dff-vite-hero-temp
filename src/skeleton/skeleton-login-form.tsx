@@ -1,5 +1,3 @@
-import { SkeletonForm } from "./skeleton-form";
-
 export const SkeletonLoginForm = () => {
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
