@@ -5,9 +5,10 @@ import { effect } from "@preact/signals-react";
 import { RouterEvent, ShowToast } from "./utils/app.event";
 import Toast from "./components/toast";
 import DefaultLayout from "./layouts/default-layout";
+import { AppRouter } from "./utils/app.router";
+import Login from "./app/login";
 
 import AccountRoute from "@/app/account";
-import IndexRoute from "@/app/index";
 
 function App() {
   const navigate = useNavigate();
@@ -35,8 +36,9 @@ function App() {
       <Toast />
       <DefaultLayout>
         <Routes>
-          <Route element={<IndexRoute />} path="/" />
-          <Route element={<AccountRoute />} path="/account" />
+          <Route element={<Login />} path={AppRouter.DEFAULT} />
+          <Route element={<Login />} path={AppRouter.LOGIN} />
+          <Route element={<AccountRoute />} path={AppRouter.ACCOUNT} />
         </Routes>
       </DefaultLayout>
     </>

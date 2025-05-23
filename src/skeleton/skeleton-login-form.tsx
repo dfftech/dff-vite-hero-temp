@@ -1,6 +1,6 @@
 export const SkeletonLoginForm = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <div className="h-auto flex items-center justify-center px-4">
       <div className="w-full max-w-md space-y-6">
         {/* Logo/Title */}
         <div className="text-center">
@@ -59,4 +59,4 @@ export const SkeletonLoginForm = () => {
       </div>
     </div>
   );
-}; 
+};

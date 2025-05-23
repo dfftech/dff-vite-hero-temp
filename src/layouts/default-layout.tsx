@@ -1,13 +1,16 @@
 import React from "react";
+import { useSignals } from "@preact/signals-react/runtime";
 
 import { Navbar } from "@/components/navbar";
 import { Sidebar } from "@/components/sidebar";
+import { SessionToken } from "@/utils/app.event";
 
 export default function DefaultLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  useSignals();
   const [toggled, setToggled] = React.useState(true);
 
   React.useEffect(() => {
@@ -20,7 +23,9 @@ export default function DefaultLayout({
         <Navbar onToggle={() => setToggled(!toggled)} />
         <main className="container mx-auto max-w-7xl px-6 flex-grow">
           <div className="flex gap-4">
-            <Sidebar isOpen={toggled} onToggle={() => setToggled(!toggled)} />
+            {SessionToken.value && (
+              <Sidebar isOpen={toggled} onToggle={() => setToggled(!toggled)} />
+            )}
             <div className="flex-grow">{children}</div>
           </div>
         </main>

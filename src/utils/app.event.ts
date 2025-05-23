@@ -3,6 +3,8 @@ import { signal } from "@preact/signals-react";
 import AppStorage, { SESSION_INFO, TOKEN, GOOGLE_ACCESS_TOKEN } from "./app.storage";
 import { AppRouter } from "./app.router";
 
+export const SessionToken = signal(AppStorage.getData(TOKEN) || null);
+
 type RouterType = {
   pathname: string;
   query?: Record<string, string>;

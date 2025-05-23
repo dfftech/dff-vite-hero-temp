@@ -4,14 +4,17 @@ import {
   Navbar as HeroUINavbar,
   NavbarBrand,
   NavbarContent,
-  NavbarMenuToggle,
 } from "@heroui/navbar";
+import { useSignals } from "@preact/signals-react/runtime";
 
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo } from "@/components/icons";
 import TypeButton from "@/types/type.button";
+import { SessionToken } from "@/utils/app.event";
 
 export const Navbar = ({ onToggle }: { onToggle: () => void }) => {
+  useSignals();
+
   return (
     <>
       <HeroUINavbar maxWidth="xl" position="sticky">
@@ -30,14 +33,17 @@ export const Navbar = ({ onToggle }: { onToggle: () => void }) => {
 
         <NavbarContent className="basis-1 pl-4" justify="end">
           <ThemeSwitch />
-          <div className="block xl:hidden">
-            <TypeButton
-              action="default"
-              label=""
-              name="Menu"
-              onPress={onToggle}
-            />
-          </div>
+
+          {SessionToken.value && (
+            <div className="block xl:hidden">
+              <TypeButton
+                action="default"
+                label=""
+                name="Menu"
+                onPress={onToggle}
+              />
+            </div>
+          )}
 
           {/* <NavbarMenuToggle
             className="block lg:hidden"
