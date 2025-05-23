@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "@heroui/link";
 
 import { Navbar } from "@/components/navbar";
 import { Sidebar } from "@/components/sidebar";
