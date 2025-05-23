@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
-import {
-  Sidebar as ProSidebar,
-  Menu,
-  MenuItem
-} from "react-pro-sidebar";
+import { Sidebar as ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import React from "react";
 import { effect } from "@preact/signals";
 
 import { CurrentTheme } from "./theme-switch";
+import { RouterChange, RouterEvent } from "@/utils/app.event";
 
 type Theme = "light" | "dark";
 
@@ -28,7 +25,6 @@ export const Sidebar = ({
 }) => {
   const [theme, setTheme] = React.useState<Theme>("dark");
   const [toggled, setToggled] = useState(isOpen);
-  const [collapsed, setCollapsed] = React.useState(false);
 
   useEffect(() => {
     setToggled(isOpen);
@@ -43,10 +39,14 @@ export const Sidebar = ({
     effect(() => setTheme(CurrentTheme.value === "light" ? "light" : "dark"));
   }, []);
 
+  function handleMenu(href: string): void {
+    RouterChange(href, {});
+  }
+
   return (
     <ProSidebar
-      backgroundColor={hexToRgba(themes[theme].sidebar.backgroundColor, 0.9)}
-      breakPoint="lg"
+      backgroundColor={hexToRgba(themes[theme].sidebar.backgroundColor, 0.5)}
+      breakPoint="xl"
       className="h-[calc(100vh-80px)] overflow-y-auto "
       rootStyles={{
         color: themes[theme].sidebar.color,
@@ -60,7 +60,12 @@ export const Sidebar = ({
       <Menu>
         {siteConfig.navMenuItems.map((item, index) => (
           <>
-            <MenuItem key={`${item.label}-${index}`}> {item.label}</MenuItem>
+            <MenuItem
+              key={`${item.label}-${index}`}
+              onClick={() => handleMenu(item.href)}
+            >
+              {item.label}
+            </MenuItem>
             <hr />
           </>
         ))}
@@ -111,20 +116,6 @@ const themes = {
 export const siteConfig = {
   navMenuItems: [
     { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Services", href: "/services" },
-    { label: "Contact", href: "/contact" },
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Services", href: "/services" },
-    { label: "Contact", href: "/contact" },
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Services", href: "/services" },
-    { label: "Contact", href: "/contact" },
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Services", href: "/services" },
-    { label: "Contact", href: "/contact" },
+    { label: "Account", href: "/account" },
   ],
 };

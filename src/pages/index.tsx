@@ -1,10 +1,8 @@
 import { SkeletonListComponent } from "../skeleton/skeleton-list";
-import DefaultLayout from "../layouts/default";
+import DefaultLayout from "../layouts/default-layout";
 
 export default function IndexPage() {
   return (
-    <DefaultLayout>
-      <SkeletonListComponent />
-    </DefaultLayout>
+    <SkeletonListComponent />
   );
 }

@@ -9,6 +9,7 @@ import {
 
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo } from "@/components/icons";
+import TypeButton from "@/types/type.button";
 
 export const Navbar = ({ onToggle }: { onToggle: () => void }) => {
   return (
@@ -29,12 +30,22 @@ export const Navbar = ({ onToggle }: { onToggle: () => void }) => {
 
         <NavbarContent className="basis-1 pl-4" justify="end">
           <ThemeSwitch />
-          <NavbarMenuToggle
+          <div className="block xl:hidden">
+            <TypeButton
+              action="default"
+              label=""
+              name="Menu"
+              onPress={onToggle}
+            />
+          </div>
+
+          {/* <NavbarMenuToggle
+            className="block lg:hidden"
             onClick={(e) => {
               e.isPropagationStopped();
               onToggle();
             }}
-          />
+          /> */}
         </NavbarContent>
 
         {/* <NavbarMenu >

@@ -1,20 +1,45 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import React from "react";
+import { effect } from "@preact/signals-react";
 
-import IndexPage from "@/pages/index";
-import DocsPage from "@/pages/docs";
-import PricingPage from "@/pages/pricing";
-import BlogPage from "@/pages/blog";
-import AboutPage from "@/pages/about";
+import { RouterEvent, ShowToast } from "./utils/app.event";
+import Toast from "./components/toast";
+import DefaultLayout from "./layouts/default-layout";
+
+import AccountRoute from "@/app/account";
+import IndexRoute from "@/app/index";
 
 function App() {
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    ShowToast("Welcome message !!!!", "success");
+    effect(() => {
+      const path = RouterEvent.value.pathname;
+      const queryString = new URLSearchParams(
+        RouterEvent.value.query ?? {},
+      ).toString();
+
+      if (path) {
+        const fullPath = queryString ? `${path}?${queryString}` : path;
+
+        if (window.location.pathname + window.location.search !== fullPath) {
+          navigate(fullPath);
+        }
+      }
+    });
+  }, []);
+
   return (
-    <Routes>
-      <Route element={<IndexPage />} path="/" />
-      <Route element={<DocsPage />} path="/docs" />
-      <Route element={<PricingPage />} path="/pricing" />
-      <Route element={<BlogPage />} path="/blog" />
-      <Route element={<AboutPage />} path="/about" />
-    </Routes>
+    <>
+      <Toast />
+      <DefaultLayout>
+        <Routes>
+          <Route element={<IndexRoute />} path="/" />
+          <Route element={<AccountRoute />} path="/account" />
+        </Routes>
+      </DefaultLayout>
+    </>
   );
 }
 

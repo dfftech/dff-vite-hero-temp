@@ -1,4 +1,4 @@
-export function SkeletonListArticle() {
+export function SkeletonArticle() {
   return (
     <div className="flex flex-row justify-between gap-2">
       <div className="flex flex-row items-center gap-2">
