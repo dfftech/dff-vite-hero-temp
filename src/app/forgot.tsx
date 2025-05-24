@@ -1,12 +1,11 @@
 import { Suspense } from "react";
-
 import { SkeletonLoginForm } from "@/skeleton/skeleton-login-form";
-import { LoginPage } from "@/modules/auth/login/login";
+import { ForgotPage } from "@/modules/auth/forgot";
 
-export default function Login() {
+export default function Forgot() {
   return (
     <Suspense fallback={<SkeletonPage />}>
-      <LoginPage />
+      <ForgotPage />
     </Suspense>
   );
 }

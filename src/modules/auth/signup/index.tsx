@@ -1,0 +1,156 @@
+import { ContentLayout } from "@/layouts/content-layout";
+import { useEffect, useState } from "react";
+import {
+  Button,
+  Modal,
+  ModalContent,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+  InputOtp,
+} from "@heroui/react";
+import { checkLoginUser } from "@/utils/app.methods";
+import { RouterChange } from "@/utils/app.event";
+import { AppRouter } from "@/utils/app.router";
+import { TypeInput } from "@/types/type.input";
+import { useForm } from "react-hook-form";
+import TypeButton from "@/types/type.button";
+import React from "react";
+
+export async function SignUpPage() {
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
+
+  useEffect(() => {
+    const isLogin = checkLoginUser();
+    if (isLogin) {
+      RouterChange(AppRouter.HOME);
+    }
+  }, []);
+
+  const RenderSection = () => {
+    const {
+      control,
+      handleSubmit,
+      formState: { errors },
+    } = useForm();
+
+    const onSubmit = (data: any) => {
+      console.log("Form Data:", data);
+      setIsSubmitted(true); // Set submitted state
+    };
+
+    const onCancelOtp = () => {
+      setIsSubmitted(false); // ✅ Return to sign-up form
+    };
+
+    const handleOtp = async (otp: number) => {
+      // const resp: any = await verifySignUp(otp, otpId);
+    };
+
+    const onCancel = () => {
+      RouterChange(AppRouter.LOGIN);
+    };
+    return (
+      <>
+        <div className="flex flex-col items-center justify-center p-4">
+          <section className="w-full md:w-7/12 lg:w-7/12 shadow-md rounded-lg p-6">
+            <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
+            {!isSubmitted ? (
+              <form>
+                <div className="flex flex-col gap-4">
+                  <TypeInput
+                    control={control}
+                    name="name"
+                    label="Full Name"
+                    type="text" // or "email" if you extend your TypeInput's `type` prop to include "email"
+                    rules={{ required: "Name is required" }}
+                    error={errors.email}
+                  />
+                  <TypeInput
+                    control={control}
+                    name="email"
+                    label="Email"
+                    type="text" // or "email" if you extend your TypeInput's `type` prop to include "email"
+                    rules={{ required: "Email is required" }}
+                    error={errors.email}
+                  />
+
+                  <TypeInput
+                    control={control}
+                    name="password"
+                    label="Password"
+                    type="password"
+                    rules={{ required: "Password is required" }}
+                    error={errors.password}
+                  />
+                  <TypeInput
+                    control={control}
+                    name="reEnterPassword"
+                    label="Re-enter Password"
+                    type="password"
+                    rules={{ required: "ReEnter Password is required" }}
+                    error={errors.password}
+                  />
+                  <TypeButton
+                    name="CircleX"
+                    label="Cancel"
+                    action="danger"
+                    onPress={onCancel}
+                  />
+                  {/* Submit Button */}
+                  <TypeButton
+                    label="Submit"
+                    onPress={() => handleSubmit(onSubmit)()}
+                  />
+                </div>
+              </form>
+            ) : (
+              <div className="text-center">
+                <p className="text-lg text-gray-700">
+                  OTP has been sent successfully!
+                </p>
+
+                {/* ✅ OTP Input Field */}
+                <div className="flex w-full flex-wrap md:flex-nowrap gap-4 ml-1 mt-4 items-center justify-center">
+                  <InputOtp
+                    description="Enter your OTP"
+                    length={6}
+                    onChange={(event) => {
+                      const target = event.target as HTMLInputElement;
+                      if (target.value.length === 6) {
+                        handleOtp(Number(target.value));
+                      }
+                    }}
+                  />
+                </div>
+
+                {/* ✅ OTP Buttons */}
+                <div className="flex justify-between mt-4 space-x-4">
+                  <TypeButton
+                    name="CircleX"
+                    label="Cancel"
+                    action="danger"
+                    onPress={onCancelOtp}
+                  />
+                  {/* <TypeButton
+                    label="Verify OTP"
+                    onPress={handleOtp}
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg"
+                  /> */}
+                </div>
+              </div>
+            )}
+          </section>
+        </div>
+      </>
+    );
+  };
+
+  return (
+    <>
+      <ContentLayout>
+        <RenderSection />
+      </ContentLayout>
+    </>
+  );
+}

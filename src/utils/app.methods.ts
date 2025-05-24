@@ -95,3 +95,13 @@ export const debounce = (func: (...args: any[]) => void, wait: number): ((...arg
     timeout = setTimeout(() => func(...args), wait);
   };
 };
+export const checkLoginUser = () => {
+  const decoded = AppStorage.getData(TOKEN, true);
+  // const current_time = new Date().getTime() / 1000;
+  // || current_time > decoded.exp
+  if (!decoded) {
+    return false;
+  } else {
+    return true;
+  }
+};
