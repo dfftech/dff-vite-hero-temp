@@ -1,12 +1,12 @@
 import { Suspense } from "react";
 
 import { SkeletonLoginForm } from "@/skeleton/skeleton-login-form";
-import { LoginPage } from "@/modules/auth/login/login";
+import { SignUpPage } from "@/modules/auth/signup";
 
-export default function Login() {
+export default function SignUp() {
   return (
     <Suspense fallback={<SkeletonPage />}>
-      <LoginPage />
+      <SignUpPage />
     </Suspense>
   );
 }

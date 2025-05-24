@@ -9,6 +9,8 @@ import { AppRouter } from "./utils/app.router";
 import Login from "./app/login";
 
 import AccountRoute from "@/app/account";
+import SignUp from "./app/signup";
+import Forgot from "./app/forgot";
 
 function App() {
   const navigate = useNavigate();
@@ -38,6 +40,8 @@ function App() {
         <Routes>
           <Route element={<Login />} path={AppRouter.DEFAULT} />
           <Route element={<Login />} path={AppRouter.LOGIN} />
+          <Route element={<SignUp />} path={AppRouter.SIGN_UP} />
+          <Route element={<Forgot />} path={AppRouter.FORGOT_PASSWORD} />
           <Route element={<AccountRoute />} path={AppRouter.ACCOUNT} />
         </Routes>
       </DefaultLayout>

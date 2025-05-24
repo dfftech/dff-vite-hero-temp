@@ -1,6 +1,6 @@
 export const AppRouter = {
   DEFAULT: "",
-  SIGN_UP: "/sign-up",
+  SIGN_UP: "/auth/signup",
   HOME: "/",
   LOGIN: "/auth/login",
   FORGOT_PASSWORD: "/auth/forgotpassword",
