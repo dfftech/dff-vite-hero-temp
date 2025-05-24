@@ -74,7 +74,7 @@ export async function LoginPage() {
                 />
               </div>
             </form>
-            <div className="mt-4 text-center flex justify-between">
+            <div className="mt-4 text-center flex justify-between flex-col lg:flex-row md:flex-row">
               <p className="text-sm text-gray-600">
                 Don't have an account?{" "}
                 <TypeButton

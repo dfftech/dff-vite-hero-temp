@@ -40,6 +40,10 @@ export async function ForgotPage() {
     const handleOtp = async (otp: number) => {
       // const resp: any = await verifySignUp(otp, otpId);
     };
+
+    const onCancel = () => {
+      RouterChange(AppRouter.LOGIN);
+    };
     return (
       <>
         <div className="flex flex-col items-center justify-center p-4">
@@ -55,6 +59,12 @@ export async function ForgotPage() {
                     type="text" // or "email" if you extend your TypeInput's `type` prop to include "email"
                     rules={{ required: "Email is required" }}
                     error={errors.email}
+                  />
+                  <TypeButton
+                    name="CircleX"
+                    label="Cancel"
+                    action="danger"
+                    onPress={onCancel}
                   />
                   {/* Submit Button */}
                   <TypeButton
