@@ -1,27 +1,21 @@
+import { useEffect } from "react";
+import { InputOtp } from "@heroui/react";
+import { useForm } from "react-hook-form";
+import React from "react";
+
 import { ContentLayout } from "@/layouts/content-layout";
-import { useEffect, useState } from "react";
-import {
-  Button,
-  Modal,
-  ModalContent,
-  ModalBody,
-  ModalFooter,
-  useDisclosure,
-  InputOtp,
-} from "@heroui/react";
 import { checkLoginUser } from "@/utils/app.methods";
 import { RouterChange } from "@/utils/app.event";
 import { AppRouter } from "@/utils/app.router";
 import { TypeInput } from "@/types/type.input";
-import { useForm } from "react-hook-form";
 import TypeButton from "@/types/type.button";
-import React from "react";
 
 export async function SignUpPage() {
   const [isSubmitted, setIsSubmitted] = React.useState(false);
 
   useEffect(() => {
     const isLogin = checkLoginUser();
+
     if (isLogin) {
       RouterChange(AppRouter.HOME);
     }
@@ -50,6 +44,7 @@ export async function SignUpPage() {
     const onCancel = () => {
       RouterChange(AppRouter.LOGIN);
     };
+
     return (
       <>
         <div className="flex flex-col items-center justify-center p-4">
@@ -60,41 +55,41 @@ export async function SignUpPage() {
                 <div className="flex flex-col gap-4">
                   <TypeInput
                     control={control}
-                    name="name"
-                    label="Full Name"
-                    type="text" // or "email" if you extend your TypeInput's `type` prop to include "email"
-                    rules={{ required: "Name is required" }}
                     error={errors.email}
+                    label="Full Name"
+                    name="name"
+                    rules={{ required: "Name is required" }}
+                    type="text" // or "email" if you extend your TypeInput's `type` prop to include "email"
                   />
                   <TypeInput
                     control={control}
-                    name="email"
-                    label="Email"
-                    type="text" // or "email" if you extend your TypeInput's `type` prop to include "email"
-                    rules={{ required: "Email is required" }}
                     error={errors.email}
+                    label="Email"
+                    name="email"
+                    rules={{ required: "Email is required" }}
+                    type="text" // or "email" if you extend your TypeInput's `type` prop to include "email"
                   />
 
                   <TypeInput
                     control={control}
-                    name="password"
-                    label="Password"
-                    type="password"
-                    rules={{ required: "Password is required" }}
                     error={errors.password}
+                    label="Password"
+                    name="password"
+                    rules={{ required: "Password is required" }}
+                    type="password"
                   />
                   <TypeInput
                     control={control}
-                    name="reEnterPassword"
-                    label="Re-enter Password"
-                    type="password"
-                    rules={{ required: "ReEnter Password is required" }}
                     error={errors.password}
+                    label="Re-enter Password"
+                    name="reEnterPassword"
+                    rules={{ required: "ReEnter Password is required" }}
+                    type="password"
                   />
                   <TypeButton
-                    name="CircleX"
-                    label="Cancel"
                     action="danger"
+                    label="Cancel"
+                    name="CircleX"
                     onPress={onCancel}
                   />
                   {/* Submit Button */}
@@ -117,6 +112,7 @@ export async function SignUpPage() {
                     length={6}
                     onChange={(event) => {
                       const target = event.target as HTMLInputElement;
+
                       if (target.value.length === 6) {
                         handleOtp(Number(target.value));
                       }
@@ -127,9 +123,9 @@ export async function SignUpPage() {
                 {/* ✅ OTP Buttons */}
                 <div className="flex justify-between mt-4 space-x-4">
                   <TypeButton
-                    name="CircleX"
-                    label="Cancel"
                     action="danger"
+                    label="Cancel"
+                    name="CircleX"
                     onPress={onCancelOtp}
                   />
                   {/* <TypeButton

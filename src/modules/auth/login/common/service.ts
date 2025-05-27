@@ -5,18 +5,13 @@ import { GoogleUserResponseType, UserSignIn } from "./types";
 
 import { RouterChange, ShowToast } from "@/utils/app.event";
 import AppHttp from "@/utils/app.http";
-import AppStorage, {
-  GOOGLE_ACCESS_TOKEN,
-  SESSION_INFO,
-  TOKEN,
-} from "@/utils/app.storage";
+import AppStorage, { GOOGLE_ACCESS_TOKEN, SESSION_INFO, TOKEN } from "@/utils/app.storage";
 // import {
 //   onFetchProfile,
 //   UserSubscriptionState,
 // } from "@/modules/profile/common/service";
 import { AppRouter } from "@/utils/app.router";
 import { AuthStateType, SessionInfoType } from "@/utils/app.types";
-
 
 AppHttp.getInstance();
 
@@ -33,8 +28,6 @@ export const getgoogleClientId = (): string => {
 
   return googleClientId;
 };
-
-
 
 export const ApiInitiateGoogleSignin = async (user: GoogleUserResponseType) => {
   const res = await AppHttp.Post(AppHttp.AUTH_MS_HOST + "/auth/google/signin", {
@@ -63,6 +56,7 @@ export const ApiInitiateGoogleSignin = async (user: GoogleUserResponseType) => {
 
 export const loadAuth = async () => {
   const token: string = await AppStorage.getData(TOKEN, true);
+
   console.log("token", token);
   if (token) {
     const sessionInfo: SessionInfoType = jwtDecode(token);
@@ -90,14 +84,13 @@ export const logout = async () => {
 };
 
 export const verifySignIn = async () => {
-  const res = await AppHttp.Post(
-    AppHttp.AUTH_MS_HOST + "/auth/signin",
-    UserSignInSignal.value
-  );
+  const res = await AppHttp.Post(AppHttp.AUTH_MS_HOST + "/auth/signin", UserSignInSignal.value);
+
   // console.log(res?.data.success);
   if (res?.data?.success) {
     ShowToast("Login Successful", "success");
     let token = res.data.data.jwt as string;
+
     AppStorage.setData(TOKEN, token, true);
     await loadAuth();
     RouterChange(AppRouter.HOME);

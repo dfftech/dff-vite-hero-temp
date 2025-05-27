@@ -42,7 +42,7 @@ export const TypeInput = ({
   return (
     <section className={className}>
       {label && (
-        <label className="text-sm font-medium">
+        <label className="text-sm font-medium p-2">
           {label} {rules.required && <span className="text-red-500">*</span>}
         </label>
       )}

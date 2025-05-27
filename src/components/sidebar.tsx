@@ -4,7 +4,11 @@ import React from "react";
 import { effect } from "@preact/signals";
 
 import { CurrentTheme } from "./theme-switch";
-import { RouterChange, RouterEvent } from "@/utils/app.event";
+
+import { RouterChange } from "@/utils/app.event";
+import { TypeIcon } from "@/types/type.icon";
+import { AppRouter } from "@/utils/app.router";
+import TypeButton from "@/types/type.button";
 
 type Theme = "light" | "dark";
 
@@ -57,22 +61,42 @@ export const Sidebar = ({
       toggled={isOpen}
       onBackdropClick={handleToggle}
     >
+      <SidebarHeader />
       <Menu>
         {siteConfig.navMenuItems.map((item, index) => (
           <>
             <MenuItem
               key={`${item.label}-${index}`}
+              suffix={<TypeIcon name="ChevronRight" />}
               onClick={() => handleMenu(item.href)}
             >
               {item.label}
             </MenuItem>
-            <hr />
           </>
         ))}
       </Menu>
     </ProSidebar>
   );
 };
+
+function SidebarHeader() {
+  return (
+    <aside className="sticky top-0 z-10 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+      <div className="sticky top-0 flex items-center justify-between p-4">
+        <h2 className="text-lg font-semibold">Welcome</h2>
+        <div className="-mr-6">
+          <TypeButton
+            action="default"
+            label=""
+            name="LogOut"
+            variant="light"
+            onPress={() => RouterChange(AppRouter.LOGIN)}
+          />
+        </div>
+      </div>
+    </aside>
+  );
+}
 
 const themes = {
   light: {

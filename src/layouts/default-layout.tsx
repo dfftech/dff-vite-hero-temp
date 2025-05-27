@@ -21,7 +21,7 @@ export default function DefaultLayout({
     <>
       <div className="relative flex flex-col h-screen overflow-hidden">
         <Navbar onToggle={() => setToggled(!toggled)} />
-        <main className="container mx-auto max-w-7xl px-6 flex-grow">
+        <main className="container mx-auto px-6 flex-grow">
           <div className="flex gap-4">
             {SessionToken.value && (
               <Sidebar isOpen={toggled} onToggle={() => setToggled(!toggled)} />

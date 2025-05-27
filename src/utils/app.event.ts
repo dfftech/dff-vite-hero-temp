@@ -16,10 +16,11 @@ type RouterType = {
 export const RouterEvent = signal({} as RouterType);
 export const RouterChange = (pathname: string, query?: Record<string, string>) => {
   RouterEvent.value = { pathname, query };
-  if (pathname == AppRouter.SIGN_IN) {
+  if (pathname == AppRouter.LOGIN) {
     AppStorage.removeData(TOKEN);
     AppStorage.removeData(SESSION_INFO);
     AppStorage.removeData(GOOGLE_ACCESS_TOKEN, true);
+    CheckSession();
   }
 };
 
@@ -50,4 +51,8 @@ export const ShowToast = (
     message,
     type,
   };
+};
+
+export const CheckSession = () => {
+  SessionToken.value = AppStorage.getData(TOKEN) || null;
 };

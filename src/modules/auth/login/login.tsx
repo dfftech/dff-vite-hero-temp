@@ -1,4 +1,3 @@
-import { ContentLayout } from "@/layouts/content-layout";
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -8,21 +7,24 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@heroui/react";
+import { useForm } from "react-hook-form";
+
+import { ContentLayout } from "@/layouts/content-layout";
 import { checkLoginUser } from "@/utils/app.methods";
-import { RouterChange } from "@/utils/app.event";
+import { CheckSession, RouterChange } from "@/utils/app.event";
 import { AppRouter } from "@/utils/app.router";
 import { TypeInput } from "@/types/type.input";
-import { useForm } from "react-hook-form";
 import TypeButton from "@/types/type.button";
+import AppStorage, { TOKEN } from "@/utils/app.storage";
 
-export async function LoginPage() {
-
+export function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const { isOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     const isLogin = checkLoginUser();
+
     if (isLogin) {
       RouterChange(AppRouter.HOME);
     }
@@ -37,7 +39,12 @@ export async function LoginPage() {
 
     const onSubmit = (data: any) => {
       console.log("Form Data:", data);
+      AppStorage.setData(TOKEN, "dummy_token_value");
+      CheckSession();
+      RouterChange(AppRouter.ACCOUNT);
+
     };
+
     return (
       <>
         <div className="flex flex-col items-center justify-center p-4">
@@ -47,59 +54,59 @@ export async function LoginPage() {
               <div className="flex flex-col gap-4">
                 <TypeInput
                   control={control}
-                  name="email"
-                  label="Email"
-                  type="text" // or "email" if you extend your TypeInput's `type` prop to include "email"
-                  rules={{ required: "Email is required" }}
                   error={errors.email}
+                  label="Email"
+                  name="email"
+                  rules={{ required: "Email is required" }}
+                  type="text" // or "email" if you extend your TypeInput's `type` prop to include "email"
                 />
 
                 <TypeInput
                   control={control}
-                  name="password"
-                  label="Password"
-                  type="password"
-                  rules={{ required: "Password is required" }}
                   error={errors.password}
+                  label="Password"
+                  name="password"
+                  rules={{ required: "Password is required" }}
+                  type="password"
                 />
 
                 {/* Submit Button */}
                 <TypeButton
-                  label={isLoading ? "Logging in..." : "Log In"}
-                  onPress={handleSubmit(onSubmit)}
-                  variant="solid"
                   action="primary"
                   disabled={isLoading}
                   isLoading={isLoading}
+                  label={isLoading ? "Logging in..." : "Log In"}
+                  variant="solid"
+                  onPress={handleSubmit(onSubmit)}
                 />
               </div>
             </form>
             <div className="mt-4 text-center flex justify-between flex-col lg:flex-row md:flex-row">
               <p className="text-sm text-gray-600">
-                Don't have an account?{" "}
+                Don&apos;t have an account?&nbsp;
                 <TypeButton
-                  label="Sign Up"
-                  onPress={() => RouterChange(AppRouter.SIGN_UP)}
-                  variant="light"
                   action="primary"
                   className="p-0"
+                  label="Sign Up"
+                  variant="light"
+                  onPress={() => RouterChange(AppRouter.SIGN_UP)}
                 />
               </p>
               <TypeButton
-                label="Forgot Password?"
-                onPress={() => RouterChange(AppRouter.FORGOT_PASSWORD)}
-                variant="light"
                 action="primary"
                 className="p-0"
+                label="Forgot Password?"
+                variant="light"
+                onPress={() => RouterChange(AppRouter.FORGOT_PASSWORD)}
               />
             </div>
           </section>
         </div>
         <Modal
-          isOpen={isOpen}
-          onClose={onClose}
-          placement="center"
           className="bg-primary text-white p-2 rounded-lg mt-20"
+          isOpen={isOpen}
+          placement="center"
+          onClose={onClose}
         >
           <ModalContent>
             <ModalBody>
@@ -108,12 +115,12 @@ export async function LoginPage() {
               </p>
             </ModalBody>
             <ModalFooter>
-              <Button onPress={onClose} variant="light" className="text-white">
+              <Button className="text-white" variant="light" onPress={onClose}>
                 Close
               </Button>
               <Button
-                onPress={() => alert("Proceeding with login")}
                 className="text-white"
+                onPress={() => alert("Proceeding with login")}
               >
                 Proceed
               </Button>

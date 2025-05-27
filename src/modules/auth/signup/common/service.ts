@@ -1,9 +1,6 @@
 import { signal } from "@preact/signals-react";
+
 import { SignUpType } from "./type";
-import AppHttp from "@/utils/app.http";
-import AppStorage, { TOKEN } from "@/utils/app.storage";
-import { RouterChange, ShowToast } from "@/utils/app.event";
-import { AppRouter } from "@/utils/app.router";
 
 export const SignUpSignal = signal<SignUpType>({} as SignUpType);
 
@@ -18,12 +15,10 @@ export const signUpSerice = async () => {
 };
 
 export const verifySignUp = async (otp: number, id: string) => {
-
   // const res = await AppHttp.Post(
   //   AppHttp.AUTH_MS_HOST + "/auth/verify-otp", {
   //   otp, id
   // }
-
   // );
   // if (res && res.data.success) {
   //   let token = res.data.data.token as string;
