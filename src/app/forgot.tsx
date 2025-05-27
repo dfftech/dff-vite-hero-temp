@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { SkeletonLoginForm } from "@/skeleton/skeleton-login-form";
-import { ForgotPage } from "@/modules/auth/forgot";
+import ForgotPage from "@/modules/auth/forgot";
+
 
 export default function Forgot() {
   return (
