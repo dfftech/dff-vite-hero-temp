@@ -48,7 +48,7 @@ export function LoginPage() {
     return (
       <>
         <div className="flex flex-col items-center justify-center p-4">
-          <section className="w-full md:w-7/12 lg:w-7/12 shadow-md rounded-lg p-6">
+          <section className="w-full md:w-7/12 lg:w-7/12 p-6">
             <h2 className="text-2xl font-semibold text-center mb-6">Sign In</h2>
             <form>
               <div className="flex flex-col gap-4">
@@ -71,17 +71,27 @@ export function LoginPage() {
                 />
 
                 {/* Submit Button */}
-                <TypeButton
-                  action="primary"
-                  disabled={isLoading}
-                  isLoading={isLoading}
-                  label={isLoading ? "Logging in..." : "Log In"}
-                  variant="solid"
-                  onPress={handleSubmit(onSubmit)}
-                />
+                <div className="flex justify-between">
+
+                  <TypeButton
+                    action="primary"
+                    label="Forgot Password?"
+                    variant="light"
+                    onPress={() => RouterChange(AppRouter.FORGOT_PASSWORD)}
+                  />
+                  <TypeButton
+                    action="primary"
+                    disabled={isLoading}
+                    isLoading={isLoading}
+                    label={isLoading ? "Logging in..." : "Log In"}
+                    variant="solid"
+                    onPress={handleSubmit(onSubmit)}
+                  />
+                </div>
+
               </div>
             </form>
-            <div className="mt-4 text-center flex justify-between flex-col lg:flex-row md:flex-row">
+            <div className="mt-4 text-center flex justify-center flex-col lg:flex-row md:flex-row">
               <p className="text-sm text-gray-600">
                 Don&apos;t have an account?&nbsp;
                 <TypeButton
@@ -92,13 +102,7 @@ export function LoginPage() {
                   onPress={() => RouterChange(AppRouter.SIGN_UP)}
                 />
               </p>
-              <TypeButton
-                action="primary"
-                className="p-0"
-                label="Forgot Password?"
-                variant="light"
-                onPress={() => RouterChange(AppRouter.FORGOT_PASSWORD)}
-              />
+
             </div>
           </section>
         </div>

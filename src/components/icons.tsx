@@ -65,6 +65,40 @@ export const TwitterIcon: React.FC<IconSvgProps> = ({
   );
 };
 
+export const GoogleIcon: React.FC<IconSvgProps> = ({
+  size = 24,
+  width,
+  height,
+  ...props
+}) => {
+  return (
+    <svg
+      height={size || height}
+      width={size || width}
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <path
+        d="M21.805 10.023h-9.79v3.955h5.606c-.24 1.24-.954 2.293-2.03 3.004v2.48h3.29c1.928-1.774 3.033-4.385 3.033-7.439 0-.538-.048-1.061-.109-1.557z"
+        fill="#4285F4"
+      />
+      <path
+        d="M12.015 22c2.73 0 5.018-.9 6.69-2.445l-3.29-2.48c-.915.617-2.09.975-3.4.975-2.61 0-4.823-1.76-5.61-4.127H3.017v2.594A9.985 9.985 0 0 0 12.015 22z"
+        fill="#34A853"
+      />
+      <path
+        d="M6.405 13.923a5.996 5.996 0 0 1 0-3.846v-2.594H3.017a9.985 9.985 0 0 0 0 9.034l3.388-2.594z"
+        fill="#FBBC05"
+      />
+      <path
+        d="M12.015 6.178c1.484 0 2.82.512 3.873 1.512l2.895-2.895C17.03 2.978 14.743 2 12.015 2 7.67 2 3.973 4.574 3.017 7.923l3.388 2.594c.787-2.367 3-4.127 5.61-4.127z"
+        fill="#EA4335"
+      />
+    </svg>
+  );
+};
+
+
 export const GithubIcon: React.FC<IconSvgProps> = ({
   size = 24,
   width,

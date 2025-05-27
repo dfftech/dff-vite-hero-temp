@@ -48,7 +48,7 @@ export async function SignUpPage() {
     return (
       <>
         <div className="flex flex-col items-center justify-center p-4">
-          <section className="w-full md:w-7/12 lg:w-7/12 shadow-md rounded-lg p-6">
+          <section className="w-full md:w-7/12 lg:w-7/12 p-6">
             <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
             {!isSubmitted ? (
               <form>
@@ -86,17 +86,20 @@ export async function SignUpPage() {
                     rules={{ required: "ReEnter Password is required" }}
                     type="password"
                   />
-                  <TypeButton
-                    action="danger"
-                    label="Cancel"
-                    name="CircleX"
-                    onPress={onCancel}
-                  />
-                  {/* Submit Button */}
-                  <TypeButton
-                    label="Submit"
-                    onPress={() => handleSubmit(onSubmit)()}
-                  />
+                  <div className="flex justify-between gap-4">
+                    <TypeButton
+                      action="danger"
+                      name="CornerUpLeft"
+                      label="Back to Login"
+                      onPress={onCancel}
+                    />
+                    {/* Submit Button */}
+                    <TypeButton
+                      label="Submit"
+                      onPress={() => handleSubmit(onSubmit)()}
+                    />
+                  </div>
+
                 </div>
               </form>
             ) : (
