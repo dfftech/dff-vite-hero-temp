@@ -9,6 +9,7 @@ import { RouterChange } from "@/utils/app.event";
 import { AppRouter } from "@/utils/app.router";
 import { TypeInput } from "@/types/type.input";
 import TypeButton from "@/types/type.button";
+import { AuthLayout } from "@/layouts/auth-layout";
 
 export async function SignUpPage() {
   const [isSubmitted, setIsSubmitted] = React.useState(false);
@@ -48,7 +49,7 @@ export async function SignUpPage() {
     return (
       <>
         <div className="flex flex-col items-center justify-center p-4">
-          <section className="w-full md:w-7/12 lg:w-7/12 p-6">
+          <section className="w-full p-6">
             <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
             {!isSubmitted ? (
               <form>
@@ -147,9 +148,9 @@ export async function SignUpPage() {
 
   return (
     <>
-      <ContentLayout>
+      <AuthLayout>
         <RenderSection />
-      </ContentLayout>
+      </AuthLayout>
     </>
   );
 }

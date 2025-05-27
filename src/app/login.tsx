@@ -2,6 +2,7 @@ import { Suspense } from "react";
 
 import { SkeletonLoginForm } from "@/skeleton/skeleton-login-form";
 import { LoginPage } from "@/modules/auth/login/login";
+import { AuthLayout } from "@/layouts/auth-layout";
 
 export default function Login() {
   return (
@@ -13,8 +14,8 @@ export default function Login() {
 
 function SkeletonPage() {
   return (
-    <>
+    <AuthLayout>
       <SkeletonLoginForm />
-    </>
+    </AuthLayout>
   );
 }

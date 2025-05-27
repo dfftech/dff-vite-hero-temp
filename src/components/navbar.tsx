@@ -18,7 +18,7 @@ export const Navbar = ({ onToggle }: { onToggle: () => void }) => {
   return (
     <>
       <HeroUINavbar
-        className="container mx-auto"
+        className="container mx-auto "
         maxWidth="full"
         position="sticky"
       >

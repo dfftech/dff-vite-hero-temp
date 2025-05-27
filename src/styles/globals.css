@@ -3,3 +3,37 @@
 
 @source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 @custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-bg-light: #e8f0ff;
+  /* White for light mode */
+  --color-bg-dark: #1f2937;
+  /* Dark gray for dark mode */
+  --bg-image: url('/WorldMap.svg');
+}
+
+/* Apply background colors based on theme */
+:root {
+  background-color: var(--color-bg-light);
+}
+
+:root[class~="dark"] {
+  background-color: var(--color-bg-dark);
+}
+
+@layer utilities {
+  .bg-auth-light {
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .bg-auth-dark {
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat;
+    /* Repeat for geometric pattern */
+  }
+}

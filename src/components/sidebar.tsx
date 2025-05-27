@@ -51,11 +51,11 @@ export const Sidebar = ({
     <ProSidebar
       backgroundColor={hexToRgba(themes[theme].sidebar.backgroundColor, 0.5)}
       breakPoint="xl"
-      className="h-[calc(100vh-80px)] overflow-y-auto "
+      className="h-[calc(100vh-88px)] overflow-y-auto "
       rootStyles={{
         color: themes[theme].sidebar.color,
         backgroundColor: themes[theme].sidebar.backgroundColor,
-        border: "1px solid #99a1af",
+        border: "0px solid #99a1af",
         borderRadius: "0 rem",
       }}
       toggled={isOpen}
@@ -81,7 +81,7 @@ export const Sidebar = ({
 
 function SidebarHeader() {
   return (
-    <aside className="sticky top-0 z-10 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+    <aside className="sticky top-0 z-10 bg-white dark:bg-black border-b border-gray-200 dark:border-gray-700">
       <div className="sticky top-0 flex items-center justify-between p-4">
         <h2 className="text-lg font-semibold">Welcome</h2>
         <div className="-mr-6">
@@ -119,7 +119,7 @@ const themes = {
   },
   dark: {
     sidebar: {
-      backgroundColor: "#1E293B",
+      backgroundColor: "#000000",
       color: "#8ba1b7",
     },
     menu: {

@@ -19,10 +19,10 @@ export default function DefaultLayout({
 
   return (
     <>
-      <div className="relative flex flex-col h-screen overflow-hidden">
+      <div className="relative flex flex-col h-screen overflow-hidden gap-2">
         <Navbar onToggle={() => setToggled(!toggled)} />
-        <main className="container mx-auto px-6 flex-grow">
-          <div className="flex gap-4">
+        <main className="container mx-auto flex-grow">
+          <div className="flex gap-2">
             {SessionToken.value && (
               <Sidebar isOpen={toggled} onToggle={() => setToggled(!toggled)} />
             )}

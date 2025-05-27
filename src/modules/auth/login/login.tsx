@@ -9,13 +9,13 @@ import {
 } from "@heroui/react";
 import { useForm } from "react-hook-form";
 
-import { ContentLayout } from "@/layouts/content-layout";
 import { checkLoginUser } from "@/utils/app.methods";
 import { CheckSession, RouterChange } from "@/utils/app.event";
 import { AppRouter } from "@/utils/app.router";
 import { TypeInput } from "@/types/type.input";
 import TypeButton from "@/types/type.button";
 import AppStorage, { TOKEN } from "@/utils/app.storage";
+import { AuthLayout } from "@/layouts/auth-layout";
 
 export function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -48,7 +48,7 @@ export function LoginPage() {
     return (
       <>
         <div className="flex flex-col items-center justify-center p-4">
-          <section className="w-full md:w-7/12 lg:w-7/12 p-6">
+          <section className="w-full p-2">
             <h2 className="text-2xl font-semibold text-center mb-6">Sign In</h2>
             <form>
               <div className="flex flex-col gap-4">
@@ -137,9 +137,9 @@ export function LoginPage() {
 
   return (
     <>
-      <ContentLayout>
+      <AuthLayout>
         <RenderSection />
-      </ContentLayout>
+      </AuthLayout>
     </>
   );
 }

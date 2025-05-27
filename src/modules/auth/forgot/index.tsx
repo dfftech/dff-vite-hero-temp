@@ -1,14 +1,13 @@
-import { ContentLayout } from "@/layouts/content-layout";
 import { useEffect, useState } from "react";
-import {
-  InputOtp,
-} from "@heroui/react";
+import { InputOtp } from "@heroui/react";
+import { useForm } from "react-hook-form";
+
 import { checkLoginUser } from "@/utils/app.methods";
 import { RouterChange } from "@/utils/app.event";
 import { AppRouter } from "@/utils/app.router";
 import { TypeInput } from "@/types/type.input";
-import { useForm } from "react-hook-form";
 import TypeButton from "@/types/type.button";
+import { AuthLayout } from "@/layouts/auth-layout";
 
 export default function ForgotPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -17,6 +16,7 @@ export default function ForgotPage() {
 
   useEffect(() => {
     const isLogin = checkLoginUser();
+
     if (isLogin) {
       RouterChange(AppRouter.HOME);
     }
@@ -38,12 +38,13 @@ export default function ForgotPage() {
   const onSubmitOtp = () => {
     if (otp.length < 6) {
       setOtpError("OTP must be 6 digits");
+
       return;
     }
 
     setOtpError("");
     console.log("OTP submitted:", otp);
-    RouterChange(AppRouter.ACCOUNT);
+    RouterChange(AppRouter.LOGIN);
   };
 
   const onCancelOtp = () => {
@@ -57,27 +58,29 @@ export default function ForgotPage() {
   };
 
   return (
-    <ContentLayout>
+    <AuthLayout>
       <div className="flex flex-col items-center justify-center p-4">
-        <section className="w-full md:w-7/12 p-6">
-          <h2 className="text-2xl font-semibold text-center mb-6">Forgot Password</h2>
+        <section className="w-full">
+          <h2 className="text-2xl font-semibold text-center mb-6">
+            Forgot Password
+          </h2>
 
           {!isSubmitted ? (
             <form onSubmit={handleSubmit(onSubmitEmail)}>
               <div className="flex flex-col gap-4">
                 <TypeInput
                   control={control}
-                  name="email"
-                  label="Email"
-                  type="text"
-                  rules={{ required: "Email is required" }}
                   error={errors.email}
+                  label="Email"
+                  name="email"
+                  rules={{ required: "Email is required" }}
+                  type="text"
                 />
                 <div className="flex justify-between gap-4">
                   <TypeButton
-                    name="CornerUpLeft"
-                    label="Back to Login"
                     action="danger"
+                    label="Back to Login"
+                    name="CornerUpLeft"
                     onPress={onCancel}
                   />
                   <TypeButton
@@ -114,24 +117,26 @@ export default function ForgotPage() {
 
               <div className="flex justify-between mt-4 space-x-4">
                 <TypeButton
-                  name="CornerUpLeft"
-                  label="Back to Login"
                   action="danger"
+                  label="Back to Login"
+                  name="CornerUpLeft"
                   onPress={onCancelOtp}
                 />
                 <TypeButton
+                  className={
+                    otp.length === 6
+                      ? "bg-blue-600 hover:bg-blue-700 text-white"
+                      : "bg-blue-200 text-white cursor-not-allowed"
+                  }
+                  disabled={otp.length < 6}
                   label="Submit"
                   onPress={onSubmitOtp}
-                  disabled={otp.length < 6}
-                  className={otp.length === 6
-                    ? "bg-blue-600 hover:bg-blue-700 text-white"
-                    : "bg-blue-200 text-white cursor-not-allowed"}
                 />
               </div>
             </div>
           )}
         </section>
       </div>
-    </ContentLayout>
+    </AuthLayout>
   );
 }
