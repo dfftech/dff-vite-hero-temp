@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Sidebar as ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
+import { Sidebar as ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import React from "react";
 import { effect } from "@preact/signals";
 
@@ -11,6 +11,18 @@ import { AppRouter } from "@/utils/app.router";
 import TypeButton from "@/types/type.button";
 
 type Theme = "light" | "dark";
+
+type MenuItem = {
+  label: string;
+  href: string;
+  icon?: string;
+  permissions?: {
+    read: boolean;
+    write: boolean;
+    delete: boolean;
+  };
+  children?: MenuItem[];
+};
 
 const hexToRgba = (hex: string, alpha: number) => {
   const r = parseInt(hex.slice(1, 3), 16);
@@ -51,7 +63,7 @@ export const Sidebar = ({
     <ProSidebar
       backgroundColor={hexToRgba(themes[theme].sidebar.backgroundColor, 0.5)}
       breakPoint="xl"
-      className="h-[calc(100vh-88px)] overflow-y-auto "
+      className="h-[calc(100vh-88px)] overflow-y-auto"
       rootStyles={{
         color: themes[theme].sidebar.color,
         backgroundColor: themes[theme].sidebar.backgroundColor,
@@ -64,15 +76,28 @@ export const Sidebar = ({
       <SidebarHeader />
       <Menu>
         {siteConfig.navMenuItems.map((item, index) => (
-          <>
+          item.children ? (
+            <SubMenu
+              key={`${item.label}-${index}`}
+              label={item.label}
+            >
+              {item.children.map((child, childIndex) => (
+                <MenuItem
+                  key={`${child.label}-${childIndex}`}
+                  onClick={() => handleMenu(child.href)}
+                >
+                  {child.label}
+                </MenuItem>
+              ))}
+            </SubMenu>
+          ) : (
             <MenuItem
               key={`${item.label}-${index}`}
-              suffix={<TypeIcon name="ChevronRight" />}
               onClick={() => handleMenu(item.href)}
             >
               {item.label}
             </MenuItem>
-          </>
+          )
         ))}
       </Menu>
     </ProSidebar>
@@ -139,7 +164,90 @@ const themes = {
 
 export const siteConfig = {
   navMenuItems: [
-    { label: "Home", href: "/" },
-    { label: "Account", href: "/account" },
+    {
+      label: "Home",
+      href: "/",
+      permissions: {
+        read: true,
+        write: false,
+        delete: false
+      }
+    },
+    {
+      label: "Account",
+      href: "/account",
+      permissions: {
+        read: true,
+        write: true,
+        delete: false
+      },
+      children: [
+        {
+          label: "Profile",
+          href: "/account",
+          permissions: {
+            read: true,
+            write: true,
+            delete: false
+          }
+        },
+        {
+          label: "Settings",
+          href: "/account",
+          permissions: {
+            read: true,
+            write: true,
+            delete: false
+          }
+        },
+        {
+          label: "Security",
+          href: "/account",
+          permissions: {
+            read: true,
+            write: true,
+            delete: false
+          }
+        }
+      ]
+    },
+    {
+      label: "Admin",
+      href: "/admin",
+      permissions: {
+        read: true,
+        write: true,
+        delete: true
+      },
+      children: [
+        {
+          label: "Users",
+          href: "/account",
+          permissions: {
+            read: true,
+            write: true,
+            delete: true
+          }
+        },
+        {
+          label: "Roles",
+          href: "/account",
+          permissions: {
+            read: true,
+            write: true,
+            delete: true
+          }
+        },
+        {
+          label: "Permissions",
+          href: "/account",
+          permissions: {
+            read: true,
+            write: true,
+            delete: true
+          }
+        }
+      ]
+    }
   ],
 };
