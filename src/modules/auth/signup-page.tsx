@@ -3,7 +3,6 @@ import { InputOtp } from "@heroui/react";
 import { useForm } from "react-hook-form";
 import React from "react";
 
-import { ContentLayout } from "@/layouts/content-layout";
 import { checkLoginUser } from "@/utils/app.methods";
 import { RouterChange } from "@/utils/app.event";
 import { AppRouter } from "@/utils/app.router";
@@ -90,8 +89,8 @@ export async function SignUpPage() {
                   <div className="flex justify-between gap-4">
                     <TypeButton
                       action="danger"
-                      name="CornerUpLeft"
                       label="Back to Login"
+                      name="CornerUpLeft"
                       onPress={onCancel}
                     />
                     {/* Submit Button */}
@@ -100,7 +99,6 @@ export async function SignUpPage() {
                       onPress={() => handleSubmit(onSubmit)()}
                     />
                   </div>
-
                 </div>
               </form>
             ) : (

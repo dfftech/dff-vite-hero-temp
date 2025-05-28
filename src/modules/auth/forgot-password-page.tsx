@@ -9,10 +9,10 @@ import { TypeInput } from "@/types/type.input";
 import TypeButton from "@/types/type.button";
 import { AuthLayout } from "@/layouts/auth-layout";
 
-export default function ForgotPage() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [otp, setOtp] = useState("");
-  const [otpError, setOtpError] = useState(""); // for error message
+export default function ForgotPasswordPage() {
+  const [isEmailSubmitted, setIsEmailSubmitted] = useState(false);
+  const [otpValue, setOtpValue] = useState("");
+  const [otpError, setOtpError] = useState("");
 
   useEffect(() => {
     const isLogin = checkLoginUser();
@@ -30,27 +30,25 @@ export default function ForgotPage() {
 
   // Email form submit
   const onSubmitEmail = (data: any) => {
-    console.log("Email Submitted:", data);
-    setIsSubmitted(true);
+    setIsEmailSubmitted(true);
   };
 
   // OTP submit
   const onSubmitOtp = () => {
-    if (otp.length < 6) {
+    if (otpValue.length < 6) {
       setOtpError("OTP must be 6 digits");
 
       return;
     }
 
     setOtpError("");
-    console.log("OTP submitted:", otp);
     RouterChange(AppRouter.LOGIN);
   };
 
   const onCancelOtp = () => {
-    setOtp("");
+    setOtpValue("");
     setOtpError("");
-    setIsSubmitted(false);
+    setIsEmailSubmitted(false);
   };
 
   const onCancel = () => {
@@ -65,7 +63,7 @@ export default function ForgotPage() {
             Forgot Password
           </h2>
 
-          {!isSubmitted ? (
+          {!isEmailSubmitted ? (
             <form onSubmit={handleSubmit(onSubmitEmail)}>
               <div className="flex flex-col gap-4">
                 <TypeInput
@@ -101,10 +99,10 @@ export default function ForgotPage() {
                   <InputOtp
                     description="Enter your OTP"
                     length={6}
-                    value={otp}
-                    onValueChange={(val: string) => {
-                      setOtp(val);
-                      if (val.length === 6) setOtpError("OTP must be 6 digits");
+                    value={otpValue}
+                    onValueChange={(value: string) => {
+                      setOtpValue(value);
+                      if (value.length === 6) setOtpError("OTP must be 6 digits");
                     }}
                   />
                 </div>
@@ -124,11 +122,11 @@ export default function ForgotPage() {
                 />
                 <TypeButton
                   className={
-                    otp.length === 6
+                    otpValue.length === 6
                       ? "bg-blue-600 hover:bg-blue-700 text-white"
                       : "bg-blue-200 text-white cursor-not-allowed"
                   }
-                  disabled={otp.length < 6}
+                  disabled={otpValue.length < 6}
                   label="Submit"
                   onPress={onSubmitOtp}
                 />

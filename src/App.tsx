@@ -6,11 +6,10 @@ import { RouterEvent, ShowToast } from "./utils/app.event";
 import Toast from "./components/toast";
 import DefaultLayout from "./layouts/default-layout";
 import { AppRouter } from "./utils/app.router";
-import Login from "./app/login";
-
-import AccountRoute from "@/app/account";
 import SignUp from "./app/signup";
-import Forgot from "./app/forgot";
+import ForgotPassword from "./app/forgotpassword";
+import Login from "./app/login";
+import Account from "./app/account";
 
 function App() {
   const navigate = useNavigate();
@@ -41,8 +40,11 @@ function App() {
           <Route element={<Login />} path={AppRouter.DEFAULT} />
           <Route element={<Login />} path={AppRouter.LOGIN} />
           <Route element={<SignUp />} path={AppRouter.SIGN_UP} />
-          <Route element={<Forgot />} path={AppRouter.FORGOT_PASSWORD} />
-          <Route element={<AccountRoute />} path={AppRouter.ACCOUNT} />
+          <Route
+            element={<ForgotPassword />}
+            path={AppRouter.FORGOT_PASSWORD}
+          />
+          <Route element={<Account />} path={AppRouter.ACCOUNT} />
         </Routes>
       </DefaultLayout>
     </>
