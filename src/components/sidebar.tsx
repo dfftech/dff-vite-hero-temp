@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { Sidebar as ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
+import {
+  Sidebar as ProSidebar,
+  Menu,
+  MenuItem,
+  SubMenu,
+} from "react-pro-sidebar";
 import React from "react";
 import { effect } from "@preact/signals";
 import { useLocation } from "react-router-dom";
@@ -57,33 +62,46 @@ export const Sidebar = ({
   }, []);
 
   function handleMenu(href: string): void {
+    handleToggle();
     RouterChange(href, {});
   }
 
   // Define menu item styles based on the current theme
   const menuItemStyles = {
     // Styles for the button element within MenuItem/SubMenu
-    button: ({ level, active, disabled }: { level: number; active: boolean; disabled: boolean }) => {
+    button: ({
+      active,
+      disabled,
+    }: {
+      level: number;
+      active: boolean;
+      disabled: boolean;
+    }) => {
       // Determine base background color for the item based on theme
       const baseBackgroundColor = themes[theme].menu.menuContent; // Use menuContent for item background
 
       return {
-        color: disabled ? themes[theme].menu.disabled.color : themes[theme].menu.color,
+        color: disabled
+          ? themes[theme].menu.disabled.color
+          : themes[theme].menu.color,
         // Apply hover background, active background, or base background
-        backgroundColor: active ? themes[theme].menu.hover.backgroundColor : baseBackgroundColor,
-        '&:hover': {
+        backgroundColor: active
+          ? themes[theme].menu.hover.backgroundColor
+          : baseBackgroundColor,
+        "&:hover": {
           backgroundColor: themes[theme].menu.hover.backgroundColor,
           color: themes[theme].menu.hover.color,
         },
       };
     },
     // Styles for the expanded submenu content area - This should also use the menuContent background
-    subMenuContent: { // Wrap the style properties in an object
+    subMenuContent: {
+      // Wrap the style properties in an object
       backgroundColor: themes[theme].menu.menuContent,
     },
     // Styles for the icon
-    icon: ({ active }: { active: boolean }) => ({
-       color: themes[theme].menu.icon,
+    icon: () => ({
+      color: themes[theme].menu.icon,
     }),
     // Styles for the label
     // label: ({ open }: { open: boolean }) => ({}),
@@ -113,21 +131,22 @@ export const Sidebar = ({
         {siteConfig.navMenuItems.map((item, index) => {
           // Determine if a top-level item or any of its children are active
           const isParentActive = item.children
-            ? item.children.some(child => location.pathname === child.href) || location.pathname === item.href
+            ? item.children.some((child) => location.pathname === child.href) ||
+            location.pathname === item.href
             : location.pathname === item.href;
 
           return item.children ? (
             <SubMenu
               key={`${item.label}-${index}`}
-              label={item.label}
-              defaultOpen={isParentActive} // Optionally open the submenu if a child is active
               active={isParentActive} // Mark the submenu as active if parent or child is active
+              defaultOpen={isParentActive} // Optionally open the submenu if a child is active
+              label={item.label}
             >
               {item.children.map((child, childIndex) => (
                 <MenuItem
                   key={`${child.label}-${childIndex}`}
-                  onClick={() => handleMenu(child.href)}
                   active={location.pathname === child.href} // Mark child as active if its href matches current path
+                  onClick={() => handleMenu(child.href)}
                 >
                   {child.label}
                 </MenuItem>
@@ -136,8 +155,8 @@ export const Sidebar = ({
           ) : (
             <MenuItem
               key={`${item.label}-${index}`}
-              onClick={() => handleMenu(item.href)}
               active={location.pathname === item.href} // Mark item as active if its href matches current path
+              onClick={() => handleMenu(item.href)}
             >
               {item.label}
             </MenuItem>
@@ -216,8 +235,8 @@ export const siteConfig = {
       permissions: {
         read: true,
         write: false,
-        delete: false
-      }
+        delete: false,
+      },
     },
     {
       label: "Account",
@@ -225,7 +244,7 @@ export const siteConfig = {
       permissions: {
         read: true,
         write: true,
-        delete: false
+        delete: false,
       },
       children: [
         {
@@ -234,8 +253,8 @@ export const siteConfig = {
           permissions: {
             read: true,
             write: true,
-            delete: false
-          }
+            delete: false,
+          },
         },
         {
           label: "Settings",
@@ -243,8 +262,8 @@ export const siteConfig = {
           permissions: {
             read: true,
             write: true,
-            delete: false
-          }
+            delete: false,
+          },
         },
         {
           label: "Security",
@@ -252,10 +271,10 @@ export const siteConfig = {
           permissions: {
             read: true,
             write: true,
-            delete: false
-          }
-        }
-      ]
+            delete: false,
+          },
+        },
+      ],
     },
     {
       label: "Admin",
@@ -263,7 +282,7 @@ export const siteConfig = {
       permissions: {
         read: true,
         write: true,
-        delete: true
+        delete: true,
       },
       children: [
         {
@@ -272,8 +291,8 @@ export const siteConfig = {
           permissions: {
             read: true,
             write: true,
-            delete: true
-          }
+            delete: true,
+          },
         },
         {
           label: "Roles",
@@ -281,8 +300,8 @@ export const siteConfig = {
           permissions: {
             read: true,
             write: true,
-            delete: true
-          }
+            delete: true,
+          },
         },
         {
           label: "Permissions",
@@ -290,10 +309,10 @@ export const siteConfig = {
           permissions: {
             read: true,
             write: true,
-            delete: true
-          }
-        }
-      ]
-    }
+            delete: true,
+          },
+        },
+      ],
+    },
   ],
 };
