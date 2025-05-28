@@ -14,6 +14,7 @@ import { CurrentTheme } from "./theme-switch";
 import { RouterChange } from "@/utils/app.event";
 import { AppRouter } from "@/utils/app.router";
 import TypeButton from "@/types/type.button";
+import { TypeIcon } from "@/types/type.icon";
 
 type Theme = "light" | "dark";
 
@@ -99,9 +100,9 @@ export const Sidebar = ({
       // Wrap the style properties in an object
       backgroundColor: themes[theme].menu.menuContent,
     },
-    // Styles for the icon
-    icon: () => ({
-      color: themes[theme].menu.icon,
+    // Styles for the icon - Using a function here allows dynamic color based on item state if needed
+    icon: ({ active, disabled }: { active: boolean; disabled: boolean }) => ({
+       color: disabled ? themes[theme].menu.disabled.color : themes[theme].menu.icon, // Use disabled color if needed
     }),
     // Styles for the label
     // label: ({ open }: { open: boolean }) => ({}),
@@ -129,34 +130,56 @@ export const Sidebar = ({
         menuItemStyles={menuItemStyles} // Apply the defined styles
       >
         {siteConfig.navMenuItems.map((item, index) => {
+          // Check if the current user has read permission for this top-level item
+          const canReadParent = item.permissions?.read ?? true; // Default to true if permissions are not defined
+
+          // If the parent item cannot be read, don't render it or its children
+          if (!canReadParent) {
+            return null;
+          }
+
           // Determine if a top-level item or any of its children are active
           const isParentActive = item.children
-            ? item.children.some((child) => location.pathname === child.href) ||
+            ? item.children.some((child) => location.pathname === child.href && (child.permissions?.read ?? true)) || // Check child active only if readable
             location.pathname === item.href
             : location.pathname === item.href;
 
+          // Render SubMenu for items with children, otherwise MenuItem
           return item.children ? (
             <SubMenu
               key={`${item.label}-${index}`}
-              active={isParentActive} // Mark the submenu as active if parent or child is active
-              defaultOpen={isParentActive} // Optionally open the submenu if a child is active
               label={item.label}
+              defaultOpen={isParentActive} // Optionally open the submenu if a child is active
+              active={isParentActive} // Mark the submenu as active if parent or child is active
+              icon={item.icon ? <TypeIcon name={item.icon} /> : undefined} // Pass icon to SubMenu
             >
-              {item.children.map((child, childIndex) => (
-                <MenuItem
-                  key={`${child.label}-${childIndex}`}
-                  active={location.pathname === child.href} // Mark child as active if its href matches current path
-                  onClick={() => handleMenu(child.href)}
-                >
-                  {child.label}
-                </MenuItem>
-              ))}
+              {item.children.map((child, childIndex) => {
+                // Check if the current user has read permission for this child item
+                const canReadChild = child.permissions?.read ?? true; // Default to true if permissions are not defined
+
+                // If the child item cannot be read, don't render it
+                if (!canReadChild) {
+                  return null;
+                }
+
+                return (
+                  <MenuItem
+                    key={`${child.label}-${childIndex}`}
+                    active={location.pathname === child.href} // Mark child as active if its href matches current path
+                    onClick={() => handleMenu(child.href)}
+                    icon={child.icon ? <TypeIcon name={child.icon} /> : undefined} // Pass icon to child MenuItem
+                  >
+                    {child.label}
+                  </MenuItem>
+                );
+              })}
             </SubMenu>
           ) : (
             <MenuItem
               key={`${item.label}-${index}`}
-              active={location.pathname === item.href} // Mark item as active if its href matches current path
               onClick={() => handleMenu(item.href)}
+              active={location.pathname === item.href} // Mark item as active if its href matches current path
+              icon={item.icon ? <TypeIcon name={item.icon} /> : undefined} // Pass icon to MenuItem
             >
               {item.label}
             </MenuItem>
@@ -232,6 +255,7 @@ export const siteConfig = {
     {
       label: "Home",
       href: "/",
+      icon: "Home",
       permissions: {
         read: true,
         write: false,
@@ -241,8 +265,9 @@ export const siteConfig = {
     {
       label: "Account",
       href: "/account",
+      icon: "User",
       permissions: {
-        read: true,
+        read: true, // Set read to true for the parent Account item
         write: true,
         delete: false,
       },
@@ -250,8 +275,9 @@ export const siteConfig = {
         {
           label: "Profile",
           href: "/account",
+          icon: "User",
           permissions: {
-            read: true,
+            read: true, // This child will be shown if parent can be read
             write: true,
             delete: false,
           },
@@ -259,8 +285,9 @@ export const siteConfig = {
         {
           label: "Settings",
           href: "/account",
+          icon: "Settings",
           permissions: {
-            read: true,
+            read: false, // This child will NOT be shown even if parent can be read
             write: true,
             delete: false,
           },
@@ -268,8 +295,9 @@ export const siteConfig = {
         {
           label: "Security",
           href: "/account",
+          icon: "Lock",
           permissions: {
-            read: true,
+            read: true, // This child will be shown if parent can be read
             write: true,
             delete: false,
           },
@@ -279,8 +307,9 @@ export const siteConfig = {
     {
       label: "Admin",
       href: "/admin",
+      icon: "Shield",
       permissions: {
-        read: true,
+        read: true, // Set read to false for the parent Admin item
         write: true,
         delete: true,
       },
@@ -288,8 +317,9 @@ export const siteConfig = {
         {
           label: "Users",
           href: "/account",
+          icon: "Users",
           permissions: {
-            read: true,
+            read: true, // This child will NOT be shown because its parent cannot be read
             write: true,
             delete: true,
           },
@@ -297,8 +327,9 @@ export const siteConfig = {
         {
           label: "Roles",
           href: "/account",
+          icon: "Tag",
           permissions: {
-            read: true,
+            read: true, // This child will NOT be shown because its parent cannot be read
             write: true,
             delete: true,
           },
@@ -306,8 +337,9 @@ export const siteConfig = {
         {
           label: "Permissions",
           href: "/account",
+          icon: "Key",
           permissions: {
-            read: true,
+            read: true, // This child will NOT be shown because its parent cannot be read
             write: true,
             delete: true,
           },
