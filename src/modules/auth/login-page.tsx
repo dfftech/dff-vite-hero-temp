@@ -16,6 +16,7 @@ import { TypeInput } from "@/types/type.input";
 import TypeButton from "@/types/type.button";
 import AppStorage, { TOKEN } from "@/utils/app.storage";
 import { AuthLayout } from "@/layouts/auth-layout";
+import { LoginValidate } from "./common/validate";
 
 export function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -30,20 +31,22 @@ export function LoginPage() {
     }
   }, []);
 
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data: any) => {
+    console.log("Form Data:", data);
+    AppStorage.setData(TOKEN, "dummy_token_value");
+    CheckSession();
+    RouterChange(AppRouter.ACCOUNT);
+
+  };
+
   const RenderSection = () => {
-    const {
-      control,
-      handleSubmit,
-      formState: { errors },
-    } = useForm();
 
-    const onSubmit = (data: any) => {
-      console.log("Form Data:", data);
-      AppStorage.setData(TOKEN, "dummy_token_value");
-      CheckSession();
-      RouterChange(AppRouter.ACCOUNT);
-
-    };
 
     return (
       <>
@@ -57,7 +60,7 @@ export function LoginPage() {
                   error={errors.email}
                   label="Email"
                   name="email"
-                  rules={{ required: "Email is required" }}
+                  rules={LoginValidate.email}
                   type="text" // or "email" if you extend your TypeInput's `type` prop to include "email"
                 />
 
@@ -66,7 +69,7 @@ export function LoginPage() {
                   error={errors.password}
                   label="Password"
                   name="password"
-                  rules={{ required: "Password is required" }}
+                  rules={LoginValidate.password}
                   type="password"
                 />
 
