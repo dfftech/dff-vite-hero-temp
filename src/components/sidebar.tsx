@@ -15,20 +15,9 @@ import { RouterChange } from "@/utils/app.event";
 import { AppRouter } from "@/utils/app.router";
 import TypeButton from "@/types/type.button";
 import { TypeIcon } from "@/types/type.icon";
+import { siteConfig } from "@/config/siteConfig";
 
 type Theme = "light" | "dark";
-
-type MenuItem = {
-  label: string;
-  href: string;
-  icon?: string;
-  permissions?: {
-    read: boolean;
-    write: boolean;
-    delete: boolean;
-  };
-  children?: MenuItem[];
-};
 
 const hexToRgba = (hex: string, alpha: number) => {
   const r = parseInt(hex.slice(1, 3), 16);
@@ -236,7 +225,7 @@ const themes = {
     },
     menu: {
       fontSize: "small",
-      menuContent: "#082440",
+      menuContent: "#000000",
       color: "#8ba1b7",
       icon: "#59d0ff",
       hover: {
@@ -248,103 +237,4 @@ const themes = {
       },
     },
   },
-};
-
-export const siteConfig = {
-  navMenuItems: [
-    {
-      label: "Home",
-      href: "/",
-      icon: "Home",
-      permissions: {
-        read: true,
-        write: false,
-        delete: false,
-      },
-    },
-    {
-      label: "Account",
-      href: "/account",
-      icon: "User",
-      permissions: {
-        read: true, // Set read to true for the parent Account item
-        write: true,
-        delete: false,
-      },
-      children: [
-        {
-          label: "Profile",
-          href: "/account",
-          icon: "User",
-          permissions: {
-            read: true, // This child will be shown if parent can be read
-            write: true,
-            delete: false,
-          },
-        },
-        {
-          label: "Settings",
-          href: "/account",
-          icon: "Settings",
-          permissions: {
-            read: false, // This child will NOT be shown even if parent can be read
-            write: true,
-            delete: false,
-          },
-        },
-        {
-          label: "Security",
-          href: "/account",
-          icon: "Lock",
-          permissions: {
-            read: true, // This child will be shown if parent can be read
-            write: true,
-            delete: false,
-          },
-        },
-      ],
-    },
-    {
-      label: "Admin",
-      href: "/admin",
-      icon: "Shield",
-      permissions: {
-        read: true, // Set read to false for the parent Admin item
-        write: true,
-        delete: true,
-      },
-      children: [
-        {
-          label: "Users",
-          href: "/account",
-          icon: "Users",
-          permissions: {
-            read: true, // This child will NOT be shown because its parent cannot be read
-            write: true,
-            delete: true,
-          },
-        },
-        {
-          label: "Roles",
-          href: "/account",
-          icon: "Tag",
-          permissions: {
-            read: true, // This child will NOT be shown because its parent cannot be read
-            write: true,
-            delete: true,
-          },
-        },
-        {
-          label: "Permissions",
-          href: "/account",
-          icon: "Key",
-          permissions: {
-            read: true, // This child will NOT be shown because its parent cannot be read
-            write: true,
-            delete: true,
-          },
-        },
-      ],
-    },
-  ],
 };

@@ -2,7 +2,7 @@
 import { CircleOff, icons } from "lucide-react";
 import React from "react";
 
-type IconName = keyof typeof icons;
+export type IconName = keyof typeof icons;
 
 interface IconProps {
   name: IconName;
