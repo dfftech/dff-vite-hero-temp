@@ -6,9 +6,9 @@ import { RouterEvent, ShowToast } from "./utils/app.event";
 import Toast from "./components/toast";
 import DefaultLayout from "./layouts/default-layout";
 import { AppRouter } from "./utils/app.router";
-import SignUp from "./app/signup";
-import ForgotPassword from "./app/forgotpassword";
-import Login from "./app/login";
+import SignUp from "./app/auth/signup";
+import ForgotPassword from "./app/auth/forgotpassword";
+import Login from "./app/auth/login";
 import Account from "./app/account";
 
 function App() {

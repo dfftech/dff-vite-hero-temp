@@ -124,11 +124,6 @@ export default function SignUpPage() {
             name="CircleX"
             onPress={onCancelOtp}
           />
-          {/* <TypeButton
-                    label="Verify OTP"
-                    onPress={handleOtp}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg"
-                  /> */}
         </div>
       </div>
     );

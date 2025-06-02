@@ -34,3 +34,5 @@ export type OtpType = {
   otp: string;
   email: string;
 };
+
+
