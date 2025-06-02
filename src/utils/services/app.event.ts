@@ -1,18 +1,24 @@
 import { signal } from "@preact/signals-react";
 
-import AppStorage, { SESSION_INFO, TOKEN, GOOGLE_ACCESS_TOKEN, LANG, DIR, TRANS } from "./app.storage";
-import { AppRouter } from "./app.router";
 import { langDirection } from "../../i18n";
 
+import AppStorage, {
+  SESSION_INFO,
+  TOKEN,
+  GOOGLE_ACCESS_TOKEN,
+  LANG,
+  DIR,
+  THEME,
+} from "./app.storage";
+import { AppRouter } from "./app.router";
+
 export const SessionToken = signal(AppStorage.getData(TOKEN) || null);
-export const SessionLang = signal<string>(
-  AppStorage.getData(LANG) || 'en-US',
-);
+export const SessionLang = signal<string>(AppStorage.getData(LANG) || "en-US");
+export const ThemeMode = signal(AppStorage.getData(THEME) || "light");
 
 export const RtlDir = signal<boolean>(
-  langDirection(AppStorage.getData(DIR) || 'en-US') === 'rtl',
+  langDirection(AppStorage.getData(DIR) || "en-US") === "rtl"
 );
-
 
 type RouterType = {
   pathname: string;
@@ -23,7 +29,10 @@ type RouterType = {
  *  routerEffect
  */
 export const RouterEvent = signal({} as RouterType);
-export const RouterChange = (pathname: string, query?: Record<string, string>) => {
+export const RouterChange = (
+  pathname: string,
+  query?: Record<string, string>
+) => {
   RouterEvent.value = { pathname, query };
   if (pathname == AppRouter.LOGIN) {
     AppStorage.removeData(TOKEN);
@@ -36,7 +45,14 @@ export const RouterChange = (pathname: string, query?: Record<string, string>) =
 type ToastType = {
   show: boolean;
   message: string;
-  type: "success" | "default" | "foreground" | "primary" | "secondary" | "warning" | "danger";
+  type:
+    | "success"
+    | "default"
+    | "foreground"
+    | "primary"
+    | "secondary"
+    | "warning"
+    | "danger";
 };
 
 export const ToastMessage = signal({
@@ -51,7 +67,14 @@ export const ToastMessage = signal({
 
 export const ShowToast = (
   message: string,
-  type: "success" | "default" | "foreground" | "primary" | "secondary" | "warning" | "danger" = "warning",
+  type:
+    | "success"
+    | "default"
+    | "foreground"
+    | "primary"
+    | "secondary"
+    | "warning"
+    | "danger" = "warning"
 ) => {
   ToastMessage.value = {
     show: true,

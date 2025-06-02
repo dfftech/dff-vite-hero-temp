@@ -12,12 +12,12 @@ type TypeProps = {
   error?: any;
   className?: string;
   type?:
-  | "text"
-  | "password"
-  | "number"
-  | "datetime-local"
-  | "textarea"
-  | "time";
+    | "text"
+    | "password"
+    | "number"
+    | "datetime-local"
+    | "textarea"
+    | "time";
   disabled?: boolean;
   radius?: "full" | "none" | "sm" | "md" | "lg" | undefined;
   onChange?: (value: any) => void;
@@ -74,7 +74,7 @@ export const TypeInput = ({
               radius={radius}
               onChange={(e) => {
                 field.onChange(
-                  type === "number" ? Number(e.target.value) : e.target.value,
+                  type === "number" ? Number(e.target.value) : e.target.value
                 );
                 if (onChange) onChange(e.target.value);
               }}

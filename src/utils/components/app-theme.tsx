@@ -3,20 +3,18 @@ import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { SwitchProps, useSwitch } from "@heroui/switch";
 import clsx from "clsx";
 import { useTheme } from "@heroui/use-theme";
-import { signal } from "@preact/signals";
+
+import { ThemeMode } from "../services/app.event";
 
 import { SunFilledIcon, MoonFilledIcon } from "@/components/icons";
+import AppStorage, { THEME } from "../services/app.storage";
 
-export const ThemeMod = signal("light");
 export interface ThemeSwitchProps {
   className?: string;
   classNames?: SwitchProps["classNames"];
 }
 
-export const AppTheme: FC<ThemeSwitchProps> = ({
-  className,
-  classNames,
-}) => {
+export const AppTheme: FC<ThemeSwitchProps> = ({ className, classNames }) => {
   const [isMounted, setIsMounted] = useState(false);
 
   const { theme, setTheme } = useTheme();
@@ -38,7 +36,8 @@ export const AppTheme: FC<ThemeSwitchProps> = ({
   }, [isMounted]);
 
   useEffect(() => {
-    ThemeMod.value = theme;
+    ThemeMode.value = theme;
+    AppStorage.setData(THEME, theme);
   }, [theme]);
 
   // Prevent Hydration Mismatch
@@ -51,7 +50,7 @@ export const AppTheme: FC<ThemeSwitchProps> = ({
         className: clsx(
           "px-px transition-opacity hover:opacity-80 cursor-pointer",
           className,
-          classNames?.base,
+          classNames?.base
         ),
       })}
     >
@@ -73,7 +72,7 @@ export const AppTheme: FC<ThemeSwitchProps> = ({
               "px-0",
               "mx-0",
             ],
-            classNames?.wrapper,
+            classNames?.wrapper
           ),
         })}
       >

@@ -9,15 +9,14 @@ import React from "react";
 import { effect } from "@preact/signals";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useSignals } from "@preact/signals-react/runtime";
 
-import { ThemeMod } from "@/utils/components/app-theme";
 import { trans } from "@/i18n";
-import { RouterChange } from "@/utils/services/app.event";
+import { ThemeMode, RouterChange } from "@/utils/services/app.event";
 import { AppRouter } from "@/utils/services/app.router";
 import TypeButton from "@/types/type.button";
 import { TypeIcon } from "@/types/type.icon";
 import { siteConfig } from "@/config/siteConfig";
-import { useSignals } from "@preact/signals-react/runtime";
 
 type Theme = "light" | "dark";
 
@@ -51,7 +50,7 @@ export const Sidebar = ({
   };
 
   useEffect(() => {
-    effect(() => setTheme(ThemeMod.value === "light" ? "light" : "dark"));
+    effect(() => setTheme(ThemeMode.value === "light" ? "light" : "dark"));
   }, []);
 
   function handleMenu(href: string): void {
@@ -94,7 +93,9 @@ export const Sidebar = ({
     },
     // Styles for the icon - Using a function here allows dynamic color based on item state if needed
     icon: ({ disabled }: { active: boolean; disabled: boolean }) => ({
-       color: disabled ? themes[theme].menu.disabled.color : themes[theme].menu.icon, // Use disabled color if needed
+      color: disabled
+        ? themes[theme].menu.disabled.color
+        : themes[theme].menu.icon, // Use disabled color if needed
     }),
     // Styles for the label
     // label: ({ open }: { open: boolean }) => ({}),
@@ -132,18 +133,22 @@ export const Sidebar = ({
 
           // Determine if a top-level item or any of its children are active
           const isParentActive = item.children
-            ? item.children.some((child) => location.pathname === child.href && (child.permissions?.read ?? true)) || // Check child active only if readable
-            location.pathname === item.href
+            ? item.children.some(
+                (child) =>
+                  location.pathname === child.href &&
+                  (child.permissions?.read ?? true)
+              ) || // Check child active only if readable
+              location.pathname === item.href
             : location.pathname === item.href;
 
           // Render SubMenu for items with children, otherwise MenuItem
           return item.children ? (
             <SubMenu
               key={`${item.name}-${index}`}
-              label={trans(item.nameLang, item.name)}
-              defaultOpen={isParentActive} // Optionally open the submenu if a child is active
               active={isParentActive} // Mark the submenu as active if parent or child is active
+              defaultOpen={isParentActive} // Optionally open the submenu if a child is active
               icon={item.icon ? <TypeIcon name={item.icon} /> : undefined} // Pass icon to SubMenu
+              label={trans(item.nameLang, item.name)}
             >
               {item.children.map((child, childIndex) => {
                 // Check if the current user has read permission for this child item
@@ -158,8 +163,10 @@ export const Sidebar = ({
                   <MenuItem
                     key={`${child.name}-${childIndex}`}
                     active={location.pathname === child.href} // Mark child as active if its href matches current path
+                    icon={
+                      child.icon ? <TypeIcon name={child.icon} /> : undefined
+                    } // Pass icon to child MenuItem
                     onClick={() => handleMenu(child.href)}
-                    icon={child.icon ? <TypeIcon name={child.icon} /> : undefined} // Pass icon to child MenuItem
                   >
                     {trans(child.nameLang, child.name)}
                   </MenuItem>
@@ -169,9 +176,9 @@ export const Sidebar = ({
           ) : (
             <MenuItem
               key={`${item.name}-${index}`}
-              onClick={() => handleMenu(item.href)}
               active={location.pathname === item.href} // Mark item as active if its href matches current path
               icon={item.icon ? <TypeIcon name={item.icon} /> : undefined} // Pass icon to MenuItem
+              onClick={() => handleMenu(item.href)}
             >
               {trans(item.nameLang, item.name)}
             </MenuItem>
@@ -184,11 +191,11 @@ export const Sidebar = ({
 
 function SidebarHeader() {
   const { t } = useTranslation();
-  
+
   return (
     <aside className="sticky top-0 z-10 bg-white dark:bg-black border-b border-gray-200 dark:border-gray-700">
       <div className="sticky top-0 flex items-center justify-between p-4">
-        <h2 className="text-lg font-semibold">{t('welcome')}</h2>
+        <h2 className="text-lg font-semibold">{t("welcome")}</h2>
         <div className="-m-6">
           <TypeButton
             action="default"

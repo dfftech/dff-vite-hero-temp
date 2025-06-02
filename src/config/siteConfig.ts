@@ -29,7 +29,7 @@ export const siteConfig: { navMenuItems: MenuItem[] } = {
       nameLang: {
         "en-US": "Home",
         "te-IN": "హోమ్",
-        "ar-SA": "الرئيسية"
+        "ar-SA": "الرئيسية",
       },
       href: "/",
       icon: "LayoutDashboard",
@@ -45,7 +45,7 @@ export const siteConfig: { navMenuItems: MenuItem[] } = {
       nameLang: {
         "en-US": "Account",
         "te-IN": "ఖాతా",
-        "ar-SA": "الحساب"
+        "ar-SA": "الحساب",
       },
       href: "/account",
       icon: "User",
@@ -54,14 +54,14 @@ export const siteConfig: { navMenuItems: MenuItem[] } = {
         create: true,
         update: true,
         delete: false,
-      }
+      },
     },
     {
       name: "Admin",
       nameLang: {
         "en-US": "Admin",
         "te-IN": "నిర్వాహకుడు",
-        "ar-SA": "المشرف"
+        "ar-SA": "المشرف",
       },
       href: "/admin",
       icon: "Shield",
@@ -77,7 +77,7 @@ export const siteConfig: { navMenuItems: MenuItem[] } = {
           nameLang: {
             "en-US": "Users",
             "te-IN": "వినియోగదారులు",
-            "ar-SA": "المستخدمون"
+            "ar-SA": "المستخدمون",
           },
           href: "/profile",
           icon: "Users",
@@ -93,7 +93,7 @@ export const siteConfig: { navMenuItems: MenuItem[] } = {
           nameLang: {
             "en-US": "Permissions",
             "te-IN": "అనుమతులు",
-            "ar-SA": "الصلاحيات"
+            "ar-SA": "الصلاحيات",
           },
           href: "/permissions",
           icon: "Key",
@@ -107,4 +107,4 @@ export const siteConfig: { navMenuItems: MenuItem[] } = {
       ],
     },
   ],
-}; 
+};
