@@ -1,12 +1,12 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import AppStorage, { LANG, TRANS } from '@/utils/services/app.storage';
+import AppStorage, { DIR, LANG, TRANS } from '@/utils/services/app.storage';
 
 // Import JSON translation files
 import enUS from './locales/en-US.json';
 import teIN from './locales/te-IN.json';
 import arSA from './locales/ar-SA.json';
-import { SessionLang } from '../services/app.event';
+import { RtlDir, SessionLang } from '../services/app.event';
 
 export const languages = [
   {
@@ -67,8 +67,11 @@ i18n
 // Language change listener
 i18n.on('languageChanged', (lng: string) => {
   try {
-    const isRTL = langDirection(lng) === 'rtl';
+    const dir = langDirection(lng);
+    AppStorage.setData(DIR, dir);
     AppStorage.setData(LANG, lng);
+    RtlDir.value = dir === 'rtl';
+    SessionLang.value = lng;
     if (lng in resources) {
       AppStorage.setData(TRANS, resources[lng as ResourceKey]);
     }
@@ -81,6 +84,6 @@ export default i18n;
 
 
 export const trans = (nameLang: { [key: string]: string }, defaultName: string) => {
-    const val = nameLang[SessionLang.value];
-    return val === '' || val === undefined || val === null ? defaultName : val;
+    let val = nameLang[SessionLang.value];
+    return val === undefined || val === null  || val.trim() === '' ? defaultName : val;
 };

@@ -3,9 +3,9 @@ import { TypeIcon } from "@/types/type.icon";
 import TypeDropDown from "@/types/type.drop-down";
 import { languages } from "@/utils/i18n";
 import { useEffect, useState } from "react";
-import { DIR, LANG } from "../services/app.storage";
+import { LANG } from "../services/app.storage";
 import AppStorage from "../services/app.storage";
-import { RtlDir, SessionLang } from "../services/app.event";
+
 
 type Language = typeof languages[number];
 
@@ -37,10 +37,7 @@ export const AppLang = () => {
 
   const callLanguage = (value: string) => {
     const foundLang = languages.find(lang => lang.code === value) || languages[0];
-    AppStorage.setData(LANG, value);
-    AppStorage.setData(DIR, foundLang.dir);
-    SessionLang.value = value;
-    RtlDir.value = foundLang.dir === 'rtl';
+    i18n.changeLanguage(value);
     document.documentElement.dir = foundLang.dir;
     document.documentElement.lang = value;
     setCurrentLang(foundLang);
