@@ -1,11 +1,9 @@
-
-
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { checkLoginUser } from "@/utils/app.methods";
-import { RouterChange } from "@/utils/app.event";
-import { AppRouter } from "@/utils/app.router";
+import { checkLoginUser } from "@/utils/services/app.methods";
+import { RouterChange } from "@/utils/services/app.event";
+import { AppRouter } from "@/utils/services/app.router";
 import { TypeInput } from "@/types/type.input";
 import TypeButton from "@/types/type.button";
 import { AuthLayout } from "@/layouts/auth-layout";

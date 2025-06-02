@@ -13,7 +13,7 @@ export interface ThemeSwitchProps {
   classNames?: SwitchProps["classNames"];
 }
 
-export const ThemeSwitch: FC<ThemeSwitchProps> = ({
+export const AppTheme: FC<ThemeSwitchProps> = ({
   className,
   classNames,
 }) => {

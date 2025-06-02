@@ -6,10 +6,10 @@ import {
 } from "@heroui/navbar";
 import { useSignals } from "@preact/signals-react/runtime";
 
-import { ThemeSwitch } from "@/components/theme-switch";
+import { AppTheme } from "@/utils/components/app-theme";
 import { Logo } from "@/components/icons";
 import TypeButton from "@/types/type.button";
-import { SessionToken } from "@/utils/app.event";
+import { SessionToken } from "@/utils/services/app.event";
 
 export const Navbar = ({ onToggle }: { onToggle: () => void }) => {
   useSignals();
@@ -35,7 +35,7 @@ export const Navbar = ({ onToggle }: { onToggle: () => void }) => {
         </NavbarContent>
 
         <NavbarContent className="basis-1 pl-4" justify="end">
-          <ThemeSwitch />
+          <AppTheme />
 
           {SessionToken.value && (
             <div className="block xl:hidden">

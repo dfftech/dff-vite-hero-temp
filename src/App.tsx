@@ -2,10 +2,10 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import React from "react";
 import { effect } from "@preact/signals-react";
 
-import { RouterEvent, ShowToast } from "./utils/app.event";
-import Toast from "./components/toast";
+import { RouterEvent, ShowToast } from "@/utils/services/app.event";
+import AppToast from "@/utils/components/app-toast";
 import DefaultLayout from "./layouts/default-layout";
-import { AppRouter } from "./utils/app.router";
+import { AppRouter } from "@/utils/services/app.router";
 import SignUp from "./app/auth/signup";
 import ForgotPassword from "./app/auth/forgotpassword";
 import Login from "./app/auth/login";
@@ -34,7 +34,7 @@ function App() {
 
   return (
     <>
-      <Toast />
+      <AppToast />
       <DefaultLayout>
         <Routes>
           <Route element={<Login />} path={AppRouter.DEFAULT} />

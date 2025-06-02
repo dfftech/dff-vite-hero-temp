@@ -1,4 +1,4 @@
-import { AppProps } from '../../../utils/app.props';
+import { AppProps } from "@/utils/services/app.props";
 // import { RegExp } from 'dff-util';
 
 export const ForgotPasswordValidate = {

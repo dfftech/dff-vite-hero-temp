@@ -45,7 +45,7 @@ const TypeAutoComplete: React.FC<SelectProps> = ({
         control={control}
         defaultValue={defaultValue}
         name={name}
-        render={({ field: { onChange, value, ref } }) => (
+        render={({ field: { onChange, ref } }) => (
           <div className="relative">
             {/* Input field */}
             <div className="relative w-full">

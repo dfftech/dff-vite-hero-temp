@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { InputOtp } from "@heroui/react";
 import { useForm } from "react-hook-form";
 
-import { checkLoginUser } from "@/utils/app.methods";
-import { RouterChange } from "@/utils/app.event";
-import { AppRouter } from "@/utils/app.router";
+import { checkLoginUser } from "@/utils/services/app.methods";
+import { RouterChange } from "@/utils/services/app.event";
+import { AppRouter } from "@/utils/services/app.router";
 import { TypeInput } from "@/types/type.input";
 import TypeButton from "@/types/type.button";
 import { AuthLayout } from "@/layouts/auth-layout";
 import { SignUpValidate } from "./common/validate";
+import { verifySignUp } from "./common/services";
 
 export default function SignUpPage() {
   const [isEmailSubmitted, setIsEmailSubmitted] = useState(false);
@@ -36,7 +37,14 @@ export default function SignUpPage() {
   };
 
   const handleOtp = async (otp: number) => {
-    // const resp: any = await verifySignUp(otp, otpId);
+    try {
+      // Call the verifySignUp function with the OTP
+      const response = await verifySignUp(otp, "dummy_id");
+      console.log("OTP verification response:", response);
+      // Handle the response accordingly
+    } catch (error) {
+      console.error("Error handling OTP:", error);
+    }
   };
 
   const onCancel = () => {

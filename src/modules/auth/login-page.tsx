@@ -9,12 +9,12 @@ import {
 } from "@heroui/react";
 import { useForm } from "react-hook-form";
 
-import { checkLoginUser } from "@/utils/app.methods";
-import { CheckSession, RouterChange } from "@/utils/app.event";
-import { AppRouter } from "@/utils/app.router";
+import { checkLoginUser } from "@/utils/services/app.methods";
+import { CheckSession, RouterChange } from "@/utils/services/app.event";
+import { AppRouter } from "@/utils/services/app.router";
 import { TypeInput } from "@/types/type.input";
 import TypeButton from "@/types/type.button";
-import AppStorage, { TOKEN } from "@/utils/app.storage";
+import AppStorage, { TOKEN } from "@/utils/services/app.storage";
 import { AuthLayout } from "@/layouts/auth-layout";
 import { LoginValidate } from "./common/validate";
 
@@ -38,11 +38,15 @@ export function LoginPage() {
   } = useForm();
 
   const onSubmit = (data: any) => {
-    console.log("Form Data:", data);
-    AppStorage.setData(TOKEN, "dummy_token_value");
-    CheckSession();
-    RouterChange(AppRouter.ACCOUNT);
-
+    setIsLoading(true);
+    try {
+      console.log("Form Data:", data);
+      AppStorage.setData(TOKEN, "dummy_token_value");
+      CheckSession();
+      RouterChange(AppRouter.ACCOUNT);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const RenderSection = () => {

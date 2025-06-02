@@ -9,10 +9,10 @@ import React from "react";
 import { effect } from "@preact/signals";
 import { useLocation } from "react-router-dom";
 
-import { CurrentTheme } from "./theme-switch";
+import { CurrentTheme } from "@/utils/components/app-theme";
 
-import { RouterChange } from "@/utils/app.event";
-import { AppRouter } from "@/utils/app.router";
+import { RouterChange } from "@/utils/services/app.event";
+import { AppRouter } from "@/utils/services/app.router";
 import TypeButton from "@/types/type.button";
 import { TypeIcon } from "@/types/type.icon";
 import { siteConfig } from "@/config/siteConfig";
@@ -90,7 +90,7 @@ export const Sidebar = ({
       backgroundColor: themes[theme].menu.menuContent,
     },
     // Styles for the icon - Using a function here allows dynamic color based on item state if needed
-    icon: ({ active, disabled }: { active: boolean; disabled: boolean }) => ({
+    icon: ({ disabled }: { active: boolean; disabled: boolean }) => ({
        color: disabled ? themes[theme].menu.disabled.color : themes[theme].menu.icon, // Use disabled color if needed
     }),
     // Styles for the label

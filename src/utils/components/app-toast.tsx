@@ -4,9 +4,9 @@ import { useEffect } from "react";
 import { useSignals } from "@preact/signals-react/runtime";
 import { addToast, ToastProvider } from "@heroui/toast";
 
-import { ToastMessage } from "@/utils/app.event";
+import { ToastMessage } from "@/utils/services/app.event";
 
-const Toast = () => {
+const AppToast = () => {
   useSignals();
 
   useEffect(() => {
@@ -25,4 +25,4 @@ const Toast = () => {
   return <ToastProvider placement={"top-right"} />;
 };
 
-export default Toast;
+export default AppToast;

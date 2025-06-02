@@ -3,7 +3,7 @@ import { useSignals } from "@preact/signals-react/runtime";
 
 import { Navbar } from "@/components/navbar";
 import { Sidebar } from "@/components/sidebar";
-import { SessionToken } from "@/utils/app.event";
+import { SessionToken } from "@/utils/services/app.event";
 
 export default function DefaultLayout({
   children,
