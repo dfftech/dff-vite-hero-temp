@@ -4,10 +4,6 @@
 @source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 @custom-variant dark (&:is(.dark *));
 
-@import "ag-grid-community/styles/ag-grid.css";
-@import "ag-grid-community/styles/ag-theme-quartz.css";
-@import "ag-grid-community/styles/ag-theme-quartz-dark.css";
-
 @theme {
   --color-bg-light: #e8f0ff;
   /* White for light mode */

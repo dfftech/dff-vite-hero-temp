@@ -1,8 +1,15 @@
-import { IDatasource, IGetRowsParams, ColDef } from "ag-grid-community";
+import {
+  IDatasource,
+  IGetRowsParams,
+  ColDef,
+  themeQuartz,
+} from "ag-grid-community";
 import { GridOptions } from "ag-grid-community";
 
 import ActionCellRenderer from "@/components/action-cell";
 import { SkeletonTable } from "@/skeleton/skeletion-table";
+import { ThemeMode } from "@/utils/services/app.event";
+import { darkGridTheme, lightGridTheme } from "@/utils/services/ag.theme";
 
 export type ActionType = {
   onAction: (data: any, action: "edit" | "status") => void;

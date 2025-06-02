@@ -12,8 +12,7 @@ import { ArticleLayout } from "@/layouts/article-layout";
 import { ContentLayout } from "@/layouts/content-layout";
 import { FloatLayout } from "@/layouts/float-layout";
 import TypeButton from "@/types/type.button";
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
+import { darkGridTheme, lightGridTheme } from "@/utils/services/ag.theme";
 import { ThemeMode } from "@/utils/services/app.event";
 
 // Register AG Grid Community Module
@@ -46,6 +45,8 @@ export function ProfilesPage() {
       gridRef.current.api.purgeInfiniteCache();
     }
   };
+
+  // to use myTheme in an application, pass it to the theme grid option
 
   const onAdd = () => {
     console.log("Add button clicked");
@@ -91,20 +92,16 @@ export function ProfilesPage() {
   const RenderSection = () => {
     return (
       <aside>
-        <div
-          className={
-            ThemeMode.value === "dark"
-              ? "ag-theme-quartz-dark"
-              : "ag-theme-quartz"
-          }
-          style={{ height: "400px", width: "100%" }}
-        >
-          {ThemeMode.value}
+        <div style={{ height: "400px", width: "100%" }}>
           <AgGridReact
             ref={gridRef}
             columnDefs={columnDefs({ onAction: handleAction })}
             datasource={dataSource}
-            gridOptions={gridOptions}
+            gridOptions={{
+              ...gridOptions,
+              theme:
+                ThemeMode.value === "dark" ? darkGridTheme : lightGridTheme,
+            }}
           />
         </div>
       </aside>
