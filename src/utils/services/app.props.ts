@@ -1,8 +1,8 @@
 export const AppProps = {
-  MESSAGE_REQUIRED: "Required",
-  MESSAGE_MIN_LENGTH: "Min length required",
-  MESSAGE_MAX_LENGTH: "Exceed max length",
-  MESSAGE_INVALID_DATA: "Invalid data",
+  MESSAGE_REQUIRED: "required",
+  MESSAGE_MIN_LENGTH: "minLength",
+  MESSAGE_MAX_LENGTH: "maxLength",
+  MESSAGE_INVALID_DATA: "invalidData",
 };
 
 export enum PlatformType {

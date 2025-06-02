@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { InputOtp } from "@heroui/react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import { checkLoginUser } from "@/utils/services/app.methods";
 import { RouterChange } from "@/utils/services/app.event";
@@ -13,6 +14,8 @@ import { verifySignUp } from "./common/services";
 
 export default function SignUpPage() {
   const [isEmailSubmitted, setIsEmailSubmitted] = useState(false);
+  const { t } = useTranslation();
+
   useEffect(() => {
     const isLogin = checkLoginUser();
 
@@ -58,28 +61,28 @@ export default function SignUpPage() {
           <TypeInput
             control={control}
             error={errors.email}
-            label="Full Name"
+            label={t("fullName")}
             name="name"
             rules={SignUpValidate.name}
           />
           <TypeInput
             control={control}
             error={errors.email}
-            label="Email"
+            label={t("email")}
             name="email"
             rules={SignUpValidate.email}
           />
           <TypeInput
             control={control}
             error={errors.mobile}
-            label="Mobile Number"
+            label={t("mobileNumber")}
             name="mobileNumber"
             rules={SignUpValidate.phone}
           />
           <TypeInput
             control={control}
             error={errors.password}
-            label="Password"
+            label={t("password")}
             name="password"
             rules={SignUpValidate.password}
           />
@@ -87,13 +90,13 @@ export default function SignUpPage() {
           <div className="flex justify-between gap-4">
             <TypeButton
               action="danger"
-              label="Back to Login"
+              label={t("backToLogin")}
               name="CornerUpLeft"
               onPress={onCancel}
             />
             {/* Submit Button */}
             <TypeButton
-              label="Submit"
+              label={t("submit")}
               onPress={() => handleSubmit(onSubmit)()}
             />
           </div>
@@ -106,13 +109,13 @@ export default function SignUpPage() {
     return (
       <div className="text-center">
         <p className="text-lg text-gray-700">
-          OTP has been sent successfully!
+          {t("otpSentSuccess")}
         </p>
 
         {/* ✅ OTP Input Field */}
         <div className="flex w-full flex-wrap md:flex-nowrap gap-4 ml-1 mt-4 items-center justify-center">
           <InputOtp
-            description="Enter your OTP"
+            description={t("enterOtp")}
             length={6}
             onChange={(event) => {
               const target = event.target as HTMLInputElement;
@@ -128,7 +131,7 @@ export default function SignUpPage() {
         <div className="flex justify-between mt-4 space-x-4">
           <TypeButton
             action="danger"
-            label="Cancel"
+            label={t("cancel")}
             name="CircleX"
             onPress={onCancelOtp}
           />
@@ -142,7 +145,7 @@ export default function SignUpPage() {
       <>
         <div className="flex flex-col items-center justify-center p-4">
           <section className="w-full p-6">
-            <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
+            <h2 className="text-2xl font-semibold text-center mb-6">{t("signUp")}</h2>
             {!isEmailSubmitted ? (
               <SignUpForm />
             ) : (

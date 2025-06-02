@@ -1,6 +1,7 @@
 import { Controller } from "react-hook-form";
 import { Input, Textarea } from "@heroui/input";
 import { useEffect, useState } from "react";
+import { t } from "@/i18n";
 
 type TypeProps = {
   control: any;
@@ -82,7 +83,7 @@ export const TypeInput = ({
         }
         rules={rules}
       />
-      {error && <p className="text-red-500 text-sm">{error.message}</p>}
+      {error && <p className="text-red-500 text-sm">{t(error.message)}</p>}
     </section>
   );
 };

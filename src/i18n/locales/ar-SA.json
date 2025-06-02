@@ -1,5 +1,4 @@
 {
-
     "welcome": "مرحباً",
     "loading": "جاري التحميل...",
     "errorOccurred": "حدث خطأ",
@@ -25,10 +24,25 @@
     "register": "تسجيل",
     "fullName": "الاسم الكامل",
     "createAccount": "إنشاء حساب",
-    "hasAccount": "لديك حساب بالفعل؟",
+    "hasAccount": "هل لديك حساب بالفعل؟",
+    "userid": "معرف المستخدم",
+    "backToLogin": "العودة إلى تسجيل الدخول",
+    "submit": "إرسال",
+    "otpSentSuccess": "تم إرسال رمز التحقق بنجاح!",
+    "enterOtp": "أدخل رمز التحقق",
+    "otpLengthError": "يجب أن يتكون رمز التحقق من 6 أرقام",
+    
+    "required": "مطلوب",
+    "minLength": "الحد الأدنى للطول مطلوب",
+    "maxLength": "تجاوز الحد الأقصى للطول",
+    "invalidData": "بيانات غير صالحة",
     
     "fieldRequired": "{{field}} مطلوب",
     "invalidEmail": "يرجى إدخال بريد إلكتروني صحيح",
-    "passwordLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل"
-  
+    "passwordLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+    
+    "mobileNumber": "رقم الجوال",
+    "account": "الحساب",
+    "profiles": "الملفات الشخصية",
+    "permissions": "الصلاحيات"
 } 

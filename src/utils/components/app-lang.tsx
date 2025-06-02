@@ -32,15 +32,15 @@ export const AppLang = () => {
 
   const handleLanguageChange = (value: string) => {
     callLanguage(value);
-    i18n.changeLanguage(value);
+   // i18n.changeLanguage(value);
   };
 
   const callLanguage = (value: string) => {
     const foundLang = languages.find(lang => lang.code === value) || languages[0];
     i18n.changeLanguage(value);
+    setCurrentLang(foundLang);
     document.documentElement.dir = foundLang.dir;
     document.documentElement.lang = value;
-    setCurrentLang(foundLang);
   }
  
 

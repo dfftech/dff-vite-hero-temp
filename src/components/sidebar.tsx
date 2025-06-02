@@ -17,6 +17,7 @@ import { AppRouter } from "@/utils/services/app.router";
 import TypeButton from "@/types/type.button";
 import { TypeIcon } from "@/types/type.icon";
 import { siteConfig } from "@/config/siteConfig";
+import { useSignals } from "@preact/signals-react/runtime";
 
 type Theme = "light" | "dark";
 
@@ -35,6 +36,7 @@ export const Sidebar = ({
   isOpen: boolean;
   onToggle: () => void;
 }) => {
+  useSignals();
   const [theme, setTheme] = React.useState<Theme>("dark");
   const [toggled, setToggled] = useState(isOpen);
   const location = useLocation();

@@ -5,7 +5,7 @@ import { SkeletonAccountForm } from "@/skeleton/skeleton-account-form";
 import TypeButton from "@/types/type.button";
 import { useTranslation } from "react-i18next";
 
-export async function AccountPage() {
+export async function PermissionsPage() {
   const { t } = useTranslation();
   const onAdd = () => {
     console.log("Add button clicked");
@@ -15,7 +15,7 @@ export async function AccountPage() {
     return (
       <aside className="flex justify-between gap-2">
         <div>
-          <h2 className="text-2xl font-bold">{t("account")}</h2>
+          <h2 className="text-2xl font-bold">{t("permissions")}</h2>
         </div>
         <div className="flex gap-2">
           <TypeButton

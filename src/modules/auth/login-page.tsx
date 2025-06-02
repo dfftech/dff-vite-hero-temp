@@ -19,6 +19,7 @@ import AppStorage, { TOKEN } from "@/utils/services/app.storage";
 import { AuthLayout } from "@/layouts/auth-layout";
 import { LoginValidate } from "./common/validate";
 
+
 export function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const { isOpen, onClose } = useDisclosure();

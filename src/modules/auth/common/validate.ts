@@ -1,6 +1,7 @@
 import { AppProps } from "@/utils/services/app.props";
 // import { RegExp } from 'dff-util';
 
+
 export const ForgotPasswordValidate = {
     email: {
         required: AppProps.MESSAGE_REQUIRED,

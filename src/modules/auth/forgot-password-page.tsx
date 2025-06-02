@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import { checkLoginUser } from "@/utils/services/app.methods";
 import { RouterChange } from "@/utils/services/app.event";
@@ -24,13 +25,15 @@ const ForgotPassword = ({
   onSubmitEmail: (data: any) => void;
   handleSubmit: any;
 }) => {
+  const { t } = useTranslation();
+  
   return (
     <form onSubmit={handleSubmit(onSubmitEmail)}>
       <div className="flex flex-col gap-4">
         <TypeInput
           control={control}
           error={errors.email}
-          label="userid"
+          label={t("userid")}
           name="email"
           rules={ForgotPasswordValidate.email}
           type="text"
@@ -38,11 +41,11 @@ const ForgotPassword = ({
         <div className="flex justify-between gap-4">
           <TypeButton
             action="danger"
-            label="Back to Login"
+            label={t("backToLogin")}
             name="CornerUpLeft"
             onPress={onCancel}
           />
-          <TypeButton label="Submit" onPress={handleSubmit(onSubmitEmail)} />
+          <TypeButton label={t("submit")} onPress={handleSubmit(onSubmitEmail)} />
         </div>
       </div>
     </form>
@@ -63,14 +66,16 @@ const ForgotPasswordOtp = ({
   onCancelOtp: () => void;
   onSubmitOtp: () => void;
 }) => {
+  const { t } = useTranslation();
+  
   return (
     <div className="text-center">
-      <p className="text-lg text-gray-700">OTP has been sent successfully!</p>
+      <p className="text-lg text-gray-700">{t("otpSentSuccess")}</p>
 
       <div className="flex flex-col items-center mt-4">
         <div className="flex justify-center">
           <InputOtp
-            description="Enter your OTP"
+            description={t("enterOtp")}
             length={6}
             value={otpValue}
             onValueChange={(value: string) => {
@@ -92,7 +97,7 @@ const ForgotPasswordOtp = ({
       <div className="flex justify-between mt-4 space-x-4">
         <TypeButton
           action="danger"
-          label="Back to Login"
+          label={t("backToLogin")}
           name="CornerUpLeft"
           onPress={onCancelOtp}
         />
@@ -103,7 +108,7 @@ const ForgotPasswordOtp = ({
               : "bg-blue-200 text-white cursor-not-allowed"
           }
           disabled={otpValue.length < 6}
-          label="Submit"
+          label={t("submit")}
           onPress={onSubmitOtp}
         />
       </div>
@@ -115,6 +120,7 @@ export default function ForgotPasswordPage() {
   const [isEmailSubmitted, setIsEmailSubmitted] = useState(false);
   const [otpValue, setOtpValue] = useState("");
   const [otpError, setOtpError] = useState("");
+  const { t } = useTranslation();
 
   useEffect(() => {
     const isLogin = checkLoginUser();
@@ -136,7 +142,7 @@ export default function ForgotPasswordPage() {
 
   const onSubmitOtp = () => {
     if (otpValue.length < 6) {
-      setOtpError("OTP must be 6 digits");
+      setOtpError(t("otpLengthError"));
       return;
     }
 
@@ -168,7 +174,7 @@ export default function ForgotPasswordPage() {
         <div className="flex flex-col items-center justify-center p-4">
           <section className="w-full">
             <h2 className="text-2xl font-semibold text-center mb-6">
-              Forgot Password
+              {t("forgotPassword")}
             </h2>
 
             {!isEmailSubmitted ? (

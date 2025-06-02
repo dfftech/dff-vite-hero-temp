@@ -10,6 +10,8 @@ import SignUp from "./app/auth/signup";
 import ForgotPassword from "./app/auth/forgotpassword";
 import Login from "./app/auth/login";
 import Account from "./app/account";
+import Profile from "./app/profile";
+import Permissions from "./app/permissions";
 
 function App() {
   const navigate = useNavigate();
@@ -45,6 +47,8 @@ function App() {
             path={AppRouter.FORGOT_PASSWORD}
           />
           <Route element={<Account />} path={AppRouter.ACCOUNT} />
+          <Route element={<Profile />} path={AppRouter.PROFILE} />
+          <Route element={<Permissions />} path={AppRouter.PERMISSIONS} />
         </Routes>
       </DefaultLayout>
     </>

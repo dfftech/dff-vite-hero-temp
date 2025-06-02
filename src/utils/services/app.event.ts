@@ -1,6 +1,6 @@
 import { signal } from "@preact/signals-react";
 
-import AppStorage, { SESSION_INFO, TOKEN, GOOGLE_ACCESS_TOKEN, LANG, DIR } from "./app.storage";
+import AppStorage, { SESSION_INFO, TOKEN, GOOGLE_ACCESS_TOKEN, LANG, DIR, TRANS } from "./app.storage";
 import { AppRouter } from "./app.router";
 import { langDirection } from "../../i18n";
 
@@ -12,6 +12,7 @@ export const SessionLang = signal<string>(
 export const RtlDir = signal<boolean>(
   langDirection(AppStorage.getData(DIR) || 'en-US') === 'rtl',
 );
+
 
 type RouterType = {
   pathname: string;

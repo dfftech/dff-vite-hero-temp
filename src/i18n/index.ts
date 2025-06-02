@@ -8,6 +8,8 @@ import teIN from './locales/te-IN.json';
 import arSA from './locales/ar-SA.json';
 import { RtlDir, SessionLang } from '@/utils/services/app.event';
 
+let SessionTrans: Record<string, string> = {};
+
 export const languages = [
   {
     code: 'en-US',
@@ -73,7 +75,8 @@ i18n.on('languageChanged', (lng: string) => {
     RtlDir.value = dir === 'rtl';
     SessionLang.value = lng;
     if (lng in resources) {
-      AppStorage.setData(TRANS, resources[lng as ResourceKey]);
+      AppStorage.setData(TRANS, resources[lng as ResourceKey].translation);
+      SessionTrans = resources[lng as ResourceKey].translation;
     }
   } catch (error) {
     console.error('Error during language change:', error);
@@ -85,5 +88,10 @@ export default i18n;
 
 export const trans = (nameLang: { [key: string]: string }, defaultName: string) => {
     let val = nameLang[SessionLang.value];
+    console.log("val ::", val);
     return val === undefined || val === null  || val.trim() === '' ? defaultName : val;
 };
+
+export const t = (key: string) => {
+  return SessionTrans[key] || `NOT_FOUND[${key}]`;
+}

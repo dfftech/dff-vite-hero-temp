@@ -1,5 +1,4 @@
 {
-
     "welcome": "Welcome",
     "loading": "Loading...",
     "errorOccurred": "An error occurred",
@@ -26,9 +25,24 @@
     "fullName": "Full Name",
     "createAccount": "Create Account",
     "hasAccount": "Already have an account?",
+    "userid": "User ID",
+    "backToLogin": "Back to Login",
+    "submit": "Submit",
+    "otpSentSuccess": "OTP has been sent successfully!",
+    "enterOtp": "Enter your OTP",
+    "otpLengthError": "OTP must be 6 digits",
+    
+    "required": "Required",
+    "minLength": "Min length required",
+    "maxLength": "Exceed max length",
+    "invalidData": "Invalid data",
     
     "fieldRequired": "{{field}} is required",
     "invalidEmail": "Please enter a valid email",
-    "passwordLength": "Password must be at least 8 characters"
-  
+    "passwordLength": "Password must be at least 8 characters",
+    
+    "mobileNumber": "Mobile Number",
+    "account": "Account",
+    "profiles": "Profiles",
+    "permissions": "Permissions"
 } 

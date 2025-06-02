@@ -54,57 +54,7 @@ export const siteConfig: { navMenuItems: MenuItem[] } = {
         create: true,
         update: true,
         delete: false,
-      },
-      children: [
-        {
-          name: "Profile",
-          nameLang: {
-            "en-US": "Profile",
-            "te-IN": "ప్రొఫైల్",
-            "ar-SA": "الملف الشخصي"
-          },
-          href: "/account/profile",
-          icon: "User",
-          permissions: {
-            read: true,
-            create: true,
-            update: true,
-            delete: false,
-          },
-        },
-        {
-          name: "Settings",
-          nameLang: {
-            "en-US": "Settings",
-            "te-IN": "సెట్టింగ్స్",
-            "ar-SA": "الإعدادات"
-          },
-          href: "/account/settings",
-          icon: "Settings",
-          permissions: {
-            read: false,
-            create: true,
-            update: true,
-            delete: false,
-          },
-        },
-        {
-          name: "Security",
-          nameLang: {
-            "en-US": "Security",
-            "te-IN": "భద్రత",
-            "ar-SA": "الأمان"
-          },
-          href: "/account/security",
-          icon: "Lock",
-          permissions: {
-            read: true,
-            create: true,
-            update: true,
-            delete: false,
-          },
-        },
-      ],
+      }
     },
     {
       name: "Admin",
@@ -123,32 +73,16 @@ export const siteConfig: { navMenuItems: MenuItem[] } = {
       },
       children: [
         {
-          name: "Users",
+          name: "Profile",
           nameLang: {
             "en-US": "Users",
             "te-IN": "వినియోగదారులు",
             "ar-SA": "المستخدمون"
           },
-          href: "/admin/users",
+          href: "/profile",
           icon: "Users",
           permissions: {
             read: true,
-            create: true,
-            update: true,
-            delete: true,
-          },
-        },
-        {
-          name: "Roles",
-          nameLang: {
-            "en-US": "Roles",
-            "te-IN": "పాత్రలు",
-            "ar-SA": "الأدوار"
-          },
-          href: "/admin/roles",
-          icon: "Tag",
-          permissions: {
-            read: false,
             create: true,
             update: true,
             delete: true,
@@ -161,7 +95,7 @@ export const siteConfig: { navMenuItems: MenuItem[] } = {
             "te-IN": "అనుమతులు",
             "ar-SA": "الصلاحيات"
           },
-          href: "/admin/permissions",
+          href: "/permissions",
           icon: "Key",
           permissions: {
             read: true,
