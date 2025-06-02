@@ -12,6 +12,7 @@ type TypeProps = {
   type?: "before" | "after";
   variant?: "square" | "circular";
   disabled?: boolean;
+  radius?: "full" | "none" | "sm" | "md" | "lg" | undefined;
 };
 
 export const TypeCheckbox = ({
@@ -24,6 +25,7 @@ export const TypeCheckbox = ({
   type = "after",
   variant = "square",
   disabled = false,
+  radius = "none",
 }: TypeProps) => {
   return (
     <section className={className}>
@@ -40,7 +42,8 @@ export const TypeCheckbox = ({
             label={label}
             labelPosition={type}
             shape={variant}
-          />
+            radius={radius}
+            />
         )}
         rules={rules}
       />

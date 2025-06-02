@@ -20,6 +20,7 @@ const TypeDatePicker: React.FC<DateProps> = ({
   return (
     <DatePicker
       className={className}
+      radius="full"
     // modal
     // mode="date"
     // locale={I18nManager.isRTL ? "ar" : "en"}

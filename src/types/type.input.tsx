@@ -18,6 +18,7 @@ type TypeProps = {
   | "textarea"
   | "time";
   disabled?: boolean;
+  radius?: "full" | "none" | "sm" | "md" | "lg" | undefined;
   onChange?: (value: any) => void;
 };
 
@@ -32,6 +33,7 @@ export const TypeInput = ({
   type = "text",
   disabled = false,
   onChange,
+  radius = "full",
 }: TypeProps) => {
   const [inputValue, setInputValue] = useState<string | number | undefined>("");
 
@@ -56,6 +58,7 @@ export const TypeInput = ({
               {...field}
               className={className}
               disabled={disabled}
+              radius={radius}
               onChange={(e) => {
                 field.onChange(e.target.value);
                 if (onChange) onChange(e.target.value);
@@ -67,6 +70,7 @@ export const TypeInput = ({
               className={className}
               disabled={disabled}
               type={type}
+              radius={radius}
               onChange={(e) => {
                 field.onChange(
                   type === "number" ? Number(e.target.value) : e.target.value,

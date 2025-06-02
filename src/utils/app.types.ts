@@ -9,16 +9,12 @@ export type AuthStateType = {
 };
 
 export type LanguageType = {
-  _id: string;
   lang: string;
   name: string;
-  rtl: boolean;
-  active: boolean | string;
-  nameLocal: string;
-  updatedOn: Date;
-  country: CountryType["_id"];
+  dir: "ltr" | "rtl";
+  locale: string;
 };
-export type AllLanguageCodesType = "en-US" | "kn-IN" | "ta-IN" | "hi-IN" | "te-IN";
+export type AllLanguageCodesType = "en-US" | "kn-IN" | "ta-IN" | "hi-IN" | "te-IN" | "ar-SA";
 
 export type SupportedLanguagesType = Extract<AllLanguageCodesType, "en-US" | "te-IN">;
 

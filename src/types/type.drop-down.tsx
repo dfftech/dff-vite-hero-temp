@@ -21,6 +21,7 @@ interface DropdownInputProps {
   className?: string;
   options?: { id: string; nameLang: any }[];
   multiSelect?: boolean;
+  radius?: "full" | "none" | "sm" | "md" | "lg" | undefined;
 }
 
 export const DropdownInput = ({
@@ -34,6 +35,7 @@ export const DropdownInput = ({
   name,
   options = [],
   multiSelect = false,
+  radius = "full",
 }: DropdownInputProps) => {
   const [selectedValues, setSelectedValues] = useState<string[]>(
     Array.isArray(value) ? value : [],

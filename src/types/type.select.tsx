@@ -23,6 +23,7 @@ type TypeProps = {
   isRequired?: boolean;
   varient?: "flat" | "bordered" | "underlined" | "faded";
   onChange?: (value: string | string[]) => void;
+  radius?: "full" | "none" | "sm" | "md" | "lg" | undefined;
 };
 
 export const TypeSelect = ({
@@ -39,6 +40,7 @@ export const TypeSelect = ({
   isRequired = false,
   varient = "bordered",
   onChange,
+  radius = "full",
 }: TypeProps) => {
   useSignals();
 
@@ -73,6 +75,7 @@ export const TypeSelect = ({
             multiple={multiSelect} // Enables multi-select mode
             value={multiSelect ? selectedValues : selectedValues[0] || ""}
             variant={varient}
+            radius={radius}
             onSelectionChange={(selected: any) => {
               let newValues: any;
 

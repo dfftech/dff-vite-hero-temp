@@ -12,6 +12,7 @@ type InputProps = {
   value?: string;
   className?: string;
   error?: any;
+  radius?: "full" | "none" | "sm" | "md" | "lg" | undefined;
 };
 
 const TypePassword: React.FC<InputProps> = ({
@@ -23,6 +24,7 @@ const TypePassword: React.FC<InputProps> = ({
   value,
   error,
   className = "w-full",
+  radius = "full",
 }: InputProps) => {
   return (
     <div className={className}>
@@ -48,6 +50,7 @@ const TypePassword: React.FC<InputProps> = ({
               value={value}
               onBlur={onBlur}
               onChange={onChange}
+              radius={radius}
             />
           )}
           rules={rules}
