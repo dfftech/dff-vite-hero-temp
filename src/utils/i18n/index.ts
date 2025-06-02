@@ -6,6 +6,7 @@ import AppStorage, { LANG, TRANS } from '@/utils/services/app.storage';
 import enUS from './locales/en-US.json';
 import teIN from './locales/te-IN.json';
 import arSA from './locales/ar-SA.json';
+import { SessionLang } from '../services/app.event';
 
 export const languages = [
   {
@@ -77,3 +78,9 @@ i18n.on('languageChanged', (lng: string) => {
 });
 
 export default i18n;
+
+
+export const trans = (nameLang: { [key: string]: string }, defaultName: string) => {
+    const val = nameLang[SessionLang.value];
+    return val === '' || val === undefined || val === null ? defaultName : val;
+};

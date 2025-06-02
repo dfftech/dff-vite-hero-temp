@@ -11,7 +11,7 @@ import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { ThemeMod } from "@/utils/components/app-theme";
-import { trans } from "@/utils/services/app.trans";
+import { trans } from "@/utils/i18n";
 import { RouterChange } from "@/utils/services/app.event";
 import { AppRouter } from "@/utils/services/app.router";
 import TypeButton from "@/types/type.button";
