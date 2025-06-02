@@ -6,7 +6,7 @@ import AppStorage, { DIR, LANG, TRANS } from '@/utils/services/app.storage';
 import enUS from './locales/en-US.json';
 import teIN from './locales/te-IN.json';
 import arSA from './locales/ar-SA.json';
-import { RtlDir, SessionLang } from '../services/app.event';
+import { RtlDir, SessionLang } from '@/utils/services/app.event';
 
 export const languages = [
   {

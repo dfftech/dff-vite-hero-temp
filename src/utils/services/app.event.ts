@@ -2,7 +2,7 @@ import { signal } from "@preact/signals-react";
 
 import AppStorage, { SESSION_INFO, TOKEN, GOOGLE_ACCESS_TOKEN, LANG, DIR } from "./app.storage";
 import { AppRouter } from "./app.router";
-import { langDirection } from "../i18n";
+import { langDirection } from "../../i18n";
 
 export const SessionToken = signal(AppStorage.getData(TOKEN) || null);
 export const SessionLang = signal<string>(

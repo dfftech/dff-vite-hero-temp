@@ -30,7 +30,7 @@ const ForgotPassword = ({
         <TypeInput
           control={control}
           error={errors.email}
-          label="Email/Mobile"
+          label="userid"
           name="email"
           rules={ForgotPasswordValidate.email}
           type="text"
