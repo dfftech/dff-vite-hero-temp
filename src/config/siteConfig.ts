@@ -4,7 +4,12 @@ import { IconName } from "@/types/type.icon";
 
 // Define the MenuItem type here and export it
 export type MenuItem = {
-  label: string;
+  name: string; // Default name (English)
+  nameLang: {
+    "en-US": string;
+    "te-IN": string;
+    "ar-SA": string;
+  };
   href: string;
   icon?: IconName;
   permissions?: {
@@ -20,7 +25,12 @@ export type MenuItem = {
 export const siteConfig: { navMenuItems: MenuItem[] } = {
   navMenuItems: [
     {
-      label: "Home",
+      name: "Home",
+      nameLang: {
+        "en-US": "Home",
+        "te-IN": "హోమ్",
+        "ar-SA": "الرئيسية"
+      },
       href: "/",
       icon: "LayoutDashboard",
       permissions: {
@@ -31,7 +41,12 @@ export const siteConfig: { navMenuItems: MenuItem[] } = {
       },
     },
     {
-      label: "Account",
+      name: "Account",
+      nameLang: {
+        "en-US": "Account",
+        "te-IN": "ఖాతా",
+        "ar-SA": "الحساب"
+      },
       href: "/account",
       icon: "User",
       permissions: {
@@ -42,7 +57,12 @@ export const siteConfig: { navMenuItems: MenuItem[] } = {
       },
       children: [
         {
-          label: "Profile",
+          name: "Profile",
+          nameLang: {
+            "en-US": "Profile",
+            "te-IN": "ప్రొఫైల్",
+            "ar-SA": "الملف الشخصي"
+          },
           href: "/account/profile",
           icon: "User",
           permissions: {
@@ -53,18 +73,28 @@ export const siteConfig: { navMenuItems: MenuItem[] } = {
           },
         },
         {
-          label: "Settings",
+          name: "Settings",
+          nameLang: {
+            "en-US": "Settings",
+            "te-IN": "సెట్టింగ్స్",
+            "ar-SA": "الإعدادات"
+          },
           href: "/account/settings",
           icon: "Settings",
           permissions: {
-            read: false, // Example: this item won't show
+            read: false,
             create: true,
             update: true,
             delete: false,
           },
         },
         {
-          label: "Security",
+          name: "Security",
+          nameLang: {
+            "en-US": "Security",
+            "te-IN": "భద్రత",
+            "ar-SA": "الأمان"
+          },
           href: "/account/security",
           icon: "Lock",
           permissions: {
@@ -77,10 +107,15 @@ export const siteConfig: { navMenuItems: MenuItem[] } = {
       ],
     },
     {
-      label: "Admin",
+      name: "Admin",
+      nameLang: {
+        "en-US": "Admin",
+        "te-IN": "నిర్వాహకుడు",
+        "ar-SA": "المشرف"
+      },
       href: "/admin",
       icon: "Shield",
-       permissions: {
+      permissions: {
         read: true,
         create: true,
         update: true,
@@ -88,7 +123,12 @@ export const siteConfig: { navMenuItems: MenuItem[] } = {
       },
       children: [
         {
-          label: "Users",
+          name: "Users",
+          nameLang: {
+            "en-US": "Users",
+            "te-IN": "వినియోగదారులు",
+            "ar-SA": "المستخدمون"
+          },
           href: "/admin/users",
           icon: "Users",
           permissions: {
@@ -99,18 +139,28 @@ export const siteConfig: { navMenuItems: MenuItem[] } = {
           },
         },
         {
-          label: "Roles",
+          name: "Roles",
+          nameLang: {
+            "en-US": "Roles",
+            "te-IN": "పాత్రలు",
+            "ar-SA": "الأدوار"
+          },
           href: "/admin/roles",
           icon: "Tag",
           permissions: {
-            read: false, // Example: this child won't show
+            read: false,
             create: true,
             update: true,
             delete: true,
           },
         },
         {
-          label: "Permissions",
+          name: "Permissions",
+          nameLang: {
+            "en-US": "Permissions",
+            "te-IN": "అనుమతులు",
+            "ar-SA": "الصلاحيات"
+          },
           href: "/admin/permissions",
           icon: "Key",
           permissions: {

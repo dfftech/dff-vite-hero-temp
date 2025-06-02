@@ -8,9 +8,10 @@ import {
 import React from "react";
 import { effect } from "@preact/signals";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-import { CurrentTheme } from "@/utils/components/app-theme";
-
+import { ThemeMod } from "@/utils/components/app-theme";
+import { trans } from "@/utils/services/app.trans";
 import { RouterChange } from "@/utils/services/app.event";
 import { AppRouter } from "@/utils/services/app.router";
 import TypeButton from "@/types/type.button";
@@ -37,6 +38,7 @@ export const Sidebar = ({
   const [theme, setTheme] = React.useState<Theme>("dark");
   const [toggled, setToggled] = useState(isOpen);
   const location = useLocation();
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     setToggled(isOpen);
@@ -48,7 +50,7 @@ export const Sidebar = ({
   };
 
   useEffect(() => {
-    effect(() => setTheme(CurrentTheme.value === "light" ? "light" : "dark"));
+    effect(() => setTheme(ThemeMod.value === "light" ? "light" : "dark"));
   }, []);
 
   function handleMenu(href: string): void {
@@ -136,8 +138,8 @@ export const Sidebar = ({
           // Render SubMenu for items with children, otherwise MenuItem
           return item.children ? (
             <SubMenu
-              key={`${item.label}-${index}`}
-              label={item.label}
+              key={`${item.name}-${index}`}
+              label={trans(item.nameLang, item.name)}
               defaultOpen={isParentActive} // Optionally open the submenu if a child is active
               active={isParentActive} // Mark the submenu as active if parent or child is active
               icon={item.icon ? <TypeIcon name={item.icon} /> : undefined} // Pass icon to SubMenu
@@ -153,24 +155,24 @@ export const Sidebar = ({
 
                 return (
                   <MenuItem
-                    key={`${child.label}-${childIndex}`}
+                    key={`${child.name}-${childIndex}`}
                     active={location.pathname === child.href} // Mark child as active if its href matches current path
                     onClick={() => handleMenu(child.href)}
                     icon={child.icon ? <TypeIcon name={child.icon} /> : undefined} // Pass icon to child MenuItem
                   >
-                    {child.label}
+                    {trans(child.nameLang, child.name)}
                   </MenuItem>
                 );
               })}
             </SubMenu>
           ) : (
             <MenuItem
-              key={`${item.label}-${index}`}
+              key={`${item.name}-${index}`}
               onClick={() => handleMenu(item.href)}
               active={location.pathname === item.href} // Mark item as active if its href matches current path
               icon={item.icon ? <TypeIcon name={item.icon} /> : undefined} // Pass icon to MenuItem
             >
-              {item.label}
+              {trans(item.nameLang, item.name)}
             </MenuItem>
           );
         })}
@@ -180,11 +182,13 @@ export const Sidebar = ({
 };
 
 function SidebarHeader() {
+  const { t } = useTranslation();
+  
   return (
     <aside className="sticky top-0 z-10 bg-white dark:bg-black border-b border-gray-200 dark:border-gray-700">
       <div className="sticky top-0 flex items-center justify-between p-4">
-        <h2 className="text-lg font-semibold">Welcome</h2>
-        <div className="-mr-6">
+        <h2 className="text-lg font-semibold">{t('welcome')}</h2>
+        <div className="-m-6">
           <TypeButton
             action="default"
             label=""

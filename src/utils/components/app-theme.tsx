@@ -7,7 +7,7 @@ import { signal } from "@preact/signals";
 
 import { SunFilledIcon, MoonFilledIcon } from "@/components/icons";
 
-export const CurrentTheme = signal("light");
+export const ThemeMod = signal("light");
 export interface ThemeSwitchProps {
   className?: string;
   classNames?: SwitchProps["classNames"];
@@ -38,7 +38,7 @@ export const AppTheme: FC<ThemeSwitchProps> = ({
   }, [isMounted]);
 
   useEffect(() => {
-    CurrentTheme.value = theme;
+    ThemeMod.value = theme;
   }, [theme]);
 
   // Prevent Hydration Mismatch

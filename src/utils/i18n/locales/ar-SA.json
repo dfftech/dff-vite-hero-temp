@@ -1,0 +1,34 @@
+{
+
+    "welcome": "مرحباً",
+    "loading": "جاري التحميل...",
+    "errorOccurred": "حدث خطأ",
+    "pageNotFound": "الصفحة غير موجودة",
+    
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "delete": "حذف",
+    
+    "home": "الرئيسية",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج",
+    
+    "login": "تسجيل الدخول",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "signIn": "دخول",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "noAccount": "ليس لديك حساب؟",
+    "signUp": "إنشاء حساب",
+    "register": "تسجيل",
+    "fullName": "الاسم الكامل",
+    "createAccount": "إنشاء حساب",
+    "hasAccount": "لديك حساب بالفعل؟",
+    
+    "fieldRequired": "{{field}} مطلوب",
+    "invalidEmail": "يرجى إدخال بريد إلكتروني صحيح",
+    "passwordLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل"
+  
+} 

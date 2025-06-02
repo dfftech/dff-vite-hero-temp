@@ -3,9 +3,9 @@ import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/d
 
 interface DropDownProps {
   className?: string;
-  items: Array<{ label: string; value: string }>;
+  items: Array<{ label: string | React.ReactNode; value: string }>;
   onSelect: (value: string) => void;
-  placeholder?: string;
+  placeholder?: string | React.ReactNode;
 }
 
 const TypeDropDown: React.FC<DropDownProps> = ({
@@ -17,7 +17,8 @@ const TypeDropDown: React.FC<DropDownProps> = ({
   const [selectedValue, setSelectedValue] = useState<string>("");
 
   const handleSelect = (value: string) => {
-    setSelectedValue(value);
+    const foundItem = items.find(item => item.value === value);
+    setSelectedValue(foundItem?.label as string);
     onSelect(value);
   };
 

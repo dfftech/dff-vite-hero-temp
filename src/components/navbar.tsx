@@ -7,6 +7,7 @@ import {
 import { useSignals } from "@preact/signals-react/runtime";
 
 import { AppTheme } from "@/utils/components/app-theme";
+import { AppLang } from "@/utils/components/app-lang";
 import { Logo } from "@/components/icons";
 import TypeButton from "@/types/type.button";
 import { SessionToken } from "@/utils/services/app.event";
@@ -35,6 +36,7 @@ export const Navbar = ({ onToggle }: { onToggle: () => void }) => {
         </NavbarContent>
 
         <NavbarContent className="basis-1 pl-4" justify="end">
+          <AppLang />
           <AppTheme />
 
           {SessionToken.value && (

@@ -1,0 +1,34 @@
+{
+
+    "welcome": "Welcome",
+    "loading": "Loading...",
+    "errorOccurred": "An error occurred",
+    "pageNotFound": "Page not found",
+    
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    
+    "home": "Home",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout",
+    
+    "login": "Login",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign In",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign Up",
+    "register": "Register",
+    "fullName": "Full Name",
+    "createAccount": "Create Account",
+    "hasAccount": "Already have an account?",
+    
+    "fieldRequired": "{{field}} is required",
+    "invalidEmail": "Please enter a valid email",
+    "passwordLength": "Password must be at least 8 characters"
+  
+} 

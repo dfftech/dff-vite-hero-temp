@@ -8,6 +8,7 @@ import {
   useDisclosure,
 } from "@heroui/react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import { checkLoginUser } from "@/utils/services/app.methods";
 import { CheckSession, RouterChange } from "@/utils/services/app.event";
@@ -20,8 +21,8 @@ import { LoginValidate } from "./common/validate";
 
 export function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
-
   const { isOpen, onClose } = useDisclosure();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const isLogin = checkLoginUser();
@@ -50,28 +51,26 @@ export function LoginPage() {
   };
 
   const RenderSection = () => {
-
-
     return (
       <>
         <div className="flex flex-col items-center justify-center p-4">
           <section className="w-full p-2">
-            <h2 className="text-2xl font-semibold text-center mb-6">Sign In</h2>
+            <h2 className="text-2xl font-semibold text-center mb-6">{t('signIn')}</h2>
             <form>
               <div className="flex flex-col gap-4">
                 <TypeInput
                   control={control}
                   error={errors.email}
-                  label="Email"
+                  label={t('email')}
                   name="email"
                   rules={LoginValidate.email}
-                  type="text" // or "email" if you extend your TypeInput's `type` prop to include "email"
+                  type="text"
                 />
 
                 <TypeInput
                   control={control}
                   error={errors.password}
-                  label="Password"
+                  label={t('password')}
                   name="password"
                   rules={LoginValidate.password}
                   type="password"
@@ -79,10 +78,9 @@ export function LoginPage() {
 
                 {/* Submit Button */}
                 <div className="flex justify-between">
-
                   <TypeButton
                     action="primary"
-                    label="Forgot Password?"
+                    label={t('forgotPassword')}
                     variant="light"
                     onPress={() => RouterChange(AppRouter.FORGOT_PASSWORD)}
                   />
@@ -90,26 +88,24 @@ export function LoginPage() {
                     action="primary"
                     disabled={isLoading}
                     isLoading={isLoading}
-                    label={isLoading ? "Logging in..." : "Log In"}
+                    label={isLoading ? t('loading') : t('login')}
                     variant="solid"
                     onPress={handleSubmit(onSubmit)}
                   />
                 </div>
-
               </div>
             </form>
             <div className="mt-4 text-center flex justify-center flex-col lg:flex-row md:flex-row">
               <p className="text-sm text-gray-600">
-                Don&apos;t have an account?&nbsp;
+                {t('noAccount')}&nbsp;
                 <TypeButton
                   action="primary"
                   className="p-0"
-                  label="Sign Up"
+                  label={t('signUp')}
                   variant="light"
                   onPress={() => RouterChange(AppRouter.SIGN_UP)}
                 />
               </p>
-
             </div>
           </section>
         </div>
@@ -122,18 +118,18 @@ export function LoginPage() {
           <ModalContent>
             <ModalBody>
               <p className="text-sm text-gray-600">
-                Please enter your credentials to log in.
+                {t('errorOccurred')}
               </p>
             </ModalBody>
             <ModalFooter>
               <Button className="text-white" variant="light" onPress={onClose}>
-                Close
+                {t('cancel')}
               </Button>
               <Button
                 className="text-white"
                 onPress={() => alert("Proceeding with login")}
               >
-                Proceed
+                {t('confirm')}
               </Button>
             </ModalFooter>
           </ModalContent>
