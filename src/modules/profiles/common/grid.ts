@@ -1,10 +1,11 @@
 import { IDatasource, IGetRowsParams, ColDef } from "ag-grid-community";
 import { GridOptions } from "ag-grid-community";
 
+import { onData } from "./service";
+
 import ActionCellRenderer from "@/components/action-cell";
 import { SkeletonTable } from "@/skeleton/skeletion-table";
 import NoRowsComponent from "@/components/no-rows";
-import { darkGridTheme, lightGridTheme } from "@/styles/ag.theme";
 
 export type ActionType = {
   onAction: (data: any, action: "edit" | "status") => void;
@@ -30,25 +31,15 @@ export const columnDefs = ({ onAction }: ActionType): ColDef<any>[] => [
 
 export const getDataSource = (searchTerm: string): IDatasource => ({
   getRows: async (params: IGetRowsParams) => {
-    const startRow = params.startRow;
-    const endRow = params.endRow;
-
-    // Build query parameters
-    let query = `startRow=${startRow}&endRow=${endRow}`;
-
-    if (searchTerm) {
-      query += `&search=${encodeURIComponent(searchTerm)}`;
-    }
+    const query = {
+      startRow: params.startRow,
+      endRow: params.endRow,
+      searchTerm: searchTerm,
+    };
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      // Simulate backend API call
-      const response = await fetch(`https://jsonplaceholder.typicode.com/users?${query}`);
-      const data: any[] = await response.json();
-
-      //throw new Error("Simulated error"); // Simulate an error for testing
-      // Transform data, adding isActive (mocked)
-      const rowsThisBlock: any[] = data.map((user) => ({
+      const data = await onData(query);
+      const rowsThisBlock: any[] = data.map((user: any) => ({
         id: user.id,
         name: user.name,
         email: user.email,
