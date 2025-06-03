@@ -1,5 +1,6 @@
 import { IDatasource, IGetRowsParams, ColDef } from "ag-grid-community";
 import { GridOptions } from "ag-grid-community";
+import { TFunction } from "i18next";
 
 import { onData } from "./service";
 
@@ -7,13 +8,9 @@ import ActionCellRenderer from "@/components/action-cell";
 import { SkeletonTable } from "@/skeleton/skeletion-table";
 import NoRowsComponent from "@/components/no-rows";
 
-export type ActionType = {
-  onAction: (data: any, action: "edit" | "status") => void;
-};
-
-export const columnDefs = ({ onAction }: ActionType): ColDef<any>[] => [
+export const columnDefs = (t: TFunction, onAction: Function): ColDef<any>[] => [
   { field: "id", maxWidth: 100 },
-  { field: "name" },
+  { field: "name", headerName: t("name") },
   { field: "email" },
   {
     headerName: "Actions",

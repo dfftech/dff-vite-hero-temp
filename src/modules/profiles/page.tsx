@@ -63,7 +63,7 @@ export function ProfilesPage() {
       <GridLayout>
         <AgGridReact
           ref={gridRef}
-          columnDefs={columnDefs({ onAction: handleAction })}
+          columnDefs={columnDefs(t, handleAction)}
           datasource={dataSource}
           gridOptions={gridOptions}
           theme={ThemeMode.value === "dark" ? darkGridTheme : lightGridTheme}
