@@ -1,9 +1,6 @@
-"use client"; // Mark as Client Component (if using Next.js)
-
 import { useTranslation } from "react-i18next";
 import { AgGridReact } from "ag-grid-react";
-import { useRef, useState, useEffect } from "react";
-import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
+import { useRef, useState, useMemo } from "react";
 import { useSignals } from "@preact/signals-react/runtime";
 
 import { columnDefs, getDataSource, gridOptions } from "./common/grid";
@@ -12,11 +9,10 @@ import { ArticleLayout } from "@/layouts/article-layout";
 import { ContentLayout } from "@/layouts/content-layout";
 import { FloatLayout } from "@/layouts/float-layout";
 import TypeButton from "@/types/type.button";
-import { darkGridTheme, lightGridTheme } from "@/utils/services/ag.theme";
 import { ThemeMode } from "@/utils/services/app.event";
-
-// Register AG Grid Community Module
-ModuleRegistry.registerModules([AllCommunityModule]);
+import TypeSearch from "@/types/type.search";
+import { darkGridTheme, lightGridTheme } from "@/styles/ag.theme";
+import { GridLayout } from "@/layouts/grid-layout";
 
 export function ProfilesPage() {
   useSignals();
@@ -28,102 +24,58 @@ export function ProfilesPage() {
     console.log(`Action: ${action}, Data:`, data);
   };
 
-  // State for row data
-  const dataSource = getDataSource(searchTerm);
-
-  // Set data source when component mounts
-  useEffect(() => {
-    if (gridRef.current && gridRef.current.api) {
-      (gridRef.current.api as any).setDatasource(dataSource);
-    }
-  }, [dataSource]);
-
-  // Handle search input change
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+  const handleRelaod = () => {
     if (gridRef.current && gridRef.current.api) {
       gridRef.current.api.purgeInfiniteCache();
     }
   };
-
-  // to use myTheme in an application, pass it to the theme grid option
-
+  const dataSource = useMemo(() => getDataSource(searchTerm), [searchTerm]);
   const onAdd = () => {
     console.log("Add button clicked");
-    // Example: Add a new row dynamically
-  };
-
-  // Optional: Fetch data if needed
-  useEffect(() => {
-    // Example API call (uncomment and adjust as needed)
-    /*
-    fetch("/api/profiles")
-      .then((res) => res.json())
-      .then((data) => setRowData(data))
-      .catch((err) => console.error("Failed to fetch profiles:", err));
-    */
-  }, []);
-
-  const RenderArticle = () => {
-    return (
-      <aside className="flex justify-between gap-2">
-        <div>
-          <input
-            className="search-input"
-            placeholder="Search across all fields..."
-            type="text"
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
-          <h2 className="text-2xl font-bold">{t("profiles")}</h2>
-        </div>
-        <div className="flex gap-2">
-          <TypeButton
-            action="success"
-            label={t("submit")}
-            name="SendHorizontal"
-            onPress={onAdd}
-          />
-        </div>
-      </aside>
-    );
-  };
-
-  const RenderSection = () => {
-    return (
-      <aside>
-        <div style={{ height: "400px", width: "100%" }}>
-          <AgGridReact
-            ref={gridRef}
-            columnDefs={columnDefs({ onAction: handleAction })}
-            datasource={dataSource}
-            gridOptions={{
-              ...gridOptions,
-              theme:
-                ThemeMode.value === "dark" ? darkGridTheme : lightGridTheme,
-            }}
-          />
-        </div>
-      </aside>
-    );
-  };
-
-  const RenderFloat = () => {
-    return (
-      <TypeButton action="primary" label="" name="RotateCcw" onPress={onAdd} />
-    );
   };
 
   return (
     <>
       <ArticleLayout>
-        <RenderArticle />
+        <aside className="flex justify-between gap-2">
+          <div>
+            <h2 className="text-2xl font-bold">{t("profiles")}</h2>
+          </div>
+          <div className="flex gap-2">
+            <TypeSearch
+              className="w-48"
+              placeholder={t("search")}
+              value={searchTerm}
+              variant="underlined"
+              onChange={(value) => {
+                setSearchTerm(value);
+              }}
+            />
+            <TypeButton
+              action="success"
+              label={t("add")}
+              name="Plus"
+              onPress={onAdd}
+            />
+          </div>
+        </aside>
       </ArticleLayout>
-      <ContentLayout>
-        <RenderSection />
-      </ContentLayout>
+      <GridLayout>
+        <AgGridReact
+          ref={gridRef}
+          columnDefs={columnDefs({ onAction: handleAction })}
+          datasource={dataSource}
+          gridOptions={gridOptions}
+          theme={ThemeMode.value === "dark" ? darkGridTheme : lightGridTheme}
+        />
+      </GridLayout>
       <FloatLayout>
-        <RenderFloat />
+        <TypeButton
+          action="primary"
+          label=""
+          name="RotateCcw"
+          onPress={handleRelaod}
+        />
       </FloatLayout>
     </>
   );

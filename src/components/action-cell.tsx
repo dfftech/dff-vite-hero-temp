@@ -23,13 +23,13 @@ const ActionCellRenderer: React.FC<ActionCellRendererProps> = ({
   };
 
   return (
-    <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+    <div className="flex flex-row items-center gap-4 p-4">
       <Edit
         className="cursor-pointer hover:text-blue-500"
         size={20}
         onClick={handleEdit}
       />
-      {data?.isActive ? (
+      {data?.isActive || data?.active ? (
         <CheckCircle
           className="cursor-pointer hover:text-green-500"
           size={20}

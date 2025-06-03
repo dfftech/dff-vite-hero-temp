@@ -53,5 +53,14 @@
   "add": "Add",
   "addProfile": "Add Profile",
   "editProfile": "Edit Profile",
-  "deleteProfile": "Delete Profile"
+  "deleteProfile": "Delete Profile",
+  "view": "View",
+  "deleteConfirmation": "Are you sure you want to delete this item?",
+  "deleteSuccess": "Item deleted successfully",
+  "deleteError": "An error occurred while deleting the item",
+  "updateSuccess": "Item updated successfully",
+  "updateError": "An error occurred while updating the item",
+  "search": "Search",
+  "noResultsFound": "No results found"
+
 }

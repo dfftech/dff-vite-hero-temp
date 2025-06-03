@@ -8,12 +8,14 @@ interface IconProps {
   name: IconName;
   color?: string;
   size?: number;
+  onClick?: () => void;
 }
 
 export const TypeIcon: React.FC<IconProps> = ({
   name,
   color = "lightslategray",
   size = 24,
+  onClick,
 }) => {
   const LucideIcon = icons[name];
 
@@ -21,5 +23,12 @@ export const TypeIcon: React.FC<IconProps> = ({
     return <CircleOff color={color} size={size} />;
   }
 
-  return <LucideIcon color={color} size={size} />;
+  return (
+    <LucideIcon
+      className="cursor-pointer"
+      color={color}
+      size={size}
+      onClick={onClick}
+    />
+  );
 };

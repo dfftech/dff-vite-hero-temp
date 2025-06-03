@@ -1,22 +1,28 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 import React from "react";
 import { effect } from "@preact/signals-react";
+import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
 
-import { RouterEvent, ShowToast } from "@/utils/services/app.event";
-import AppToast from "@/utils/components/app-toast";
 import DefaultLayout from "./layouts/default-layout";
-import { AppRouter } from "@/utils/services/app.router";
 import SignUp from "./app/auth/signup";
 import ForgotPassword from "./app/auth/forgotpassword";
 import Login from "./app/auth/login";
 import Account from "./app/account";
 import Profile from "./app/profile";
 import Permissions from "./app/permissions";
+import AppHttp from "./utils/services/app.http";
+
+import { AppRouter } from "@/utils/services/app.router";
+import AppToast from "@/utils/components/app-toast";
+import { RouterEvent, ShowToast } from "@/utils/services/app.event";
+
+ModuleRegistry.registerModules([AllCommunityModule]);
 
 function App() {
   const navigate = useNavigate();
 
   React.useEffect(() => {
+    AppHttp.getInstance();
     ShowToast("Welcome message !!!!", "success");
     effect(() => {
       const path = RouterEvent.value.pathname;
