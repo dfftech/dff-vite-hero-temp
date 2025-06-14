@@ -21,7 +21,7 @@ type TypeProps = {
   disabled?: boolean;
   multiSelect?: boolean;
   isRequired?: boolean;
-  varient?: "flat" | "bordered" | "underlined" | "faded";
+  variant?: "flat" | "bordered" | "underlined" | "faded";
   onChange?: (value: string | string[]) => void;
   radius?: "full" | "none" | "sm" | "md" | "lg" | undefined;
 };
@@ -38,7 +38,7 @@ export const TypeSelect = ({
   disabled = false,
   multiSelect = false,
   isRequired = false,
-  varient = "bordered",
+  variant = "bordered",
   onChange,
   radius = "full",
 }: TypeProps) => {
@@ -73,9 +73,9 @@ export const TypeSelect = ({
             disabled={disabled}
             isRequired={isRequired}
             multiple={multiSelect} // Enables multi-select mode
-            value={multiSelect ? selectedValues : selectedValues[0] || ""}
-            variant={varient}
             radius={radius}
+            value={multiSelect ? selectedValues : selectedValues[0] || ""}
+            variant={variant}
             onSelectionChange={(selected: any) => {
               let newValues: any;
 

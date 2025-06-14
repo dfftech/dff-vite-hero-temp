@@ -57,5 +57,6 @@
   "updateSuccess": "تم تحديث العنصر بنجاح",
   "updateError": "حدث خطأ أثناء تحديث العنصر",
   "search": "بحث",
-  "noResultsFound": "لم يتم العثور على نتائج"
+  "noResultsFound": "لم يتم العثور على نتائج",
+  "image": "الصورة"
 }
