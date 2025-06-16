@@ -1,6 +1,7 @@
 import { Controller } from "react-hook-form";
 import { Input, Textarea } from "@heroui/input";
 import { useEffect, useState } from "react";
+
 import { t } from "@/i18n";
 
 type TypeProps = {
@@ -12,12 +13,12 @@ type TypeProps = {
   error?: any;
   className?: string;
   type?:
-    | "text"
-    | "password"
-    | "number"
-    | "datetime-local"
-    | "textarea"
-    | "time";
+  | "text"
+  | "password"
+  | "number"
+  | "datetime-local"
+  | "textarea"
+  | "time";
   disabled?: boolean;
   radius?: "full" | "none" | "sm" | "md" | "lg" | undefined;
   onChange?: (value: any) => void;
@@ -70,11 +71,11 @@ export const TypeInput = ({
               {...field}
               className={className}
               disabled={disabled}
-              type={type}
               radius={radius}
+              type={type}
               onChange={(e) => {
                 field.onChange(
-                  type === "number" ? Number(e.target.value) : e.target.value
+                  type === "number" ? Number(e.target.value) : e.target.value,
                 );
                 if (onChange) onChange(e.target.value);
               }}

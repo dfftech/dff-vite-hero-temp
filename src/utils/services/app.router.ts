@@ -20,4 +20,5 @@ export const AppRouter = {
   REDEEM: "/redeem",
   COMING_SOON: "/coming-soon",
   PERMISSIONS: "/permissions",
+  TESTFORM: "/test-form",
 };

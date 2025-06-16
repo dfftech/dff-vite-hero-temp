@@ -15,6 +15,7 @@ import AppHttp from "./utils/services/app.http";
 import { AppRouter } from "@/utils/services/app.router";
 import AppToast from "@/utils/components/app-toast";
 import { RouterEvent, ShowToast } from "@/utils/services/app.event";
+import TestForm from "./app/test-form";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -55,6 +56,7 @@ function App() {
           <Route element={<Account />} path={AppRouter.ACCOUNT} />
           <Route element={<Profile />} path={AppRouter.PROFILE} />
           <Route element={<Permissions />} path={AppRouter.PERMISSIONS} />
+          <Route element={<TestForm />} path={AppRouter.TESTFORM} />
         </Routes>
       </DefaultLayout>
     </>
