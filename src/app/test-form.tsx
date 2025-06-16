@@ -57,6 +57,7 @@ export default function TestForm() {
     reset({ ...test });
   };
   const onSubmitTest = async (data: TestType) => {
+    setTest(data);
     console.log("data test : ", data);
   };
   const onCancel = () => {
@@ -86,7 +87,7 @@ export default function TestForm() {
         disabled={false}
         error={errors}
         label={t("name")}
-        name={"test.name"}
+        name={"name"}
         rules={testRule.name}
         value={test.name || ""}
       />
@@ -105,6 +106,9 @@ export default function TestForm() {
             <div className="flex flex-row gap-4">
               <ComponentSubmit />
               <ComponentCancel />
+            </div>
+            <div className="flex flex-row gap-4">
+              {JSON.stringify(test, null, 4)}
             </div>
           </div>
         </form>
