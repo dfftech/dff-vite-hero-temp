@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 
 import TypeButton from "@/types/type.button";
 import { TypeInput } from "@/types/type.input";
-import DefaultLayout from "@/layouts/default-layout";
 import { ContentLayout } from "@/layouts/content-layout";
 import { ArticleLayout } from "@/layouts/article-layout";
 

@@ -1,5 +1,5 @@
 import { Controller } from "react-hook-form";
-import { Input, Textarea } from "@heroui/input";
+import { Input, Textarea } from "@heroui/react";
 import { useEffect, useState } from "react";
 
 import { t } from "@/i18n";

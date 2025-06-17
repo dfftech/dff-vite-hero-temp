@@ -5,22 +5,23 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-bg-light: #e8f0ff;
-  /* White for light mode */
-  --color-bg-dark: #1f2937;
-  /* Dark gray for dark mode */
+  --color-bg-light: #e8f0ff; /* White for light mode */
+  --color-bg-dark: #1f2937; /* Dark gray for dark mode */
   --bg-image: url("/world-map.svg");
 }
 
-/* Apply background colors based on theme */
-:root {
-  background-color: var(--color-bg-light);
+/* Base styles for :root (outside utilities layer) */
+@layer base {
+  :root {
+    background-color: var(--color-bg-light);
+  }
+
+  :root[class~="dark"] {
+    background-color: var(--color-bg-dark);
+  }
 }
 
-:root[class~="dark"] {
-  background-color: var(--color-bg-dark);
-}
-
+/* Utility classes */
 @layer utilities {
   .bg-auth-light {
     background-image: var(--bg-image);
@@ -33,7 +34,6 @@
     background-image: var(--bg-image);
     background-size: cover;
     background-position: center;
-    background-repeat: repeat;
-    /* Repeat for geometric pattern */
+    background-repeat: repeat; /* Repeat for geometric pattern */
   }
 }

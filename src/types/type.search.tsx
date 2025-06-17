@@ -1,4 +1,4 @@
-import { Input } from "@heroui/input";
+import { Input } from "@heroui/react";
 import React from "react";
 
 import { TypeIcon } from "./type.icon";

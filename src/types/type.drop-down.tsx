@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/dropdown";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/react";
 
 interface DropDownProps {
   className?: string;
@@ -27,7 +27,7 @@ const TypeDropDown: React.FC<DropDownProps> = ({
       <DropdownTrigger>
         {selectedValue || placeholder}
       </DropdownTrigger>
-      <DropdownMenu 
+      <DropdownMenu
         onAction={(key) => handleSelect(key as string)}
       >
         {items.map((item) => (

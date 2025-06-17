@@ -5,9 +5,9 @@ import clsx from "clsx";
 import { useTheme } from "@heroui/use-theme";
 
 import { ThemeMode } from "../services/app.event";
+import AppStorage, { THEME } from "../services/app.storage";
 
 import { SunFilledIcon, MoonFilledIcon } from "@/components/icons";
-import AppStorage, { THEME } from "../services/app.storage";
 
 export interface ThemeSwitchProps {
   className?: string;
@@ -50,7 +50,7 @@ export const AppTheme: FC<ThemeSwitchProps> = ({ className, classNames }) => {
         className: clsx(
           "px-px transition-opacity hover:opacity-80 cursor-pointer",
           className,
-          classNames?.base
+          classNames?.base,
         ),
       })}
     >
@@ -72,7 +72,7 @@ export const AppTheme: FC<ThemeSwitchProps> = ({ className, classNames }) => {
               "px-0",
               "mx-0",
             ],
-            classNames?.wrapper
+            classNames?.wrapper,
           ),
         })}
       >

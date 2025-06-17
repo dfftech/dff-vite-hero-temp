@@ -1,5 +1,5 @@
 import { Controller } from "react-hook-form";
-import { Select, SelectItem } from "@heroui/select";
+import { Select, SelectItem } from "@heroui/react";
 import { useEffect, useState } from "react";
 import { useSignals } from "@preact/signals-react/runtime";
 

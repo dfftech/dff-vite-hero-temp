@@ -19,7 +19,7 @@ type TypeDateProps = {
   onChange?: (value: any) => void;
 };
 
-export const TypeDatePicker = ({
+export const TypeDate = ({
   control,
   name,
   label,
@@ -72,4 +72,4 @@ export const TypeDatePicker = ({
   );
 };
 
-export default TypeDatePicker;
+export default TypeDate;

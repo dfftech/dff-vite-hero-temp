@@ -1,6 +1,6 @@
 import React from "react";
 import { LucideIcon, icons } from "lucide-react"; // Using Lucide React
-import { Button } from "@heroui/button";
+import { Button } from "@heroui/react";
 
 type IconName = keyof typeof icons;
 

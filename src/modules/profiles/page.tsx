@@ -6,7 +6,6 @@ import { useSignals } from "@preact/signals-react/runtime";
 import { columnDefs, getDataSource, gridOptions } from "./common/grid";
 
 import { ArticleLayout } from "@/layouts/article-layout";
-import { ContentLayout } from "@/layouts/content-layout";
 import { FloatLayout } from "@/layouts/float-layout";
 import TypeButton from "@/types/type.button";
 import { ThemeMode } from "@/utils/services/app.event";

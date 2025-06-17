@@ -1,6 +1,6 @@
 import React from "react";
 import { Controller } from "react-hook-form";
-import { Input } from "@heroui/input";
+import { Input } from "@heroui/react";
 import { AlertTriangle } from "lucide-react";
 
 type InputProps = {
