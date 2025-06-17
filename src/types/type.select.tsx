@@ -1,13 +1,10 @@
 import { Controller } from "react-hook-form";
-import { Select, SelectItem } from "@heroui/react";
+import { Select, SelectItem } from "@heroui/select";
 import { useEffect, useState } from "react";
 import { useSignals } from "@preact/signals-react/runtime";
+import { OptionType } from "dff-util";
 
-export type TypeOptions = {
-  key: string;
-  label: string;
-  active?: boolean;
-};
+import { trans } from "@/i18n";
 
 type TypeProps = {
   control: any;
@@ -17,10 +14,9 @@ type TypeProps = {
   rules?: any;
   error?: any;
   className?: string;
-  options: TypeOptions[];
+  options: OptionType[];
   disabled?: boolean;
   multiSelect?: boolean;
-  isRequired?: boolean;
   variant?: "flat" | "bordered" | "underlined" | "faded";
   onChange?: (value: string | string[]) => void;
   radius?: "full" | "none" | "sm" | "md" | "lg" | undefined;
@@ -34,10 +30,9 @@ export const TypeSelect = ({
   rules = {},
   error,
   className = "flex flex-col w-full",
-  options = [] as TypeOptions[],
+  options = [] as OptionType[],
   disabled = false,
   multiSelect = false,
-  isRequired = false,
   variant = "bordered",
   onChange,
   radius = "full",
@@ -71,7 +66,6 @@ export const TypeSelect = ({
             {...field}
             className={className}
             disabled={disabled}
-            isRequired={isRequired}
             multiple={multiSelect} // Enables multi-select mode
             radius={radius}
             value={multiSelect ? selectedValues : selectedValues[0] || ""}
@@ -94,9 +88,9 @@ export const TypeSelect = ({
               }
             }}
           >
-            {options.map((option: TypeOptions) => (
-              <SelectItem key={option.key} disableAnimation={!option.active}>
-                {option.label}
+            {options.map((option: OptionType) => (
+              <SelectItem key={option.key} isDisabled={option.disabled}>
+                {trans(option.lang, option.label)}
               </SelectItem>
             ))}
           </Select>

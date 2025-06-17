@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useSignals } from "@preact/signals-react/runtime";
 import { signal } from "@preact/signals-react";
 import { useTranslation } from "react-i18next";
+import { ConstMessages } from "dff-util";
 
 import TypeButton from "@/types/type.button";
 import { TypeInput } from "@/types/type.input";
@@ -13,7 +14,7 @@ const TestValidation = {
   name: {
     required: {
       value: true,
-      message: "Name is required",
+      message: ConstMessages.REQUIRED,
     },
     minLength: {
       value: 3,
@@ -84,7 +85,7 @@ export default function TestFormPage() {
       <TypeInput
         control={control}
         disabled={false}
-        error={errors}
+        error={errors["name"]}
         label={t("name")}
         name={"name"}
         rules={testRule.name}

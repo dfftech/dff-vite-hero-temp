@@ -1,11 +1,13 @@
+/* eslint-disable no-console */
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import AppStorage, { DIR, LANG, TRANS } from "@/utils/services/app.storage";
 
 // Import JSON translation files
 import enUS from "./locales/en-US.json";
 import teIN from "./locales/te-IN.json";
 import arSA from "./locales/ar-SA.json";
+
+import AppStorage, { DIR, LANG, TRANS } from "@/utils/services/app.storage";
 import { RtlDir, SessionLang } from "@/utils/services/app.event";
 
 let SessionTrans: Record<string, string> = {};
@@ -68,6 +70,7 @@ i18n.use(initReactI18next).init({
 i18n.on("languageChanged", (lng: string) => {
   try {
     const dir = langDirection(lng);
+
     AppStorage.setData(DIR, dir);
     AppStorage.setData(LANG, lng);
     RtlDir.value = dir === "rtl";
@@ -83,11 +86,11 @@ i18n.on("languageChanged", (lng: string) => {
 
 export default i18n;
 
-export const trans = (nameLang: { [key: string]: string }, defaultName: string) => {
-  let val = nameLang[SessionLang.value];
+export const trans = (nameLang?: Record<string, string>, defaultName?: string) => {
+  let val = nameLang ? nameLang[SessionLang.value] : defaultName;
+
   return val === undefined || val === null || val.trim() === "" ? defaultName : val;
 };
-
 export const t = (key: string) => {
-  return SessionTrans[key] || `NOT_FOUND[${key}]`;
+  return SessionTrans[key] || key;
 };
