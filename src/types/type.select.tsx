@@ -39,7 +39,7 @@ export const TypeSelect = ({
 }: TypeProps) => {
   useSignals();
 
-  const [selectedValues, setSelectedValues] = useState<string[]>(
+  const [selectedValues, setSelectedValues] = useState<string[] | string>(
     Array.isArray(value) ? value : value ? [value.toString()] : [],
   );
 
@@ -66,8 +66,8 @@ export const TypeSelect = ({
             {...field}
             className={className}
             disabled={disabled}
-            multiple={multiSelect} // Enables multi-select mode
             radius={radius}
+            selectionMode={multiSelect ? "multiple" : "single"}
             value={multiSelect ? selectedValues : selectedValues[0] || ""}
             variant={variant}
             onSelectionChange={(selected: any) => {
@@ -75,7 +75,9 @@ export const TypeSelect = ({
 
               if (multiSelect) {
                 newValues = selectedValues.includes(selected)
-                  ? selectedValues.filter((val) => val !== selected)
+                  ? (selectedValues as string[]).filter(
+                    (val) => val !== selected,
+                  )
                   : [...selectedValues, selected];
               } else {
                 newValues = [selected];
