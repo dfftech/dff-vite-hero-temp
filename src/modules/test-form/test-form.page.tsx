@@ -3,33 +3,14 @@ import { useForm } from "react-hook-form";
 import { useSignals } from "@preact/signals-react/runtime";
 import { signal } from "@preact/signals-react";
 import { useTranslation } from "react-i18next";
-import { ConstMessages } from "dff-util";
+
+import { TestType } from "./common/types";
+import { TestValidation } from "./common/validation";
 
 import TypeButton from "@/types/type.button";
 import { TypeInput } from "@/types/type.input";
 import { ContentLayout } from "@/layouts/content-layout";
 import { ArticleLayout } from "@/layouts/article-layout";
-
-const TestValidation = {
-  name: {
-    required: {
-      value: true,
-      message: ConstMessages.REQUIRED,
-    },
-    minLength: {
-      value: 3,
-      message: "Name must be at least 3 characters",
-    },
-    maxLength: {
-      value: 100,
-      message: "Name must be at most 100 characters",
-    },
-  },
-};
-
-type TestType = {
-  name: string;
-};
 
 const isSubmitLoading = signal(false);
 
@@ -102,7 +83,7 @@ export default function TestFormPage() {
       <ContentLayout>
         <form>
           <div className="flex flex-col gap-4">
-            <ComponentName />
+            {ComponentName()}
             <div className="flex flex-row gap-4">
               <ComponentSubmit />
               <ComponentCancel />
