@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useSignals } from "@preact/signals-react/runtime";
 import { signal } from "@preact/signals-react";
 import { useTranslation } from "react-i18next";
+import { OptionType } from "dff-util";
 
 import { TestType } from "./common/types";
 import { TestValidation } from "./common/validation";
@@ -13,6 +14,7 @@ import { ContentLayout } from "@/layouts/content-layout";
 import { ArticleLayout } from "@/layouts/article-layout";
 import TypeDatePicker from "@/types/type.date";
 import { TypeSelect } from "@/types/type.select"; // <-- make sure this path is correct
+import TypeInputLang from "@/types/type.inputlang";
 
 const isSubmitLoading = signal(false);
 
@@ -44,25 +46,7 @@ export default function TestFormPage() {
   };
 
   const onSubmitTest = async (data: TestType) => {
-    const value = data.date;
-    const { year, month, day } = value;
-
-    const hour = value.hour ?? 0;
-    const minute = value.minute ?? 0;
-    const second = value.second ?? 0;
-    const millisecond = value.millisecond ?? 0;
-
-    const date = new Date(
-      year,
-      month - 1,
-      day,
-      hour,
-      minute,
-      second,
-      millisecond
-    );
-    data.date = date;
-
+    data.eventDate = (data.eventDate as any).toDate();
     setTest(data);
     console.log("data test : ", data);
   };
@@ -103,65 +87,63 @@ export default function TestFormPage() {
 
   const ComponentEventDate = () => (
     <TypeDatePicker
-      control={control}
-      name="date"
-      placeholder="Event Date"
-      isDateTimeEnabled={true}
-      rules={{ required: "Event date is required" }}
       className="w-full"
-      value={test.date}
-      onChange={(value: any | null) => {
-        test.date = value;
-      }}
+      control={control}
+      error={errors["eventDate"]}
+      isDateTimeEnabled={true}
+      label="Event Date"
+      name="eventDate"
+      rules={{ required: "Event date is required" }}
+      value={test.eventDate}
     />
   );
 
   const ComponentCategory = () => {
-    const categoryOptions = [
-      { key: "tech", label: "Technology", lang: "en", active: true },
-      { key: "sci", label: "Science", lang: "en", active: true },
-      { key: "math", label: "Mathematics", lang: "en", active: true },
+    const categoryOptions: OptionType[] = [
+      { label: "Technology", key: "tech", disabled: false },
+      { label: "Science", key: "sci", disabled: false },
+      { label: "Mathematics", key: "math", disabled: false },
     ];
 
     return (
       <TypeSelect
-        control={control}
-        name="category"
-        label="Category"
-        value={test.category || []}
-        rules={{ required: "Category is required" }}
-        error={errors["category"]}
-        options={categoryOptions}
         className="w-full"
+        control={control}
+        error={errors["category"]}
+        label="Category"
+        name="category"
+        options={categoryOptions}
+        rules={{ required: "Category is required" }}
+        value={test.category || []}
         multiSelect={true}
-        onChange={(val) => {
-          test.category = Array.isArray(val) ? val : [val];
-        }}
+      // onChange={(val) => {
+      //   test.category = Array.isArray(val) ? val : [val];
+      // }}
       />
     );
   };
 
   const ComponentCategorySingle = () => {
-    const categoryOptions = [
-      { key: "tech", label: "Technology", lang: "en", active: true },
-      { key: "sci", label: "Science", lang: "en", active: true },
-      { key: "math", label: "Mathematics", lang: "en", active: true },
+    const categoryOptions: OptionType[] = [
+      { label: "Technology", key: "tech", disabled: false },
+      { label: "Science", key: "sci", disabled: false },
+      { label: "Mathematics", key: "math", disabled: false },
     ];
 
     return (
       <TypeSelect
-        control={control}
-        name="category2"
-        label="CategoryWithSingleSelection"
-        value={test.category2 || ""}
-        rules={{ required: "Category is required" }}
-        error={errors["category"]}
-        options={categoryOptions}
         className="w-full"
+        control={control}
+        error={errors["category"]}
+        label="CategoryWithSingleSelection"
+        name="category2"
+        options={categoryOptions}
+        rules={{ required: "Category is required" }}
+        value={test.category2 || ""}
         multiSelect={false}
-        onChange={(val) => {
-          test.category2 = val.toString();
-        }}
+      // onChange={(val) => {
+      //   test.category2 = val.toString();
+      // }}
       />
     );
   };
@@ -178,12 +160,25 @@ export default function TestFormPage() {
             {ComponentEventDate()}
             {ComponentCategory()}
             {ComponentCategorySingle()}
+            <TypeInputLang
+              control={control}
+              label="Country Name"
+              name="countryName"
+              rules={{ required: true }}
+              value={test.lang}
+              onChange={(values) => console.log(values)}
+            />
             <div className="flex flex-row gap-4">
               <ComponentSubmit />
               <ComponentCancel />
             </div>
             <div className="flex flex-row gap-4">
               <pre className="text-sm">{JSON.stringify(test, null, 2)}</pre>
+              <pre className="text-sm">
+                {new Date(
+                  test.eventDate || new Date().toISOString(),
+                )?.toLocaleString()}
+              </pre>
             </div>
           </div>
         </form>

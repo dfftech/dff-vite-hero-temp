@@ -1,6 +1,6 @@
 import { Controller } from "react-hook-form";
 import { DatePicker } from "@heroui/date-picker";
-import { now, getLocalTimeZone } from "@internationalized/date";
+import { CalendarDateTime, getLocalTimeZone, parseAbsoluteToLocal } from "@internationalized/date";
 import { useEffect, useState } from "react";
 
 import { t } from "@/i18n";
@@ -32,10 +32,11 @@ export const TypeDate = ({
   isDateTimeEnabled = false,
   onChange,
 }: TypeDateProps) => {
-  const [dateValue, setDateValue] = useState<any>(undefined);
+  const [dateValue, setDateValue] = useState<string>();
 
   useEffect(() => {
-    setDateValue(value);
+    console.log(value);
+    setDateValue(value ? new Date(value).toISOString() : new Date().toISOString());
   }, [value]);
 
   return (
@@ -47,9 +48,7 @@ export const TypeDate = ({
       )}
       <Controller
         control={control}
-        defaultValue={
-          dateValue || (isDateTimeEnabled ? now(getLocalTimeZone()) : undefined)
-        }
+        defaultValue={parseAbsoluteToLocal(dateValue || new Date().toISOString())}
         name={name}
         render={({ field }: any) => (
           <DatePicker
@@ -59,9 +58,10 @@ export const TypeDate = ({
             disabled={disabled}
             hideTimeZone={!isDateTimeEnabled}
             radius={radius}
-            onChange={(value) => {
-              field.onChange(value);
-              if (onChange) onChange(value);
+            onChange={(value: CalendarDateTime) => {
+              const date = value.toDate(getLocalTimeZone());
+              field.onChange(parseAbsoluteToLocal(date.toISOString()));
+              if (onChange) onChange(date);
             }}
           />
         )}

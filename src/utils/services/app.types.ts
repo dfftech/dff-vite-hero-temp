@@ -16,7 +16,7 @@ export type LanguageType = {
 };
 export type AllLanguageCodesType = "en-US" | "kn-IN" | "ta-IN" | "hi-IN" | "te-IN" | "ar-SA";
 
-export type SupportedLanguagesType = Extract<AllLanguageCodesType, "en-US" | "te-IN">;
+export type SupportedLanguagesType = Extract<AllLanguageCodesType, "en-US" | "te-IN" | "ar-SA">;
 
 export type TranslationType = Record<SupportedLanguagesType, string>;
 
