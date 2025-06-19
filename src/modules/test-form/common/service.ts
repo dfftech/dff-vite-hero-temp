@@ -32,6 +32,32 @@ const counties: OptionType[] = [
     },
   },
 ];
+import { parseAbsoluteToLocal } from "@internationalized/date";
+import { TestType } from "./types";
+
+export const DefaultTest: TestType = {
+  name: "",
+  //eventDate: parseAbsoluteToLocal(new Date().toISOString()),
+  category: [],
+  category2: "",
+  lang: {
+    "en-US": "",
+    "te-IN": "",
+    "ar-SA": "",
+  },
+};
+
+export const LoadedTest: TestType = {
+  name: "John Doe",
+  //eventDate: parseAbsoluteToLocal(new Date().toISOString()),
+  category: ["tech"],
+  category2: "tech",
+  lang: {
+    "en-US": "How are you?",
+    "te-IN": "మీరు ఎలా ఉన్నారు?",
+    "ar-SA": "كيف حالك؟",
+  },
+};
 
 export const LoadCountries = () => {
   Promise.resolve(counties);

@@ -17,10 +17,10 @@ export default function TestForm() {
     <>
       <Button onPress={onOpen}>Open Drawer</Button>
       <TestFormPage />
-      <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Drawer isOpen={isOpen} onOpenChange={onOpenChange} size="4xl">
         <DrawerContent>
           <DrawerHeader>Drawer Header</DrawerHeader>
-          <DrawerBody>
+          <DrawerBody className="w-full">
             <TestFormPage />
           </DrawerBody>
           <DrawerFooter className="flex flex-row gap-2">

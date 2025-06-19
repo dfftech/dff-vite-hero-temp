@@ -2,9 +2,12 @@ import { Controller } from "react-hook-form";
 import { Select, SelectItem } from "@heroui/select";
 import { useEffect, useState } from "react";
 import { useSignals } from "@preact/signals-react/runtime";
-import { OptionType } from "dff-util";
 
-import { trans } from "@/i18n";
+export type TypeOptions = {
+  key: string;
+  label: string;
+  active?: boolean;
+};
 
 type TypeProps = {
   control: any;
@@ -14,10 +17,10 @@ type TypeProps = {
   rules?: any;
   error?: any;
   className?: string;
-  options: OptionType[];
+  options: TypeOptions[];
   disabled?: boolean;
   multiSelect?: boolean;
-  variant?: "flat" | "bordered" | "underlined" | "faded";
+  varient?: "flat" | "bordered" | "underlined" | "faded";
   onChange?: (value: string | string[]) => void;
   radius?: "full" | "none" | "sm" | "md" | "lg" | undefined;
 };
@@ -30,22 +33,22 @@ export const TypeSelect = ({
   rules = {},
   error,
   className = "flex flex-col w-full",
-  options = [] as OptionType[],
+  options = [],
   disabled = false,
   multiSelect = false,
-  variant = "bordered",
+  varient = "bordered",
   onChange,
   radius = "full",
 }: TypeProps) => {
   useSignals();
 
   const [selectedValues, setSelectedValues] = useState<string[] | string>(
-    Array.isArray(value) ? value : value ? [value.toString()] : [],
+    Array.isArray(value) ? value : value ? [value.toString()] : []
   );
 
   useEffect(() => {
     setSelectedValues(
-      Array.isArray(value) ? value : value ? [value.toString()] : [],
+      Array.isArray(value) ? value : value ? [value.toString()] : []
     );
   }, [value]);
 
@@ -59,45 +62,52 @@ export const TypeSelect = ({
       )}
       <Controller
         control={control}
-        defaultValue={value}
         name={name}
+        defaultValue={value}
+        rules={rules}
         render={({ field }) => (
           <Select
             {...field}
             className={className}
             disabled={disabled}
-            radius={radius}
+            // isRequired={isRequired}
+            // multiple={multiSelect}
             selectionMode={multiSelect ? "multiple" : "single"}
+            variant={varient}
+            radius={radius}
             value={multiSelect ? selectedValues : selectedValues[0] || ""}
-            variant={variant}
+            defaultSelectedKeys={selectedValues}
             onSelectionChange={(selected: any) => {
               let newValues: any;
 
               if (multiSelect) {
-                newValues = selectedValues.includes(selected)
-                  ? (selectedValues as string[]).filter(
-                    (val) => val !== selected,
-                  )
-                  : [...selectedValues, selected];
+                const selectedKeys = Array.from(selected);
+                console.log(selectedKeys);
+                setSelectedValues([selectedKeys]);
+                newValues = selectedKeys;
               } else {
-                newValues = [selected];
+                const selectedKey = selected?.currentKey ?? selected;
+                setSelectedValues(selectedKey);
+                newValues = selectedKey;
               }
 
-              setSelectedValues(newValues);
-              field.onChange(multiSelect ? newValues : selected);
+              field.onChange(newValues);
               if (onChange) {
-                onChange(multiSelect ? newValues : selected);
+                onChange(newValues);
               }
             }}
           >
-            {options.map((option: OptionType) => (
-              <SelectItem key={option.key} isDisabled={option.disabled}>
-                {trans(option.lang, option.label)}
+            {options.map((option: TypeOptions) => (
+              <SelectItem
+                key={option.key}
+                value={option.key}
+                disableAnimation={!option.active}
+              >
+                {option.label}
               </SelectItem>
             ))}
           </Select>
         )}
-        rules={rules}
       />
       {error && <p className="text-xs text-red-500 mt-1">{error.message}</p>}
     </section>

@@ -15,6 +15,7 @@ import { ArticleLayout } from "@/layouts/article-layout";
 import TypeDatePicker from "@/types/type.date";
 import { TypeSelect } from "@/types/type.select"; // <-- make sure this path is correct
 import TypeInputLang from "@/types/type.inputlang";
+import { DefaultTest, LoadedTest } from "./common/service";
 
 const isSubmitLoading = signal(false);
 
@@ -24,6 +25,8 @@ export default function TestFormPage() {
   useSignals();
   const testRule = TestValidation;
   const [test, setTest] = React.useState<TestType>({} as TestType);
+
+  const [isToggleOn, setIsToggleOn] = React.useState(false);
 
   const {
     handleSubmit,
@@ -39,6 +42,7 @@ export default function TestFormPage() {
 
   const onDefaultTest = () => {
     setTest({} as TestType);
+    console.log("test : ", test);
   };
 
   const onResetTest = () => {
@@ -47,8 +51,10 @@ export default function TestFormPage() {
 
   const onSubmitTest = async (data: TestType) => {
     data.eventDate = (data.eventDate as any).toDate();
+    console.log("data : ", data);
     setTest(data);
     console.log("data test : ", data);
+    console.log("test : ", test);
   };
 
   const onCancel = () => {
@@ -114,12 +120,38 @@ export default function TestFormPage() {
         name="category"
         options={categoryOptions}
         rules={{ required: "Category is required" }}
-        value={test.category || []}
+        value={
+          typeof test.category === "string"
+            ? test.category.split(",")
+            : (test.category as string[]) || []
+        }
         multiSelect={true}
-      // onChange={(val) => {
-      //   test.category = Array.isArray(val) ? val : [val];
-      // }}
+        onChange={(val) => {
+          test.category = val;
+        }}
       />
+      //   <TypeSelect
+      //   className="w-full"
+      //   control={control}
+      //   name="performers"
+      //   multiSelect={true}
+      //   value={
+      //     typeof SelectedPoojaService.value?.performers ===
+      //     "string"
+      //       ? SelectedPoojaService.value.performers.split(",")
+      //       : (SelectedPoojaService.value
+      //           ?.performers as string[]) || []
+      //   }
+      //   options={PerformersList.value?.map(
+      //     (v: PerformersType) => ({
+      //       label: v.name,
+      //       key: v._id,
+      //       // active: true,
+      //       didable: false,
+      //     })
+      //   )}
+      //   error={errors.performers}
+      // />
     );
   };
 
@@ -139,46 +171,92 @@ export default function TestFormPage() {
         name="category2"
         options={categoryOptions}
         rules={{ required: "Category is required" }}
-        value={test.category2 || ""}
+        value={test.category2}
         multiSelect={false}
-      // onChange={(val) => {
-      //   test.category2 = val.toString();
-      // }}
+        onChange={(val) => {
+          console.log("val : ", val);
+          test.category2 = val;
+        }}
       />
+
+      //   <TypeSelect
+      //   className="w-full"
+      //   control={control}
+      //   name="performers"
+      //   multiSelect={true}
+      //   value={
+      //     typeof SelectedPoojaService.value?.performers ===
+      //     "string"
+      //       ? SelectedPoojaService.value.performers.split(",")
+      //       : (SelectedPoojaService.value
+      //           ?.performers as string[]) || []
+      //   }
+      //   options={PerformersList.value?.map(
+      //     (v: PerformersType) => ({
+      //       label: v.name,
+      //       key: v._id,
+      //       // active: true,
+      //       didable: false,
+      //     })
+      //   )}
+      //   error={errors.performers}
+      // />
     );
   };
+
+  const ComponentToggle = () => (
+    <div className="flex items-center gap-2">
+      <label htmlFor="toggleDefault">Use Default</label>
+      <input
+        id="toggleDefault"
+        type="checkbox"
+        checked={isToggleOn}
+        onChange={(e) => {
+          const checked = e.target.checked;
+          setIsToggleOn(checked);
+          if (checked) {
+            setTest({ ...LoadedTest });
+            reset({ ...LoadedTest });
+          } else {
+            setTest({ ...DefaultTest });
+            reset({ ...DefaultTest });
+          }
+        }}
+      />
+    </div>
+  );
 
   return (
     <>
       <ArticleLayout>
-        <h3>Test Form</h3>
+        <div className="flex flex-row justify-between gap-4">
+          <h3>Test Form</h3>
+          <div className="flex flex-row gap-4">
+            <ComponentToggle />
+            <ComponentSubmit />
+            <ComponentCancel />
+          </div>
+        </div>
       </ArticleLayout>
       <ContentLayout>
         <form>
-          <div className="flex flex-col gap-4">
-            {ComponentName()}
-            {ComponentEventDate()}
-            {ComponentCategory()}
-            {ComponentCategorySingle()}
-            <TypeInputLang
-              control={control}
-              label="Country Name"
-              name="countryName"
-              rules={{ required: true }}
-              value={test.lang}
-              onChange={(values) => console.log(values)}
-            />
-            <div className="flex flex-row gap-4">
-              <ComponentSubmit />
-              <ComponentCancel />
+          <div className="flex flex-col justify-between md:flex-row gap-10">
+            <div className="flex flex-col gap-4">
+              {ComponentName()}
+              {ComponentEventDate()}
+              {ComponentCategory()}
+              {ComponentCategorySingle()}
+              <TypeInputLang
+                control={control}
+                label="Lang"
+                name={"lang"}
+                rules={{ required: true }}
+                value={test.lang}
+                onChange={(values) => console.log(values)}
+              />
             </div>
             <div className="flex flex-row gap-4">
               <pre className="text-sm">{JSON.stringify(test, null, 2)}</pre>
-              <pre className="text-sm">
-                {new Date(
-                  test.eventDate || new Date().toISOString(),
-                )?.toLocaleString()}
-              </pre>
             </div>
           </div>
         </form>

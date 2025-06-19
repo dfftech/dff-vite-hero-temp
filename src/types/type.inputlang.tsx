@@ -43,14 +43,14 @@ export const TypeInputLang = ({
   useSignals();
 
   const [langValues, setLangValues] = useState<TranslationType>(
-    value as TranslationType || {},
+    (value as TranslationType) || {}
   );
   const [translatingLang, setTranslatingLang] =
     useState<SupportedLanguagesType | null>(null);
 
   const currentLang = SessionLang.value as SupportedLanguagesType;
   const supportedLanguages: SupportedLanguagesType[] = languages.map(
-    (lang) => lang.code,
+    (lang) => lang.code
   );
 
   useEffect(() => {
@@ -59,13 +59,15 @@ export const TypeInputLang = ({
         ...acc,
         [lang]: "",
       }),
-      {} as TranslationType,
+      {} as TranslationType
     );
     console.log("initialValues ::", initialValues, value);
 
     if (!value) {
-
       setLangValues(initialValues as TranslationType);
+      console.log("initialValues ::", initialValues);
+    } else {
+      setLangValues(value as TranslationType);
     }
   }, [value]);
 
@@ -79,7 +81,7 @@ export const TypeInputLang = ({
       const translatedText = await LangText(
         sourceText,
         currentLang,
-        targetLang,
+        targetLang
       );
       const newValues = {
         ...langValues,
@@ -103,7 +105,7 @@ export const TypeInputLang = ({
   const handleInputChange = (
     lang: SupportedLanguagesType,
     newValue: string,
-    field?: any,
+    field?: any
   ) => {
     const newValues = {
       ...langValues,
@@ -120,7 +122,7 @@ export const TypeInputLang = ({
   };
 
   const otherLanguages = supportedLanguages.filter(
-    (lang) => lang !== currentLang,
+    (lang) => lang !== currentLang
   );
 
   return (

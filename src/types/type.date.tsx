@@ -1,6 +1,10 @@
 import { Controller } from "react-hook-form";
 import { DatePicker } from "@heroui/date-picker";
-import { CalendarDateTime, getLocalTimeZone, parseAbsoluteToLocal } from "@internationalized/date";
+import {
+  CalendarDateTime,
+  getLocalTimeZone,
+  parseAbsoluteToLocal,
+} from "@internationalized/date";
 import { useEffect, useState } from "react";
 
 import { t } from "@/i18n";
@@ -9,7 +13,7 @@ type TypeDateProps = {
   control: any;
   name: string;
   label?: string | undefined | null;
-  value?: any;
+  value?: Date;
   rules?: any;
   error?: any;
   className?: string;
@@ -36,7 +40,9 @@ export const TypeDate = ({
 
   useEffect(() => {
     console.log(value);
-    setDateValue(value ? new Date(value).toISOString() : new Date().toISOString());
+    setDateValue(
+      value ? new Date(value).toISOString() : new Date().toISOString()
+    );
   }, [value]);
 
   return (
@@ -48,7 +54,9 @@ export const TypeDate = ({
       )}
       <Controller
         control={control}
-        defaultValue={parseAbsoluteToLocal(dateValue || new Date().toISOString())}
+        defaultValue={parseAbsoluteToLocal(
+          dateValue || new Date().toISOString()
+        )}
         name={name}
         render={({ field }: any) => (
           <DatePicker
