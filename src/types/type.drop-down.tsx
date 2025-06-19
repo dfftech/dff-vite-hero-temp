@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/react";
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@heroui/react";
 
 interface DropDownProps {
   className?: string;
@@ -17,23 +22,18 @@ const TypeDropDown: React.FC<DropDownProps> = ({
   const [selectedValue, setSelectedValue] = useState<string>("");
 
   const handleSelect = (value: string) => {
-    const foundItem = items.find(item => item.value === value);
+    const foundItem = items.find((item) => item.value === value);
+
     setSelectedValue(foundItem?.label as string);
     onSelect(value);
   };
 
   return (
     <Dropdown className={className}>
-      <DropdownTrigger>
-        {selectedValue || placeholder}
-      </DropdownTrigger>
-      <DropdownMenu
-        onAction={(key) => handleSelect(key as string)}
-      >
+      <DropdownTrigger>{selectedValue || placeholder}</DropdownTrigger>
+      <DropdownMenu onAction={(key) => handleSelect(key as string)}>
         {items.map((item) => (
-          <DropdownItem key={item.value}>
-            {item.label}
-          </DropdownItem>
+          <DropdownItem key={item.value}>{item.label}</DropdownItem>
         ))}
       </DropdownMenu>
     </Dropdown>

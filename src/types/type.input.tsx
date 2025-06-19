@@ -1,6 +1,5 @@
 import { Controller } from "react-hook-form";
 import { Input, Textarea } from "@heroui/react";
-import { useEffect, useState } from "react";
 
 import { t } from "@/i18n";
 
@@ -8,7 +7,6 @@ type TypeProps = {
   control: any;
   name: string;
   label?: string | undefined | null;
-  value?: string | number | undefined;
   rules?: any;
   error?: any;
   className?: string;
@@ -20,7 +18,7 @@ type TypeProps = {
   | "textarea"
   | "time";
   disabled?: boolean;
-  radius?: "full" | "none" | "sm" | "md" | "lg" | undefined;
+  radius?: "full" | "none" | "sm" | "md" | "lg";
   onChange?: (value: any) => void;
 };
 
@@ -28,7 +26,6 @@ export const TypeInput = ({
   control,
   name,
   label,
-  value = "",
   rules = {},
   error,
   className = "flex flex-col w-full",
@@ -37,12 +34,6 @@ export const TypeInput = ({
   onChange,
   radius = "full",
 }: TypeProps) => {
-  const [inputValue, setInputValue] = useState<string | number | undefined>("");
-
-  useEffect(() => {
-    setInputValue(value);
-  }, [value]);
-
   return (
     <section className={className}>
       {label && (
@@ -50,20 +41,24 @@ export const TypeInput = ({
           {label} {rules.required && <span className="text-red-500">*</span>}
         </label>
       )}
+
       <Controller
         control={control}
-        defaultValue={inputValue}
+        defaultValue={type === "number" ? 0 : ""}
         name={name}
-        render={({ field }: any) =>
+        render={({ field }) =>
           type === "textarea" ? (
             <Textarea
               {...field}
               className={className}
               disabled={disabled}
               radius={radius}
+              value={field.value || ""}
               onChange={(e) => {
-                field.onChange(e.target.value);
-                if (onChange) onChange(e.target.value);
+                const val = e.target.value;
+
+                field.onChange(val);
+                onChange?.(val);
               }}
             />
           ) : (
@@ -73,18 +68,23 @@ export const TypeInput = ({
               disabled={disabled}
               radius={radius}
               type={type}
+              value={field.value ?? ""}
               onChange={(e) => {
-                field.onChange(
-                  type === "number" ? Number(e.target.value) : e.target.value,
-                );
-                if (onChange) onChange(e.target.value);
+                const val =
+                  type === "number" ? Number(e.target.value) : e.target.value;
+
+                field.onChange(val);
+                onChange?.(val);
               }}
             />
           )
         }
         rules={rules}
       />
+
       {error && <p className="text-red-500 text-sm">{t(error.message)}</p>}
     </section>
   );
 };
+
+export default TypeInput;

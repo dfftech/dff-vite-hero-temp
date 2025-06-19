@@ -7,15 +7,15 @@ import { OptionType } from "dff-util";
 
 import { TestType } from "./common/types";
 import { TestValidation } from "./common/validation";
+import { DefaultTest, LoadedTest, onCountryLoad } from "./common/service";
 
 import TypeButton from "@/types/type.button";
 import { TypeInput } from "@/types/type.input";
 import { ContentLayout } from "@/layouts/content-layout";
 import { ArticleLayout } from "@/layouts/article-layout";
 import TypeDatePicker from "@/types/type.date";
-import { TypeSelect } from "@/types/type.select"; // <-- make sure this path is correct
-import TypeInputLang from "@/types/type.inputlang";
-import { DefaultTest, LoadedTest } from "./common/service";
+import TypeLang from "@/types/type.lang";
+import { TypeSelect } from "@/types/type.select";
 
 const isSubmitLoading = signal(false);
 
@@ -42,7 +42,6 @@ export default function TestFormPage() {
 
   const onDefaultTest = () => {
     setTest({} as TestType);
-    console.log("test : ", test);
   };
 
   const onResetTest = () => {
@@ -50,15 +49,11 @@ export default function TestFormPage() {
   };
 
   const onSubmitTest = async (data: TestType) => {
-    data.eventDate = (data.eventDate as any).toDate();
-    console.log("data : ", data);
     setTest(data);
-    console.log("data test : ", data);
-    console.log("test : ", test);
   };
 
   const onCancel = () => {
-    console.log("cancel");
+    onResetTest();
   };
 
   const ComponentSubmit = () => (
@@ -87,7 +82,6 @@ export default function TestFormPage() {
       label={t("name")}
       name={"name"}
       rules={testRule.name}
-      value={test.name || ""}
     />
   );
 
@@ -100,119 +94,19 @@ export default function TestFormPage() {
       label="Event Date"
       name="eventDate"
       rules={{ required: "Event date is required" }}
-      value={test.eventDate}
     />
   );
-
-  const ComponentCategory = () => {
-    const categoryOptions: OptionType[] = [
-      { label: "Technology", key: "tech", disabled: false },
-      { label: "Science", key: "sci", disabled: false },
-      { label: "Mathematics", key: "math", disabled: false },
-    ];
-
-    return (
-      <TypeSelect
-        className="w-full"
-        control={control}
-        error={errors["category"]}
-        label="Category"
-        name="category"
-        options={categoryOptions}
-        rules={{ required: "Category is required" }}
-        value={
-          typeof test.category === "string"
-            ? test.category.split(",")
-            : (test.category as string[]) || []
-        }
-        multiSelect={true}
-        onChange={(val) => {
-          test.category = val;
-        }}
-      />
-      //   <TypeSelect
-      //   className="w-full"
-      //   control={control}
-      //   name="performers"
-      //   multiSelect={true}
-      //   value={
-      //     typeof SelectedPoojaService.value?.performers ===
-      //     "string"
-      //       ? SelectedPoojaService.value.performers.split(",")
-      //       : (SelectedPoojaService.value
-      //           ?.performers as string[]) || []
-      //   }
-      //   options={PerformersList.value?.map(
-      //     (v: PerformersType) => ({
-      //       label: v.name,
-      //       key: v._id,
-      //       // active: true,
-      //       didable: false,
-      //     })
-      //   )}
-      //   error={errors.performers}
-      // />
-    );
-  };
-
-  const ComponentCategorySingle = () => {
-    const categoryOptions: OptionType[] = [
-      { label: "Technology", key: "tech", disabled: false },
-      { label: "Science", key: "sci", disabled: false },
-      { label: "Mathematics", key: "math", disabled: false },
-    ];
-
-    return (
-      <TypeSelect
-        className="w-full"
-        control={control}
-        error={errors["category"]}
-        label="CategoryWithSingleSelection"
-        name="category2"
-        options={categoryOptions}
-        rules={{ required: "Category is required" }}
-        value={test.category2}
-        multiSelect={false}
-        onChange={(val) => {
-          console.log("val : ", val);
-          test.category2 = val;
-        }}
-      />
-
-      //   <TypeSelect
-      //   className="w-full"
-      //   control={control}
-      //   name="performers"
-      //   multiSelect={true}
-      //   value={
-      //     typeof SelectedPoojaService.value?.performers ===
-      //     "string"
-      //       ? SelectedPoojaService.value.performers.split(",")
-      //       : (SelectedPoojaService.value
-      //           ?.performers as string[]) || []
-      //   }
-      //   options={PerformersList.value?.map(
-      //     (v: PerformersType) => ({
-      //       label: v.name,
-      //       key: v._id,
-      //       // active: true,
-      //       didable: false,
-      //     })
-      //   )}
-      //   error={errors.performers}
-      // />
-    );
-  };
 
   const ComponentToggle = () => (
     <div className="flex items-center gap-2">
       <label htmlFor="toggleDefault">Use Default</label>
       <input
+        checked={isToggleOn}
         id="toggleDefault"
         type="checkbox"
-        checked={isToggleOn}
         onChange={(e) => {
           const checked = e.target.checked;
+
           setIsToggleOn(checked);
           if (checked) {
             setTest({ ...LoadedTest });
@@ -226,8 +120,72 @@ export default function TestFormPage() {
     </div>
   );
 
+  const ComponentLang = () => (
+    <TypeLang
+      control={control}
+      error={errors["lang"]}
+      label="Lang"
+      name={"lang"}
+      rules={{ required: true }}
+      type="textarea"
+    />
+  );
+
+  const ComponentCountry = () => {
+    const [countryList, setCountryList] = React.useState<OptionType[]>([]);
+    const countryLoad = async () => {
+      const resp = await onCountryLoad(`\loadcountry`);
+
+      setCountryList(resp || []);
+    };
+
+    React.useEffect(() => {
+      countryLoad();
+    }, []);
+
+    return (
+      <TypeSelect
+        control={control}
+        disabled={false}
+        error={errors["country"]}
+        label={t("country")}
+        multiSelect={false}
+        name={"country"}
+        options={countryList}
+        rules={testRule.country}
+      />
+    );
+  };
+
+
+  const ComponentCountries = () => {
+    const [countryList, setCountryList] = React.useState<OptionType[]>([]);
+    const countryLoad = async () => {
+      const resp = await onCountryLoad(`\loadcountry`);
+
+      setCountryList(resp || []);
+    };
+
+    React.useEffect(() => {
+      countryLoad();
+    }, []);
+
+    return (
+      <TypeSelect
+        control={control}
+        disabled={false}
+        error={errors["countries"]}
+        label={t("countries")}
+        multiSelect={true}
+        name={"countries"}
+        options={countryList}
+        rules={testRule.country}
+      />
+    );
+  };
+
   return (
-    <>
+    <section className="w-full">
       <ArticleLayout>
         <div className="flex flex-row justify-between gap-4">
           <h3>Test Form</h3>
@@ -240,20 +198,13 @@ export default function TestFormPage() {
       </ArticleLayout>
       <ContentLayout>
         <form>
-          <div className="flex flex-col justify-between md:flex-row gap-10">
+          <div className="flex flex-col justify-between md:flex-row gap-4 w-full">
             <div className="flex flex-col gap-4">
               {ComponentName()}
               {ComponentEventDate()}
-              {ComponentCategory()}
-              {ComponentCategorySingle()}
-              <TypeInputLang
-                control={control}
-                label="Lang"
-                name={"lang"}
-                rules={{ required: true }}
-                value={test.lang}
-                onChange={(values) => console.log(values)}
-              />
+              {ComponentCountry()}
+              {ComponentCountries()}
+              {ComponentLang()}
             </div>
             <div className="flex flex-row gap-4">
               <pre className="text-sm">{JSON.stringify(test, null, 2)}</pre>
@@ -261,6 +212,6 @@ export default function TestFormPage() {
           </div>
         </form>
       </ContentLayout>
-    </>
+    </section>
   );
 }

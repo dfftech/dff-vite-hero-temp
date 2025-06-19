@@ -1,33 +1,26 @@
 import { Controller } from "react-hook-form";
 import { DatePicker } from "@heroui/date-picker";
-import {
-  CalendarDateTime,
-  getLocalTimeZone,
-  parseAbsoluteToLocal,
-} from "@internationalized/date";
-import { useEffect, useState } from "react";
+import { getLocalTimeZone, parseAbsolute } from "@internationalized/date";
 
 import { t } from "@/i18n";
 
 type TypeDateProps = {
   control: any;
   name: string;
-  label?: string | undefined | null;
-  value?: Date;
+  label?: string;
   rules?: any;
   error?: any;
   className?: string;
   disabled?: boolean;
-  radius?: "full" | "none" | "sm" | "md" | "lg" | undefined;
+  radius?: "full" | "none" | "sm" | "md" | "lg";
   isDateTimeEnabled?: boolean;
-  onChange?: (value: any) => void;
+  onChange?: (value: Date) => void;
 };
 
 export const TypeDate = ({
   control,
   name,
   label,
-  value,
   rules = {},
   error,
   className = "flex flex-col w-full",
@@ -36,45 +29,59 @@ export const TypeDate = ({
   isDateTimeEnabled = false,
   onChange,
 }: TypeDateProps) => {
-  const [dateValue, setDateValue] = useState<string>();
+  const localTZ = getLocalTimeZone();
 
-  useEffect(() => {
-    console.log(value);
-    setDateValue(
-      value ? new Date(value).toISOString() : new Date().toISOString()
-    );
-  }, [value]);
+  const normalizeToDateValue = (input: any) => {
+    try {
+      if (input && typeof input === "object" && "toDate" in input) {
+        return input; // Already a DateValue
+      } else if (input instanceof Date) {
+        return parseAbsolute(input.toISOString(), localTZ);
+      } else if (typeof input === "string") {
+        return parseAbsolute(input, localTZ);
+      } else {
+        return parseAbsolute(new Date().toISOString(), localTZ);
+      }
+    } catch (e) {
+      return parseAbsolute(new Date().toISOString(), localTZ);
+    }
+  };
 
   return (
     <section className={className}>
       {label && (
         <label className="text-sm font-medium p-2">
-          {label} {rules.required && <span className="text-red-500">*</span>}
+          {label}
+          {rules.required && <span className="text-red-500 ml-1">*</span>}
         </label>
       )}
+
       <Controller
         control={control}
-        defaultValue={parseAbsoluteToLocal(
-          dateValue || new Date().toISOString()
-        )}
+        defaultValue={parseAbsolute(new Date().toISOString(), localTZ)}
         name={name}
-        render={({ field }: any) => (
-          <DatePicker
-            {...field}
-            showMonthAndYearPickers
-            className={className}
-            disabled={disabled}
-            hideTimeZone={!isDateTimeEnabled}
-            radius={radius}
-            onChange={(value: CalendarDateTime) => {
-              const date = value.toDate(getLocalTimeZone());
-              field.onChange(parseAbsoluteToLocal(date.toISOString()));
-              if (onChange) onChange(date);
-            }}
-          />
-        )}
+        render={({ field }) => {
+          const safeValue = normalizeToDateValue(field.value);
+
+          return (
+            <DatePicker
+              showMonthAndYearPickers
+              className={className}
+              hideTimeZone={!isDateTimeEnabled}
+              isDisabled={disabled}
+              radius={radius}
+              value={safeValue}
+              onChange={(calendarDateTime: any) => {
+                const jsDate = calendarDateTime?.toDate?.(localTZ);
+                field.onChange(jsDate);
+                if (onChange) onChange(jsDate);
+              }}
+            />
+          );
+        }}
         rules={rules}
       />
+
       {error && <p className="text-red-500 text-sm">{t(error.message)}</p>}
     </section>
   );

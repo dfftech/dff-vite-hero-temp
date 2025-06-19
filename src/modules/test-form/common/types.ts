@@ -1,7 +1,7 @@
 export type TestType = {
-  category2: string;
-  category: string[];
-  eventDate?: Date;
+  country: string;
+  countries: string[];
+  eventDate?: string;
   name: string;
   lang: Record<string, string>;
 };
