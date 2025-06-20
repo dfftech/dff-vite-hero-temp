@@ -22,6 +22,7 @@ import TypeLang from "@/types/type.lang";
 import { TypeSelect } from "@/types/type.select";
 import { TypeCheck } from "@/types/type.check";
 import { TypeSwitch } from "@/types/type.switch";
+import { TypeList } from "@/types/type.list";
 
 const isSubmitLoading = signal(false);
 
@@ -114,6 +115,19 @@ export default function TestFormPage() {
     [],
   );
 
+  const listCountryProps = useMemo(
+    () => ({
+      control: control,
+      label: "Countries",
+      name: "countries",
+      options: countryOptions.value,
+      rules: testRule?.countries,
+      selectionMode: "multiple" as const,
+    }),
+    [countryOptions.value],
+  );
+
+
   const ComponentToggle = () => (
     <div className="flex items-center gap-2">
       <label htmlFor="toggleDefault">Use Default</label>
@@ -145,7 +159,7 @@ export default function TestFormPage() {
       label: "Lang",
       name: "lang",
       rules: { required: true },
-      type: "textarea" as const,
+      type: "text" as const,
     }),
     [errors.lang],
   );
@@ -165,7 +179,7 @@ export default function TestFormPage() {
   );
 
   return (
-    <section className="w-full overflow-y-auto">
+    <section className="w-full overflow-y-auto mb-8">
       <ArticleLayout>
         <div className="flex flex-row justify-between gap-4">
           <h3>Test Form</h3>
@@ -185,6 +199,7 @@ export default function TestFormPage() {
               <TypeSwitch {...termsAcceptedProps} />
               <TypeDatePicker {...eventDateProps} />
               <TypeSelect {...countryProps} />
+              <TypeList {...listCountryProps} />
               <TypeLang {...langProps} />
             </div>
             <div className="flex flex-row gap-4">

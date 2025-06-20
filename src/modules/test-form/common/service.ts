@@ -38,6 +38,56 @@ const counties: OptionType[] = [
       "ar-SA": "المملكة المتحدة",
     },
   },
+  {
+    label: "Canada",
+    key: "CA",
+    disabled: false,
+    lang: {
+      "en-US": "Canada",
+      "te-IN": "కానడా",
+      "ar-SA": "كندا",
+    },
+  },
+  {
+    label: "Australia",
+    key: "AU",
+    disabled: false,
+    lang: {
+      "en-US": "Australia",
+      "te-IN": "ఆస్ట్రాలియా",
+      "ar-SA": "أستراليا",
+    },
+  },
+  {
+    label: "New Zealand",
+    key: "NZ",
+    disabled: false,
+    lang: {
+      "en-US": "New Zealand",
+      "te-IN": "న్యూజీ",
+      "ar-SA": "جزر نيوزيلاند",
+    },
+  },
+  {
+    label: "South Africa",
+    key: "ZA",
+    disabled: false,
+    lang: {
+      "en-US": "South Africa",
+      "te-IN": "సోమీ అఫ్రికా",
+      "ar-SA": "جنوب أفريقيا",
+    },
+  },
+  {
+    label: "Russia",
+    key: "RU",
+    disabled: false,
+    lang: {
+      "en-US": "Russia",
+      "te-IN": "రుసీ",
+      "ar-SA": "روسيا",
+    },
+  },
 ];
 
 export const testDefaultValue = {
