@@ -15,14 +15,14 @@ export default class AppHttp {
 
     return this.instance;
   }
-  static async Load(id: string, params: Record<string, string | number | boolean>) {
+  static async Load(id: string, params?: Record<string, string | number | boolean>) {
     const headers = {
       ...HttpHeaders,
       ["Content-Type"]: "application/json",
       authorization: AppStorage.getData(TOKEN, true),
     };
 
-    return await Http.Get(`${MsUrl.sor}${ApiUrl.load}${id}`, params, headers);
+    return await Http.Get(`${MsUrl.sor}${ApiUrl.load}/${id}`, params, headers);
   }
 
   static async Get(url: string, params: Record<string, string | number | boolean>) {

@@ -14,6 +14,8 @@ import { SessionLang } from "@/utils/services/app.event";
 import { languages } from "@/i18n";
 import { t } from "@/i18n";
 
+export type LangTypeProps = "text" | "textarea";
+
 type TypeInputLangProps = {
   control: any;
   name: string;

@@ -4,26 +4,18 @@ import { Controller } from "react-hook-form";
 type TypeProps = {
   control: any;
   name: string;
-  label?: string | undefined | null;
-  value?: boolean;
-  rules?: any;
-  error?: any;
+  label?: string;
   className?: string;
-  type?: "before" | "after";
   variant?: "square" | "circular";
   disabled?: boolean;
-  radius?: "full" | "none" | "sm" | "md" | "lg" | undefined;
+  radius?: "full" | "none" | "sm" | "md" | "lg";
 };
 
-export const TypeCheckbox = ({
+export const TypeCheck = ({
   control,
   name,
   label,
-  value = false,
-  rules = {},
-  className = "flex flex-col w-full",
-  type = "after",
-  variant = "square",
+  className = "flex w-full",
   disabled = false,
   radius = "none",
 }: TypeProps) => {
@@ -31,21 +23,19 @@ export const TypeCheckbox = ({
     <section className={className}>
       <Controller
         control={control}
-        defaultValue={value}
         name={name}
-        render={({ field }: any) => (
+        render={({ field }) => (
           <Checkbox
             {...field}
-            checked={field.value}
+            isSelected={field.value || false}
             className={className}
             disabled={disabled}
-            label={label}
-            labelPosition={type}
-            shape={variant}
             radius={radius}
-            />
+            onValueChange={(checked: boolean) => field.onChange(checked)}
+          >
+            {label}
+          </Checkbox>
         )}
-        rules={rules}
       />
     </section>
   );

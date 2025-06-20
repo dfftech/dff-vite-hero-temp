@@ -1,4 +1,11 @@
-import { OptionType } from "dff-util";
+/* eslint-disable import/order */
+/* eslint-disable padding-line-between-statements */
+import { ConstMessages, OptionType } from "dff-util";
+import { signal } from "@preact/signals-react";
+import { ShowToast } from "@/utils/services/app.event";
+import AppHttp, { ApiUrl, MsUrl } from "@/utils/services/app.http";
+
+import { TestType } from "./types";
 
 const counties: OptionType[] = [
   {
@@ -33,21 +40,13 @@ const counties: OptionType[] = [
   },
 ];
 
-import { TestType } from "./types";
+export const testDefaultValue = {
+  name: null,
+} as unknown as TestType;
 
-export const DefaultTest: TestType = {
-  name: "",
-  countries: [],
-  country: "",
-  lang: {
-    "en-US": "",
-    "te-IN": "",
-    "ar-SA": "",
-  },
-};
-
-export const LoadedTest: TestType = {
+export const testDataValue: TestType = {
   name: "John Doe",
+  termsAccepted: true,
   eventDate: "2000-06-19T12:25:43.197Z",
   countries: ["IN", "US"],
   country: "IN",
@@ -58,8 +57,23 @@ export const LoadedTest: TestType = {
   },
 };
 
-export const onCountryLoad = async (url: string) => {
-  console.log("onCountryLoad", url);
+// export const onCountryLoad = async (url: string) => {
+//   console.log("onCountryLoad", url);
 
-  return Promise.resolve(counties);
+//   return Promise.resolve(counties);
+// };
+
+export const countryIsLoading = signal<boolean>(false);
+export const countryOptions = signal<OptionType[]>([]);
+export const countryLoadCall = async (id: string, params?: Record<string, string>) => {
+  try {
+    console.log(id, params);
+    countryIsLoading.value = true;
+    countryOptions.value = counties;
+  } catch (error: any) {
+    const message = error?.error?.message || ConstMessages.WENT_WRONG;
+    ShowToast(message, "warning");
+  } finally {
+    countryIsLoading.value = false;
+  }
 };

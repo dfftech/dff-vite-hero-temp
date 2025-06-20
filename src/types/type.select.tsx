@@ -2,6 +2,7 @@ import { Controller } from "react-hook-form";
 import { Select, SelectItem } from "@heroui/select";
 import { useSignals } from "@preact/signals-react/runtime";
 import { OptionType } from "dff-util";
+
 import { trans } from "@/i18n";
 
 type TypeProps = {
@@ -46,7 +47,6 @@ export const TypeSelect = ({
       <Controller
         control={control}
         name={name}
-        rules={rules}
         render={({ field }) => {
           const value = field.value
             ? Array.isArray(field.value)
@@ -59,16 +59,18 @@ export const TypeSelect = ({
               className={className}
               disabled={disabled}
               radius={radius}
-              selectionMode={multiSelect ? "multiple" : "single"}
               selectedKeys={value}
+              selectionMode={multiSelect ? "multiple" : "single"}
               variant={variant}
               onSelectionChange={(selected: any) => {
                 if (multiSelect) {
                   const selectedKeys = Array.from(selected);
+
                   field.onChange(selectedKeys);
                   onChange?.(selectedKeys);
                 } else {
                   const selectedKey = selected?.currentKey ?? selected;
+
                   field.onChange(selectedKey);
                   onChange?.(selectedKey);
                 }
@@ -82,6 +84,7 @@ export const TypeSelect = ({
             </Select>
           );
         }}
+        rules={rules}
       />
       {error && <p className="text-xs text-red-500 mt-1">{error.message}</p>}
     </section>

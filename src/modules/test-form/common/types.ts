@@ -4,4 +4,5 @@ export type TestType = {
   eventDate?: string;
   name: string;
   lang: Record<string, string>;
+  termsAccepted: boolean;
 };

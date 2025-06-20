@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useSignals } from "@preact/signals-react/runtime";
-import { signal } from "@preact/signals-react";
+import { signal, useSignal } from "@preact/signals-react";
 import { useTranslation } from "react-i18next";
-import { OptionType } from "dff-util";
 
 import { TestType } from "./common/types";
 import { TestValidation } from "./common/validation";
-import { DefaultTest, LoadedTest, onCountryLoad } from "./common/service";
+import {
+  testDefaultValue,
+  testDataValue,
+  countryOptions,
+  countryLoadCall,
+} from "./common/service";
 
 import TypeButton from "@/types/type.button";
 import { TypeInput } from "@/types/type.input";
@@ -16,6 +20,8 @@ import { ArticleLayout } from "@/layouts/article-layout";
 import TypeDatePicker from "@/types/type.date";
 import TypeLang from "@/types/type.lang";
 import { TypeSelect } from "@/types/type.select";
+import { TypeCheck } from "@/types/type.check";
+import { TypeSwitch } from "@/types/type.switch";
 
 const isSubmitLoading = signal(false);
 
@@ -24,7 +30,7 @@ export default function TestFormPage() {
 
   useSignals();
   const testRule = TestValidation;
-  const [test, setTest] = React.useState<TestType>({} as TestType);
+  const test = useSignal<TestType>({ ...testDefaultValue });
 
   const [isToggleOn, setIsToggleOn] = React.useState(false);
 
@@ -36,65 +42,76 @@ export default function TestFormPage() {
   } = useForm<TestType>({});
 
   React.useEffect(() => {
-    onDefaultTest();
+    countryLoadCall("load-country");
+    test.value = testDefaultValue;
     onResetTest();
   }, []);
 
-  const onDefaultTest = () => {
-    setTest({} as TestType);
-  };
-
   const onResetTest = () => {
-    reset({ ...test });
+    reset({ ...test.value });
   };
 
   const onSubmitTest = async (data: TestType) => {
-    setTest(data);
+    test.value = data;
   };
 
   const onCancel = () => {
     onResetTest();
   };
 
-  const ComponentSubmit = () => (
-    <TypeButton
-      isLoading={isSubmitLoading.value}
-      label="Submit"
-      name="SendHorizontal"
-      onPress={handleSubmit(onSubmitTest)}
-    />
+  const submitProps = useMemo(
+    () => ({
+      isLoading: isSubmitLoading.value,
+      label: "Submit",
+      name: "SendHorizontal" as const,
+      onPress: handleSubmit(onSubmitTest),
+    }),
+    [],
   );
 
-  const ComponentCancel = () => (
-    <TypeButton
-      action="secondary"
-      label="Cancel"
-      name="CircleX"
-      onPress={onCancel}
-    />
+  const cancelProps = useMemo(
+    () => ({
+      isLoading: isSubmitLoading.value,
+      label: "Cancel",
+      name: "CircleX" as const,
+      onPress: onCancel,
+    }),
+    [],
   );
 
-  const ComponentName = () => (
-    <TypeInput
-      control={control}
-      disabled={false}
-      error={errors["name"]}
-      label={t("name")}
-      name={"name"}
-      rules={testRule.name}
-    />
+  const nameProps = useMemo(
+    () => ({
+      control: control,
+      disabled: false,
+      error: errors.name,
+      label: t("name"),
+      multiSelect: false,
+      name: "name",
+      rules: testRule?.name,
+    }),
+    [errors.name],
   );
 
-  const ComponentEventDate = () => (
-    <TypeDatePicker
-      className="w-full"
-      control={control}
-      error={errors["eventDate"]}
-      isDateTimeEnabled={true}
-      label="Event Date"
-      name="eventDate"
-      rules={{ required: "Event date is required" }}
-    />
+  const eventDateProps = useMemo(
+    () => ({
+      className: "w-full",
+      control: control,
+      error: errors["eventDate"],
+      isDateTimeEnabled: true,
+      label: "Event Date",
+      name: "eventDate",
+      rules: { required: "Event date is required" },
+    }),
+    [errors.eventDate],
+  );
+
+  const termsAcceptedProps = useMemo(
+    () => ({
+      control: control,
+      label: "Terms Accepted",
+      name: "termsAccepted",
+    }),
+    [],
   );
 
   const ComponentToggle = () => (
@@ -109,90 +126,53 @@ export default function TestFormPage() {
 
           setIsToggleOn(checked);
           if (checked) {
-            setTest({ ...LoadedTest });
-            reset({ ...LoadedTest });
+            test.value = testDataValue;
+            reset({ ...testDataValue });
           } else {
-            setTest({ ...DefaultTest });
-            reset({ ...DefaultTest });
+            test.value = testDefaultValue;
+            reset({ ...testDefaultValue } as TestType);
           }
         }}
       />
     </div>
   );
 
-  const ComponentLang = () => (
-    <TypeLang
-      control={control}
-      error={errors["lang"]}
-      label="Lang"
-      name={"lang"}
-      rules={{ required: true }}
-      type="textarea"
-    />
+  const langProps = useMemo(
+    () => ({
+      control: control,
+      disabled: false,
+      error: errors["lang"],
+      label: "Lang",
+      name: "lang",
+      rules: { required: true },
+      type: "textarea" as const,
+    }),
+    [errors.lang],
   );
 
-  const ComponentCountry = () => {
-    const [countryList, setCountryList] = React.useState<OptionType[]>([]);
-    const countryLoad = async () => {
-      const resp = await onCountryLoad(`\loadcountry`);
-
-      setCountryList(resp || []);
-    };
-
-    React.useEffect(() => {
-      countryLoad();
-    }, []);
-
-    return (
-      <TypeSelect
-        control={control}
-        disabled={false}
-        error={errors["country"]}
-        label={t("country")}
-        multiSelect={false}
-        name={"country"}
-        options={countryList}
-        rules={testRule.country}
-      />
-    );
-  };
-
-
-  const ComponentCountries = () => {
-    const [countryList, setCountryList] = React.useState<OptionType[]>([]);
-    const countryLoad = async () => {
-      const resp = await onCountryLoad(`\loadcountry`);
-
-      setCountryList(resp || []);
-    };
-
-    React.useEffect(() => {
-      countryLoad();
-    }, []);
-
-    return (
-      <TypeSelect
-        control={control}
-        disabled={false}
-        error={errors["countries"]}
-        label={t("countries")}
-        multiSelect={true}
-        name={"countries"}
-        options={countryList}
-        rules={testRule.country}
-      />
-    );
-  };
+  const countryProps = useMemo(
+    () => ({
+      control: control,
+      disabled: false,
+      error: errors.country,
+      label: t("country"),
+      multiSelect: false,
+      name: "country",
+      options: countryOptions.value,
+      rules: testRule?.country,
+    }),
+    [errors.country, countryOptions.value],
+  );
 
   return (
-    <section className="w-full">
+    <section className="w-full overflow-y-auto">
       <ArticleLayout>
         <div className="flex flex-row justify-between gap-4">
           <h3>Test Form</h3>
           <div className="flex flex-row gap-4">
             <ComponentToggle />
-            <ComponentSubmit />
-            <ComponentCancel />
+            <TypeButton {...submitProps} />
+            <TypeButton {...cancelProps} />
           </div>
         </div>
       </ArticleLayout>
@@ -200,14 +180,17 @@ export default function TestFormPage() {
         <form>
           <div className="flex flex-col justify-between md:flex-row gap-4 w-full">
             <div className="flex flex-col gap-4">
-              {ComponentName()}
-              {ComponentEventDate()}
-              {ComponentCountry()}
-              {ComponentCountries()}
-              {ComponentLang()}
+              <TypeInput {...nameProps} />
+              <TypeCheck {...termsAcceptedProps} />
+              <TypeSwitch {...termsAcceptedProps} />
+              <TypeDatePicker {...eventDateProps} />
+              <TypeSelect {...countryProps} />
+              <TypeLang {...langProps} />
             </div>
             <div className="flex flex-row gap-4">
-              <pre className="text-sm">{JSON.stringify(test, null, 2)}</pre>
+              <pre className="text-sm">
+                {JSON.stringify(test.value, null, 2)}
+              </pre>
             </div>
           </div>
         </form>
