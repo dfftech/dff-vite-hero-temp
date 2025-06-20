@@ -11,12 +11,11 @@ import {
   TranslationType,
 } from "@/utils/services/app.types";
 import { SessionLang } from "@/utils/services/app.event";
-import { languages } from "@/i18n";
-import { t } from "@/i18n";
+import { languages, t } from "@/i18n";
 
 export type LangTypeProps = "text" | "textarea";
 
-type TypeInputLangProps = {
+type TypeLangProps = {
   control: any;
   name: string;
   label?: string;
@@ -25,7 +24,7 @@ type TypeInputLangProps = {
   className?: string;
   disabled?: boolean;
   radius?: "full" | "none" | "sm" | "md" | "lg";
-  type?: "text" | "textarea";
+  type?: LangTypeProps;
   onChange?: (value: TranslationType) => void;
 };
 
@@ -40,14 +39,14 @@ export const TypeLang = ({
   radius = "full",
   type = "text",
   onChange,
-}: TypeInputLangProps) => {
-  useSignals(); // React to SessionLang signal changes
+}: TypeLangProps) => {
+  useSignals(); // Reactivity with SessionLang
 
   const [langValues, setLangValues] = useState<TranslationType>({} as any);
   const [translatingLang, setTranslatingLang] =
     useState<SupportedLanguagesType | null>(null);
 
-  const currentLang = SessionLang.value; // Reactive signal
+  const currentLang = SessionLang.value;
   const supportedLanguages: SupportedLanguagesType[] = languages.map(
     (lang) => lang.code,
   );
@@ -113,13 +112,29 @@ export const TypeLang = ({
         <div className="mb-4">
           <div className="flex items-center gap-2 p-2">
             <span className="text-xs">
-              {getLanguageName(currentLang as any)}
+              {getLanguageName(currentLang as SupportedLanguagesType)}
             </span>
           </div>
           <Controller
-            key={`lang-${currentLang}`} // 🔥 Force re-render on lang change
+            key={`${name}-${currentLang}`}
             control={control}
             name={`${name}.${currentLang}`}
+            rules={{
+              ...(rules.required
+                ? {
+                  validate: () => {
+                    const values = control?._formValues?.[name] || {};
+                    const filled = Object.values(values).some(
+                      (val) => typeof val === "string" && val.trim() !== "",
+                    );
+                    return (
+                      filled ||
+                      t(rules?.message || "At least one language is required")
+                    );
+                  },
+                }
+                : {}),
+            }}
             render={({ field }) =>
               type === "textarea" ? (
                 <Textarea
@@ -127,7 +142,7 @@ export const TypeLang = ({
                   className="w-full"
                   disabled={disabled}
                   radius={radius}
-                  value={field.value ?? getLangValue(currentLang as any)}
+                  value={field.value ?? ""}
                   onChange={(e) => {
                     const newValue = e.target.value;
 
@@ -148,7 +163,7 @@ export const TypeLang = ({
                   className="w-full"
                   disabled={disabled}
                   radius={radius}
-                  value={field.value ?? getLangValue(currentLang as any)}
+                  value={field.value ?? ""}
                   onChange={(e) => {
                     const newValue = e.target.value;
 
@@ -165,7 +180,6 @@ export const TypeLang = ({
                 />
               )
             }
-            rules={rules}
           />
         </div>
 
@@ -185,7 +199,7 @@ export const TypeLang = ({
                       onClick={() =>
                         handleTranslate(
                           lang,
-                          getLangValue(currentLang as any),
+                          getLangValue(currentLang as SupportedLanguagesType),
                           field.onChange,
                         )
                       }
@@ -202,7 +216,7 @@ export const TypeLang = ({
                       className="w-full"
                       disabled={disabled || translatingLang === lang}
                       radius={radius}
-                      value={field.value ?? getLangValue(lang)}
+                      value={field.value ?? ""}
                       onChange={(e) => {
                         const newValue = e.target.value;
 
@@ -223,7 +237,7 @@ export const TypeLang = ({
                       className="w-full"
                       disabled={disabled || translatingLang === lang}
                       radius={radius}
-                      value={field.value ?? getLangValue(lang)}
+                      value={field.value ?? ""}
                       onChange={(e) => {
                         const newValue = e.target.value;
 
@@ -246,7 +260,13 @@ export const TypeLang = ({
         ))}
       </div>
 
-      {error && <p className="text-red-500 text-sm">{t(error.message)}</p>}
+      {error && (
+        <p className="text-red-500 text-sm mt-1">
+          {typeof error?.message === "string"
+            ? t(error.message)
+            : t("This field is required")}
+        </p>
+      )}
     </section>
   );
 };

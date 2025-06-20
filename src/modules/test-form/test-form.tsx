@@ -18,8 +18,8 @@ import TypeButton from "@/types/type.button";
 import { TypeInput } from "@/types/type.input";
 import { ContentLayout } from "@/layouts/content-layout";
 import { ArticleLayout } from "@/layouts/article-layout";
-import TypeDatePicker from "@/types/type.date";
-import TypeLang from "@/types/type.lang";
+import { TypeDate } from "@/types/type.date";
+import { TypeLang } from "@/types/type.lang";
 import { TypeSelect } from "@/types/type.select";
 import { TypeCheck } from "@/types/type.check";
 import { TypeSwitch } from "@/types/type.switch";
@@ -214,7 +214,7 @@ export default function TestForm() {
               <TypeOtp {...otpProps} />
               <TypeCheck {...termsAcceptedProps} />
               <TypeSwitch {...termsAcceptedProps} />
-              <TypeDatePicker {...eventDateProps} />
+              <TypeDate {...eventDateProps} />
               <TypeTime {...timeProps} />
               <TypeSelect {...countryProps} />
               <TypeList {...listCountryProps} />
