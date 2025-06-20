@@ -10,6 +10,7 @@ type TypeListProps = {
   rules?: any;
   error?: any;
   options: OptionType[];
+  disabled?: boolean;
   className?: string;
   selectionMode?: "single" | "multiple";
   disallowEmptySelection?: boolean;
@@ -21,6 +22,7 @@ export const TypeList = ({
   control,
   name,
   label,
+  disabled = false,
   rules = {},
   error,
   options = [],
@@ -71,7 +73,7 @@ export const TypeList = ({
                 onSelectionChange={handleSelectionChange}
               >
                 {options.map((option) => (
-                  <ListboxItem key={option.key} isReadOnly={option.disabled}>
+                  <ListboxItem key={option.key} isDisabled={disabled || option.disabled} >
                     {trans(option.lang, option.label)}
                   </ListboxItem>
                 ))}

@@ -77,7 +77,7 @@ export const TypeSelect = ({
               }}
             >
               {options.map((option: OptionType) => (
-                <SelectItem key={option.key} isReadOnly={option.disabled}>
+                <SelectItem key={option.key} isDisabled={option.disabled} >
                   {trans(option.lang, option.label)}
                 </SelectItem>
               ))}

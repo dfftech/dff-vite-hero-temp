@@ -40,4 +40,22 @@ export const TestValidation = {
       message: ConstMessages.REQUIRED,
     },
   },
+  otp: {
+    required: {
+      value: true,
+      message: ConstMessages.REQUIRED,
+    },
+  },
+  termsAccepted: {
+    required: {
+      value: true,
+      message: ConstMessages.REQUIRED,
+    },
+  },
+  time: {
+    required: {
+      value: true,
+      message: ConstMessages.REQUIRED,
+    },
+  },
 };

@@ -5,4 +5,6 @@ export type TestType = {
   name: string;
   lang: Record<string, string>;
   termsAccepted: boolean;
+  otp: string;
+  time: string;
 };
