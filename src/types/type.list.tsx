@@ -60,7 +60,7 @@ export const TypeList = ({
               const newValue = isMultiple ? selected : (selected[0] ?? "");
 
               field.onChange(newValue);
-              if (onChange) onChange(newValue);
+              if (onChange) onChange(newValue as any);
             };
 
             return (

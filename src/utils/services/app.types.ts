@@ -1,3 +1,5 @@
+import { AllLanguageCodesType } from "dff-util/dist/main/const-type";
+
 export type RolesType = "USER" | "PRACTITIONER" | "ADMIN";
 
 export type CurrencyCodeType = "INR" | "USD" | "JPY";
@@ -14,37 +16,10 @@ export type LanguageType = {
   dir: "ltr" | "rtl";
   locale: string;
 };
-export type AllLanguageCodesType = "en-US" | "kn-IN" | "ta-IN" | "hi-IN" | "te-IN" | "ar-SA";
 
 export type SupportedLanguagesType = Extract<AllLanguageCodesType, "en-US" | "te-IN" | "ar-SA">;
 
 export type TranslationType = Record<SupportedLanguagesType, string>;
-
-export type CountryType = {
-  _id: string;
-  name: string;
-  nameLocal: string;
-  googleNames: string[];
-  currencyCode: string;
-  currencyHex: string;
-  telCode: string;
-  flag: string;
-  flagUrl: string;
-  active: boolean;
-};
-
-export type FileType = {
-  filename: string;
-  mimetype: string;
-  url: string;
-  _id: string;
-};
-
-export interface SearchType {
-  query: string | number;
-}
-
-export type UnixTimestampType = number & { __brand: "UnixTimestamp" };
 
 export interface SiteInfoType {
   _id: string;

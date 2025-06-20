@@ -43,7 +43,7 @@ export const TypeLang = ({
 }: TypeInputLangProps) => {
   useSignals(); // React to SessionLang signal changes
 
-  const [langValues, setLangValues] = useState<TranslationType>({});
+  const [langValues, setLangValues] = useState<TranslationType>({} as any);
   const [translatingLang, setTranslatingLang] =
     useState<SupportedLanguagesType | null>(null);
 
@@ -112,13 +112,14 @@ export const TypeLang = ({
         {/* Current Language Input */}
         <div className="mb-4">
           <div className="flex items-center gap-2 p-2">
-            <span className="text-xs">{getLanguageName(currentLang)}</span>
+            <span className="text-xs">
+              {getLanguageName(currentLang as any)}
+            </span>
           </div>
           <Controller
             key={`lang-${currentLang}`} // 🔥 Force re-render on lang change
             control={control}
             name={`${name}.${currentLang}`}
-            rules={rules}
             render={({ field }) =>
               type === "textarea" ? (
                 <Textarea
@@ -126,9 +127,10 @@ export const TypeLang = ({
                   className="w-full"
                   disabled={disabled}
                   radius={radius}
-                  value={field.value ?? getLangValue(currentLang)}
+                  value={field.value ?? getLangValue(currentLang as any)}
                   onChange={(e) => {
                     const newValue = e.target.value;
+
                     field.onChange(newValue);
                     setLangValues((prev) => ({
                       ...prev,
@@ -146,9 +148,10 @@ export const TypeLang = ({
                   className="w-full"
                   disabled={disabled}
                   radius={radius}
-                  value={field.value ?? getLangValue(currentLang)}
+                  value={field.value ?? getLangValue(currentLang as any)}
                   onChange={(e) => {
                     const newValue = e.target.value;
+
                     field.onChange(newValue);
                     setLangValues((prev) => ({
                       ...prev,
@@ -162,6 +165,7 @@ export const TypeLang = ({
                 />
               )
             }
+            rules={rules}
           />
         </div>
 
@@ -181,7 +185,7 @@ export const TypeLang = ({
                       onClick={() =>
                         handleTranslate(
                           lang,
-                          getLangValue(currentLang),
+                          getLangValue(currentLang as any),
                           field.onChange,
                         )
                       }
@@ -201,6 +205,7 @@ export const TypeLang = ({
                       value={field.value ?? getLangValue(lang)}
                       onChange={(e) => {
                         const newValue = e.target.value;
+
                         field.onChange(newValue);
                         setLangValues((prev) => ({
                           ...prev,
@@ -221,6 +226,7 @@ export const TypeLang = ({
                       value={field.value ?? getLangValue(lang)}
                       onChange={(e) => {
                         const newValue = e.target.value;
+
                         field.onChange(newValue);
                         setLangValues((prev) => ({
                           ...prev,

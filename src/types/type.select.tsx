@@ -67,7 +67,7 @@ export const TypeSelect = ({
                   const selectedKeys = Array.from(selected);
 
                   field.onChange(selectedKeys);
-                  onChange?.(selectedKeys);
+                  onChange?.(selectedKeys as any);
                 } else {
                   const selectedKey = selected?.currentKey ?? selected;
 

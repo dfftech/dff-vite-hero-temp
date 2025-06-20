@@ -3,7 +3,6 @@
 import { ConstMessages, OptionType } from "dff-util";
 import { signal } from "@preact/signals-react";
 import { ShowToast } from "@/utils/services/app.event";
-import AppHttp, { ApiUrl, MsUrl } from "@/utils/services/app.http";
 
 import { TestType } from "./types";
 import { counties } from "./data";
