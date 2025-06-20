@@ -264,7 +264,7 @@ export const TypeLang = ({
         <p className="text-red-500 text-sm mt-1">
           {typeof error?.message === "string"
             ? t(error.message)
-            : t("This field is required")}
+            : t("Required")}
         </p>
       )}
     </section>
