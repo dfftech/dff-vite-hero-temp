@@ -77,21 +77,21 @@ export default function TestForm() {
   const submitProps = useMemo(
     () => ({
       isLoading: isSubmitLoading.value,
-      label: "Submit",
+      label: t("submit"),
       name: "SendHorizontal" as const,
       onPress: handleSubmit(onSubmitTest),
     }),
-    [],
+    [t],
   );
 
   const cancelProps = useMemo(
     () => ({
       isLoading: isSubmitLoading.value,
-      label: "Cancel",
+      label: t("cancel"),
       name: "CircleX" as const,
       onPress: onCancel,
     }),
-    [],
+    [t],
   );
 
   const nameProps = useMemo(
@@ -104,7 +104,7 @@ export default function TestForm() {
       name: "name",
       rules: testRule?.name,
     }),
-    [errors.name],
+    [t, errors.name],
   );
 
   const otpProps = useMemo(
@@ -112,12 +112,12 @@ export default function TestForm() {
       control: control,
       disabled: false,
       error: errors.otp,
-      label: "OTP",
+      label: t("otp"),
       name: "otp",
       rules: testRule?.otp,
       length: 6,
     }),
-    [errors.otp],
+    [t, errors.otp],
   );
 
   const eventDateProps = useMemo(
@@ -126,33 +126,33 @@ export default function TestForm() {
       control: control,
       error: errors["eventDate"],
       isDateTimeEnabled: true,
-      label: "Event Date",
+      label: t("eventDate"),
       name: "eventDate",
       rules: testRule?.eventDate,
     }),
-    [errors.eventDate],
+    [t, errors.eventDate],
   );
 
   const termsAcceptedProps = useMemo(
     () => ({
       control: control,
-      label: "Terms Accepted",
+      label: t("termAccepted"),
       name: "termsAccepted",
     }),
-    [],
+    [t],
   );
 
   const listCountryProps = useMemo(
     () => ({
       control: control,
-      label: "Countries",
+      label: t("countries"),
       name: "countries",
       options: countryOptions.value,
       rules: testRule?.countries,
       disabled: false,
       selectionMode: "multiple" as const,
     }),
-    [countryOptions.value],
+    [t, countryOptions.value],
   );
 
   const langProps = useMemo(
@@ -160,12 +160,12 @@ export default function TestForm() {
       control: control,
       disabled: false,
       error: errors["lang"],
-      label: "Lang",
+      label: t("lang"),
       name: "lang",
       rules: { required: true },
       type: "text" as const,
     }),
-    [errors.lang],
+    [t, errors.lang],
   );
 
   const countryProps = useMemo(
@@ -179,7 +179,7 @@ export default function TestForm() {
       options: countryOptions.value,
       rules: testRule?.country,
     }),
-    [errors.country, countryOptions.value],
+    [t, errors.country, countryOptions.value],
   );
 
   const timeProps = useMemo(
@@ -187,12 +187,12 @@ export default function TestForm() {
       control: control,
       disabled: false,
       error: errors.time,
-      label: "Time",
+      label: t("time"),
       name: "time",
       rules: testRule?.time,
       type: 12 as const,
     }),
-    [errors.time],
+    [t, errors.time],
   );
 
   return (

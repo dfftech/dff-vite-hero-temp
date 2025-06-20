@@ -23,7 +23,7 @@ export const TypeTime = ({
   rules = {},
   error,
   granularity = "minute",
-  className = "flex flex-col w-full max-w-[200px]",
+  className = "flex flex-col w-full",
   disabled = false,
   radius = "full",
   type = 24,

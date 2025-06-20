@@ -56,5 +56,12 @@
   "updateSuccess": "Item updated successfully",
   "userid": "User ID",
   "view": "View",
-  "welcome": "Welcome"
+  "welcome": "Welcome",
+  "eventDate": "Event Date",
+  "termAccepted": "Terms Accepted",
+  "otp": "One Time Password",
+  "time": "Time",
+  "country": "Country",
+  "countries": "Countries",
+  "lang": "Language"
 }

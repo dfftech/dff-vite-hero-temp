@@ -58,5 +58,12 @@
   "updateError": "حدث خطأ أثناء تحديث العنصر",
   "search": "بحث",
   "noResultsFound": "لم يتم العثور على نتائج",
-  "image": "الصورة"
+  "image": "الصورة",
+  "eventDate": "تاريخ الحدث",
+  "termAccepted": "تم قبول الشروط",
+  "otp": "رمز التحقق",
+  "time": "وقت الحدث",
+  "country": "الدولة",
+  "countries": "الدول",
+  "lang": "اللغة"
 }
