@@ -9,7 +9,7 @@ import { verifySignUp } from "./common/services";
 import { checkLoginUser } from "@/utils/services/app.methods";
 import { RouterChange } from "@/utils/services/app.event";
 import { AppRouter } from "@/utils/services/app.router";
-import { TypeInput } from "@/types/type.input";
+import TypeInput from "@/types/type.input";
 import TypeButton from "@/types/type.button";
 import { AuthLayout } from "@/layouts/auth-layout";
 

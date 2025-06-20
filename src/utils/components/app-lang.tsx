@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { LANG } from "../services/app.storage";
 import AppStorage from "../services/app.storage";
 
-import { TypeIcon } from "@/types/type.icon";
+import TypeIcon from "@/types/type.icon";
 import TypeDropDown from "@/types/type.dropdown";
 import { languages } from "@/i18n";
 

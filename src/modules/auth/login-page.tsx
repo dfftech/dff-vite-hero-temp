@@ -7,7 +7,7 @@ import { LoginValidate } from "./common/validate";
 import { checkLoginUser } from "@/utils/services/app.methods";
 import { CheckSession, RouterChange } from "@/utils/services/app.event";
 import { AppRouter } from "@/utils/services/app.router";
-import { TypeInput } from "@/types/type.input";
+import TypeInput from "@/types/type.input";
 import TypeButton from "@/types/type.button";
 import AppStorage, { TOKEN } from "@/utils/services/app.storage";
 import { AuthLayout } from "@/layouts/auth-layout";

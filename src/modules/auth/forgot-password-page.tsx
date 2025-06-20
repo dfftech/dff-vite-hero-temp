@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { checkLoginUser } from "@/utils/services/app.methods";
 import { RouterChange } from "@/utils/services/app.event";
 import { AppRouter } from "@/utils/services/app.router";
-import { TypeInput } from "@/types/type.input";
+import TypeInput from "@/types/type.input";
 import TypeButton from "@/types/type.button";
 import { AuthLayout } from "@/layouts/auth-layout";
 import { InputOtp } from "@heroui/react";
@@ -26,7 +26,7 @@ const ForgotPassword = ({
   handleSubmit: any;
 }) => {
   const { t } = useTranslation();
-  
+
   return (
     <form onSubmit={handleSubmit(onSubmitEmail)}>
       <div className="flex flex-col gap-4">
@@ -67,7 +67,7 @@ const ForgotPasswordOtp = ({
   onSubmitOtp: () => void;
 }) => {
   const { t } = useTranslation();
-  
+
   return (
     <div className="text-center">
       <p className="text-lg text-gray-700">{t("otpSentSuccess")}</p>

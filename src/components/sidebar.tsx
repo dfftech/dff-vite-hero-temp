@@ -15,7 +15,7 @@ import { trans } from "@/i18n";
 import { ThemeMode, RouterChange } from "@/utils/services/app.event";
 import { AppRouter } from "@/utils/services/app.router";
 import TypeButton from "@/types/type.button";
-import { TypeIcon } from "@/types/type.icon";
+import TypeIcon from "@/types/type.icon";
 import { siteConfig } from "@/config/siteConfig";
 
 type Theme = "light" | "dark";
@@ -134,11 +134,11 @@ export const Sidebar = ({
           // Determine if a top-level item or any of its children are active
           const isParentActive = item.children
             ? item.children.some(
-                (child) =>
-                  location.pathname === child.href &&
-                  (child.permissions?.read ?? true)
-              ) || // Check child active only if readable
-              location.pathname === item.href
+              (child) =>
+                location.pathname === child.href &&
+                (child.permissions?.read ?? true)
+            ) || // Check child active only if readable
+            location.pathname === item.href
             : location.pathname === item.href;
 
           // Render SubMenu for items with children, otherwise MenuItem

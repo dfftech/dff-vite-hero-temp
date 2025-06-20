@@ -15,17 +15,17 @@ import {
 } from "./common/service";
 
 import TypeButton from "@/types/type.button";
-import { TypeInput } from "@/types/type.input";
+import TypeInput from "@/types/type.input";
 import { ContentLayout } from "@/layouts/content-layout";
 import { ArticleLayout } from "@/layouts/article-layout";
-import { TypeDate } from "@/types/type.date";
-import { TypeLang } from "@/types/type.lang";
-import { TypeSelect } from "@/types/type.select";
-import { TypeCheck } from "@/types/type.check";
-import { TypeSwitch } from "@/types/type.switch";
-import { TypeList } from "@/types/type.list";
-import { TypeOtp } from "@/types/type.otp";
-import { TypeTime } from "@/types/type.time";
+import TypeDate from "@/types/type.date";
+import TypeLang from "@/types/type.lang";
+import TypeSelect from "@/types/type.select";
+import TypeCheck from "@/types/type.check";
+import TypeSwitch from "@/types/type.switch";
+import TypeList from "@/types/type.list";
+import TypeOtp from "@/types/type.otp";
+import TypeTime from "@/types/type.time";
 
 const isSubmitLoading = signal(false);
 
