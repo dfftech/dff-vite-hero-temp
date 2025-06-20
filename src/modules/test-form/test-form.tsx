@@ -30,26 +30,18 @@ import { TypeTime } from "@/types/type.time";
 const isSubmitLoading = signal(false);
 
 export default function TestForm() {
-  const { t } = useTranslation();
-
   useSignals();
-  const testRule = TestValidation;
-  const test = useSignal<TestType>({ ...testDefaultValue });
-
-  const [isToggleOn, setIsToggleOn] = React.useState(false);
-
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm<TestType>({});
+  const { t } = useTranslation();
 
   React.useEffect(() => {
     countryLoadCall("load-country");
     test.value = testDefaultValue;
     onResetTest();
   }, []);
+
+  const testRule = TestValidation;
+  const test = useSignal<TestType>({ ...testDefaultValue });
+  const { handleSubmit, control, reset, formState: { errors } } = useForm<TestType>({});
 
   const onResetTest = () => {
     reset({ ...test.value });
@@ -63,13 +55,15 @@ export default function TestForm() {
     onResetTest();
   };
 
+  const [isToggleOn, setIsToggleOn] = React.useState(false);
+
   const changeDataLoad = (checked: boolean) => {
     setIsToggleOn(checked);
     if (checked) {
-      test.value = testDataValue;
+      test.value = { ...testDataValue };
       reset({ ...testDataValue });
     } else {
-      test.value = testDefaultValue;
+      test.value = { ...testDefaultValue };
       reset({ ...testDefaultValue } as TestType);
     }
   };

@@ -39,29 +39,35 @@ export const TypeTime = ({
 
       <Controller
         control={control}
-        defaultValue=""
         name={name}
+        rules={rules}
+        defaultValue=""
         render={({ field }) => {
-          const parsedValue = field.value ? parseTime(field.value) : undefined;
+          let parsedValue: Time | null = null;
+
+          try {
+            if (field.value) parsedValue = parseTime(field.value);
+          } catch {
+            parsedValue = null;
+          }
 
           return (
             <TimeInput
-              hideTimeZone
               aria-label={label}
+              hideTimeZone
               granularity={granularity}
               hourCycle={type === 12 ? 12 : 24}
               isDisabled={disabled}
               radius={radius}
               value={parsedValue}
               onChange={(t: Time | null) => {
-                const timeStr = t?.toString() ?? "00:00:00";
+                const timeStr = t?.toString() ?? "";
                 field.onChange(timeStr);
                 onChange?.(timeStr);
               }}
             />
           );
         }}
-        rules={rules}
       />
 
       {error && <p className="text-xs text-red-500 mt-1">{error.message}</p>}

@@ -1,6 +1,10 @@
 import { Controller } from "react-hook-form";
 import { DatePicker } from "@heroui/date-picker";
-import { getLocalTimeZone, parseAbsolute } from "@internationalized/date";
+import {
+  getLocalTimeZone,
+  parseAbsolute,
+  DateValue,
+} from "@internationalized/date";
 
 import { t } from "@/i18n";
 
@@ -14,7 +18,7 @@ type TypeDateProps = {
   disabled?: boolean;
   radius?: "full" | "none" | "sm" | "md" | "lg";
   isDateTimeEnabled?: boolean;
-  onChange?: (value: Date) => void;
+  onChange?: (value: Date | null) => void;
 };
 
 export const TypeDate = ({
@@ -31,19 +35,19 @@ export const TypeDate = ({
 }: TypeDateProps) => {
   const localTZ = getLocalTimeZone();
 
-  const normalizeToDateValue = (input: any) => {
+  const normalizeToDateValue = (input: any): DateValue | null => {
     try {
       if (input && typeof input === "object" && "toDate" in input) {
-        return input; // Already a DateValue
+        return input;
       } else if (input instanceof Date) {
         return parseAbsolute(input.toISOString(), localTZ);
       } else if (typeof input === "string") {
         return parseAbsolute(input, localTZ);
       } else {
-        return parseAbsolute(new Date().toISOString(), localTZ);
+        return null;
       }
-    } catch (e) {
-      return parseAbsolute(new Date().toISOString(), localTZ);
+    } catch {
+      return null;
     }
   };
 
@@ -58,10 +62,9 @@ export const TypeDate = ({
 
       <Controller
         control={control}
-        defaultValue={parseAbsolute(new Date().toISOString(), localTZ)}
         name={name}
         render={({ field }) => {
-          const safeValue = normalizeToDateValue(field.value);
+          const parsedValue = normalizeToDateValue(field.value);
 
           return (
             <DatePicker
@@ -70,11 +73,12 @@ export const TypeDate = ({
               hideTimeZone={!isDateTimeEnabled}
               isDisabled={disabled}
               radius={radius}
-              value={safeValue}
+              value={parsedValue ?? null}
               onChange={(calendarDateTime: any) => {
-                const jsDate = calendarDateTime?.toDate?.(localTZ);
+                const jsDate = calendarDateTime?.toDate?.(localTZ) ?? null;
+
                 field.onChange(jsDate);
-                if (onChange) onChange(jsDate);
+                onChange?.(jsDate);
               }}
             />
           );
