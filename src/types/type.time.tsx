@@ -16,7 +16,7 @@ type TypeTimeProps = {
   onChange?: (value: string) => void;
 };
 
-export const TypeTime = ({
+const TypeTime = ({
   control,
   name,
   label,
@@ -74,3 +74,5 @@ export const TypeTime = ({
     </section>
   );
 };
+
+export default TypeTime;

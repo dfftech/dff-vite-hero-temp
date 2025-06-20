@@ -10,7 +10,7 @@ type TypeProps = {
   disabled?: boolean;
 };
 
-export const TypeSwitch = ({
+const TypeSwitch = ({
   control,
   name,
   label,
@@ -37,3 +37,5 @@ export const TypeSwitch = ({
     </section>
   );
 };
+
+export default TypeSwitch;

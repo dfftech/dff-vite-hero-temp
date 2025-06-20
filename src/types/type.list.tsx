@@ -54,7 +54,7 @@ export const TypeList = ({
             const newValue = isMultiple ? selected : (selected[0] ?? "");
 
             field.onChange(newValue);
-            onChange?.(newValue);
+            onChange?.(newValue as any);
           };
 
           return (
@@ -100,3 +100,5 @@ export const TypeList = ({
     </section>
   );
 };
+
+export default TypeList;

@@ -1,7 +1,7 @@
 import { Input } from "@heroui/react";
 import React from "react";
 
-import { TypeIcon } from "./type.icon";
+import TypeIcon from "./type.icon";
 
 type TypeSearchProps = {
   className?: string;

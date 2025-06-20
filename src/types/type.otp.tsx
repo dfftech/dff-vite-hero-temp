@@ -13,7 +13,7 @@ type TypeOtpProps = {
   onChange?: (val: string) => void;
 };
 
-export const TypeOtp = ({
+const TypeOtp = ({
   control,
   name,
   label,
@@ -54,3 +54,5 @@ export const TypeOtp = ({
     </section>
   );
 };
+
+export default TypeOtp;

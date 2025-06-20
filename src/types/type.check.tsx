@@ -11,7 +11,7 @@ type TypeProps = {
   radius?: "full" | "none" | "sm" | "md" | "lg";
 };
 
-export const TypeCheck = ({
+const TypeCheck = ({
   control,
   name,
   label,
@@ -40,3 +40,5 @@ export const TypeCheck = ({
     </section>
   );
 };
+
+export default TypeCheck;

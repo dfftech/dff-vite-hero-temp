@@ -22,7 +22,7 @@ type TypeProps = {
   onChange?: (value: any) => void;
 };
 
-export const TypeInput = ({
+const TypeInput = ({
   control,
   name,
   label,

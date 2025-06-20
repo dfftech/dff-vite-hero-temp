@@ -11,7 +11,7 @@ interface IconProps {
   onClick?: () => void;
 }
 
-export const TypeIcon: React.FC<IconProps> = ({
+const TypeIcon: React.FC<IconProps> = ({
   name,
   color = "lightslategray",
   size = 24,
@@ -32,3 +32,5 @@ export const TypeIcon: React.FC<IconProps> = ({
     />
   );
 };
+
+export default TypeIcon;

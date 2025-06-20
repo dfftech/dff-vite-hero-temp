@@ -20,7 +20,7 @@ type TypeProps = {
   radius?: "full" | "none" | "sm" | "md" | "lg" | undefined;
 };
 
-export const TypeSelect = ({
+const TypeSelect = ({
   control,
   name,
   label,
@@ -90,3 +90,5 @@ export const TypeSelect = ({
     </section>
   );
 };
+
+export default TypeSelect;

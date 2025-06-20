@@ -4,7 +4,7 @@ import { Input, Textarea } from "@heroui/react";
 import { useSignals } from "@preact/signals-react/runtime";
 import { LangText } from "dff-util";
 
-import { TypeIcon } from "./type.icon";
+import TypeIcon from "./type.icon";
 
 import {
   SupportedLanguagesType,
