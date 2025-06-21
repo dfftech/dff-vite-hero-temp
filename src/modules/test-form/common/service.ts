@@ -22,6 +22,11 @@ export const testDataValue: TestType = {
     "te-IN": "మీరు ఎలా ఉన్నారు?",
     "ar-SA": "كيف حالك؟",
   },
+  md: {
+    "en-US": "### Welcome!\nThis is **English** content.",
+    "te-IN": "### స్వాగతం!\nఇది **తెలుగు** సమాచారం.",
+    "ar-SA": "### أهلاً وسهلاً!\nهذا محتوى **بالعربية**.",
+  },
   otp: "555999",
   time: "16:25:43",
 };

@@ -57,4 +57,10 @@ export const TestValidation = {
       message: ConstMessages.REQUIRED,
     },
   },
+  md: {
+    required: {
+      value: true,
+      message: ConstMessages.REQUIRED,
+    },
+  },
 };

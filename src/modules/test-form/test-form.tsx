@@ -26,6 +26,7 @@ import TypeSwitch from "@/types/type.switch";
 import TypeList from "@/types/type.list";
 import TypeOtp from "@/types/type.otp";
 import TypeTime from "@/types/type.time";
+import TypeLangMd from "@/types/type.lang-md";
 
 const isSubmitLoading = signal(false);
 
@@ -189,6 +190,29 @@ export default function TestForm() {
     [t, errors.time],
   );
 
+  const mdProps = useMemo(
+    () => ({
+      control: control,
+      disabled: false,
+      error: errors.md,
+      label: t("md"),
+      name: "md",
+      rules: testRule.md
+    }),
+    [t, errors.md],
+  );
+
+  // <TypeLangMarkdown
+  //   control={control}
+  //   name="description"
+  //   label="Description"
+  //   rules={{
+  //     required: {
+  //       value: true,
+  //       message: "At least one language is required",
+  //     },
+  //   }}
+  // />
   return (
     <section className="w-full">
       <ArticleLayout>
@@ -219,6 +243,7 @@ export default function TestForm() {
               <TypeSelect {...countryProps} />
               <TypeList {...listCountryProps} />
               <TypeLang {...langProps} />
+              <TypeLangMd {...mdProps} />
             </div>
             <div className="flex flex-row gap-4">
               <pre className="text-sm">

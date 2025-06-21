@@ -7,4 +7,5 @@ export type TestType = {
   termsAccepted: boolean;
   otp: string;
   time: string;
+  md: Record<string, string>;
 };
