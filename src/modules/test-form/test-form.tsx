@@ -27,6 +27,7 @@ import TypeList from "@/types/type.list";
 import TypeOtp from "@/types/type.otp";
 import TypeTime from "@/types/type.time";
 import TypeLangMd from "@/types/type.lang-md";
+import TypeSearch from "@/types/type.search";
 
 const isSubmitLoading = signal(false);
 
@@ -57,6 +58,7 @@ export default function TestForm() {
   };
 
   const [isToggleOn, setIsToggleOn] = React.useState(false);
+  const [searchTerm, setSearchTerm] = React.useState<string>("");
 
   const changeDataLoad = (checked: boolean) => {
     setIsToggleOn(checked);
@@ -79,6 +81,8 @@ export default function TestForm() {
     [t],
   );
 
+
+
   const cancelProps = useMemo(
     () => ({
       isLoading: isSubmitLoading.value,
@@ -88,6 +92,8 @@ export default function TestForm() {
     }),
     [t],
   );
+
+
 
   const nameProps = useMemo(
     () => ({
@@ -128,6 +134,7 @@ export default function TestForm() {
     [t, errors.eventDate],
   );
 
+
   const termsAcceptedProps = useMemo(
     () => ({
       control: control,
@@ -136,6 +143,7 @@ export default function TestForm() {
     }),
     [t],
   );
+
 
   const listCountryProps = useMemo(
     () => ({
@@ -150,6 +158,7 @@ export default function TestForm() {
     [t, countryOptions.value],
   );
 
+
   const langProps = useMemo(
     () => ({
       control: control,
@@ -162,6 +171,7 @@ export default function TestForm() {
     }),
     [t, errors.lang],
   );
+
 
   const countryProps = useMemo(
     () => ({
@@ -176,6 +186,9 @@ export default function TestForm() {
     }),
     [t, errors.country, countryOptions.value],
   );
+
+
+
 
   const timeProps = useMemo(
     () => ({
@@ -202,17 +215,19 @@ export default function TestForm() {
     [t, errors.md],
   );
 
-  // <TypeLangMarkdown
-  //   control={control}
-  //   name="description"
-  //   label="Description"
-  //   rules={{
-  //     required: {
-  //       value: true,
-  //       message: "At least one language is required",
-  //     },
-  //   }}
-  // />
+  const searchProps = useMemo(
+    () => ({
+      disabled: false,
+      label: t("search"),
+      name: "search",
+      value: "",
+      onChange: (value: string) => {
+        setSearchTerm(value);
+      },
+    }),
+    [t],
+  );
+
   return (
     <section className="w-full">
       <ArticleLayout>
@@ -244,6 +259,9 @@ export default function TestForm() {
               <TypeList {...listCountryProps} />
               <TypeLang {...langProps} />
               <TypeLangMd {...mdProps} />
+              <TypeSearch {...searchProps} />
+              <sub>{searchTerm}</sub>
+              <br />
             </div>
             <div className="flex flex-row gap-4">
               <pre className="text-sm">

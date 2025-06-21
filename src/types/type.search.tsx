@@ -5,16 +5,16 @@ import TypeIcon from "./type.icon";
 
 type TypeSearchProps = {
   className?: string;
-  placeholder?: string;
-  value: string;
+  label?: string;
+  value?: string;
   variant?: "underlined" | "flat" | "faded" | "bordered" | undefined;
   onChange: (value: string) => void;
 };
 
 const TypeSearch: React.FC<TypeSearchProps> = ({
-  className = "",
-  placeholder = "Search...",
-  value,
+  className = "w-48",
+  label = "Search...",
+  value = "",
   variant = "underlined",
   onChange,
 }) => {
@@ -26,7 +26,7 @@ const TypeSearch: React.FC<TypeSearchProps> = ({
       endContent={
         <TypeIcon name="Search" onClick={() => onChange(searchTerm)} />
       }
-      placeholder={placeholder}
+      placeholder={label}
       value={searchTerm}
       variant={variant}
       onChange={(e) => {
