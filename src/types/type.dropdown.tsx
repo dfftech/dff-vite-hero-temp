@@ -4,7 +4,7 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-} from "@heroui/dropdown";
+} from "@heroui/react";
 
 interface DropDownProps {
   className?: string;

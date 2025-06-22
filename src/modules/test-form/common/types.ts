@@ -8,4 +8,6 @@ export type TestType = {
   otp: string;
   time: string;
   md: Record<string, string>;
+  mdxWithoutLang: string;
+  mdv: string;
 };

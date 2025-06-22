@@ -29,11 +29,16 @@ export const testDataValue: TestType = {
   },
   otp: "555999",
   time: "16:25:43",
+  mdxWithoutLang: "### Welcome!\nThis is **English** content.",
+  mdv: "### Welcome!\nThis is **English** content.",
 };
 
 export const countryIsLoading = signal<boolean>(false);
 export const countryOptions = signal<OptionType[]>([]);
-export const countryLoadCall = async (id: string, params?: Record<string, string>) => {
+export const countryLoadCall = async (
+  id: string,
+  params?: Record<string, string>
+) => {
   try {
     console.log(id, params);
     countryIsLoading.value = true;

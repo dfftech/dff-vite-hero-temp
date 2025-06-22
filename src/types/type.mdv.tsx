@@ -16,7 +16,7 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ markdownText }) => {
   }, [markdownText]);
 
   return (
-    <div className="mx-auto p-4 bg-white rounded-lg shadow-md text-justify">
+    <div className="mx-auto p-4 bg-white dark:bg-gray-900 rounded-lg shadow-md text-justify text-black dark:text-white">
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {markdownContent}
       </ReactMarkdown>

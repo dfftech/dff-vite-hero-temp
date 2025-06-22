@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { Path, useForm } from "react-hook-form";
 import { useSignals } from "@preact/signals-react/runtime";
 import { signal, useSignal } from "@preact/signals-react";
 import { useTranslation } from "react-i18next";
@@ -28,6 +28,8 @@ import TypeOtp from "@/types/type.otp";
 import TypeTime from "@/types/type.time";
 import TypeLangMd from "@/types/type.lang-md";
 import TypeSearch from "@/types/type.search";
+import TypeMdxEditor from "@/types/type.mdx";
+import MarkdownViewer from "@/types/type.mdv";
 
 const isSubmitLoading = signal(false);
 
@@ -43,7 +45,12 @@ export default function TestForm() {
 
   const testRule = TestValidation;
   const test = useSignal<TestType>({ ...testDefaultValue });
-  const { handleSubmit, control, reset, formState: { errors } } = useForm<TestType>({});
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm<TestType>({});
 
   const onResetTest = () => {
     reset({ ...test.value });
@@ -71,6 +78,18 @@ export default function TestForm() {
     }
   };
 
+  const mdxProps = useMemo(
+    () => ({
+      control: control,
+      error: errors["mdxWithoutLang"],
+      label: t("mdxWithoutLang"),
+      name: "mdxWithoutLang" as const,
+      value: test.value.mdxWithoutLang,
+      rules: testRule?.mdx,
+    }),
+    [t, errors.mdxWithoutLang]
+  );
+
   const submitProps = useMemo(
     () => ({
       isLoading: isSubmitLoading.value,
@@ -78,10 +97,8 @@ export default function TestForm() {
       name: "SendHorizontal" as const,
       onPress: handleSubmit(onSubmitTest),
     }),
-    [t],
+    [t]
   );
-
-
 
   const cancelProps = useMemo(
     () => ({
@@ -90,10 +107,8 @@ export default function TestForm() {
       name: "CircleX" as const,
       onPress: onCancel,
     }),
-    [t],
+    [t]
   );
-
-
 
   const nameProps = useMemo(
     () => ({
@@ -105,7 +120,7 @@ export default function TestForm() {
       name: "name",
       rules: testRule?.name,
     }),
-    [t, errors.name],
+    [t, errors.name]
   );
 
   const otpProps = useMemo(
@@ -118,7 +133,7 @@ export default function TestForm() {
       rules: testRule?.otp,
       length: 6,
     }),
-    [t, errors.otp],
+    [t, errors.otp]
   );
 
   const eventDateProps = useMemo(
@@ -131,9 +146,8 @@ export default function TestForm() {
       name: "eventDate",
       rules: testRule?.eventDate,
     }),
-    [t, errors.eventDate],
+    [t, errors.eventDate]
   );
-
 
   const termsAcceptedProps = useMemo(
     () => ({
@@ -141,9 +155,8 @@ export default function TestForm() {
       label: t("termAccepted"),
       name: "termsAccepted",
     }),
-    [t],
+    [t]
   );
-
 
   const listCountryProps = useMemo(
     () => ({
@@ -155,9 +168,8 @@ export default function TestForm() {
       disabled: false,
       selectionMode: "multiple" as const,
     }),
-    [t, countryOptions.value],
+    [t, countryOptions.value]
   );
-
 
   const langProps = useMemo(
     () => ({
@@ -169,9 +181,8 @@ export default function TestForm() {
       rules: { required: true },
       type: "text" as const,
     }),
-    [t, errors.lang],
+    [t, errors.lang]
   );
-
 
   const countryProps = useMemo(
     () => ({
@@ -184,11 +195,8 @@ export default function TestForm() {
       options: countryOptions.value,
       rules: testRule?.country,
     }),
-    [t, errors.country, countryOptions.value],
+    [t, errors.country, countryOptions.value]
   );
-
-
-
 
   const timeProps = useMemo(
     () => ({
@@ -200,7 +208,7 @@ export default function TestForm() {
       rules: testRule?.time,
       type: 12 as const,
     }),
-    [t, errors.time],
+    [t, errors.time]
   );
 
   const mdProps = useMemo(
@@ -210,9 +218,16 @@ export default function TestForm() {
       error: errors.md,
       label: t("md"),
       name: "md",
-      rules: testRule.md
+      rules: testRule.md,
     }),
-    [t, errors.md],
+    [t, errors.md]
+  );
+
+  const mdvProps = useMemo(
+    () => ({
+      markdownText: test.value.mdv,
+    }),
+    [test.value.mdv]
   );
 
   const searchProps = useMemo(
@@ -225,7 +240,7 @@ export default function TestForm() {
         setSearchTerm(value);
       },
     }),
-    [t],
+    [t]
   );
 
   return (
@@ -260,6 +275,9 @@ export default function TestForm() {
               <TypeLang {...langProps} />
               <TypeLangMd {...mdProps} />
               <TypeSearch {...searchProps} />
+              <TypeMdxEditor {...mdxProps} />
+              <MarkdownViewer {...mdvProps} />
+
               <sub>{searchTerm}</sub>
               <br />
             </div>
