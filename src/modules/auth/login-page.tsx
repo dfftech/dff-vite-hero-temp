@@ -97,7 +97,7 @@ export function LoginPage() {
                   className="p-0"
                   label={t("signUp")}
                   variant="light"
-                  onPress={() => RouterChange(AppRouter.SIGN_UP)}
+                  onPress={() => RouterChange(AppRouter.SIGNUP)}
                 />
               </p>
             </div>

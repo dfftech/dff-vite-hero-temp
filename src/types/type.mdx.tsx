@@ -6,13 +6,7 @@ import {
   RegisterOptions,
   Path,
 } from "react-hook-form";
-import "@uiw/react-md-editor/markdown-editor.css";
-import "@uiw/react-markdown-preview/markdown.css";
-
-import { lazy } from "react";
-
-// Dynamically load the Markdown Editor
-const MDEditor = lazy(() => import("@uiw/react-md-editor"));
+import MDEditor from "@uiw/react-md-editor";
 
 type MdxEditorProps<T extends FieldValues> = {
   name: Path<T>;
@@ -21,6 +15,7 @@ type MdxEditorProps<T extends FieldValues> = {
   label?: string;
   error?: FieldError;
   disabled?: boolean;
+  className?: string;
 };
 
 const TypeMdxEditor = <T extends FieldValues>({
@@ -30,26 +25,28 @@ const TypeMdxEditor = <T extends FieldValues>({
   label,
   error,
   disabled = false,
+  className = "w-full",
 }: MdxEditorProps<T>) => {
   return (
-    <div className="w-full">
+    <div className={className}>
       {label && (
         <label className="block text-sm font-medium mb-2">{label}</label>
       )}
 
       <Controller
-        name={name}
         control={control}
-        rules={rules} // or use a prop if needed
+        name={name}
         render={({ field }) => (
           <MDEditor
-            value={field.value ?? ""}
-            onChange={(val) => field.onChange(val)}
             height={400}
+            preview="edit"
             previewOptions={{}}
             textareaProps={{ disabled }}
+            value={field.value ?? ""}
+            onChange={(val) => field.onChange(val)}
           />
         )}
+        rules={rules} // or use a prop if needed
       />
 
       {error && <p className="text-sm text-red-500 mt-1">{error.message}</p>}

@@ -208,7 +208,7 @@ export default function TestForm() {
       rules: testRule?.time,
       type: 12 as const,
     }),
-    [t, errors.time]
+    [t, errors.time],
   );
 
   const mdProps = useMemo(
@@ -220,14 +220,15 @@ export default function TestForm() {
       name: "md",
       rules: testRule.md,
     }),
-    [t, errors.md]
+    [t, errors.md],
   );
 
   const mdvProps = useMemo(
     () => ({
       markdownText: test.value.mdv,
+      className: "w-full h-[250px]",
     }),
-    [test.value.mdv]
+    [test.value.mdv],
   );
 
   const searchProps = useMemo(

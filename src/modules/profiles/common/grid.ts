@@ -5,7 +5,7 @@ import { TFunction } from "i18next";
 import { onData } from "./service";
 
 import ActionCellRenderer from "@/components/action-cell";
-import { SkeletonTable } from "@/skeleton/skeletion-table";
+import { SkeletonTable } from "@/skeleton/skeleton-table";
 import NoRowsComponent from "@/components/no-rows";
 
 export const columnDefs = (t: TFunction, onAction: Function): ColDef<any>[] => [

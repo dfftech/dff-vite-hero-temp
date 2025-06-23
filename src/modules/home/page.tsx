@@ -1,7 +1,7 @@
 import { ArticleLayout } from "@/layouts/article-layout";
 import { ContentLayout } from "@/layouts/content-layout";
 import { FloatLayout } from "@/layouts/float-layout";
-import { SkeletonTable } from "@/skeleton/skeletion-table";
+import { SkeletonTable } from "@/skeleton/skeleton-table";
 import TypeButton from "@/types/type.button";
 
 export async function HomePage() {

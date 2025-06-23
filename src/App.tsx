@@ -5,17 +5,17 @@ import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
 
 import DefaultLayout from "./layouts/default-layout";
 import SignUp from "./app/auth/signup";
-import ForgotPassword from "./app/auth/forgotpassword";
+import ForgotPassword from "./app/auth/forgot-password";
 import Login from "./app/auth/login";
 import Account from "./app/account";
 import Profile from "./app/profile";
 import Permissions from "./app/permissions";
 import AppHttp from "./utils/services/app.http";
+import TestForm from "./app/test-form";
 
 import { AppRouter } from "@/utils/services/app.router";
 import AppToast from "@/utils/components/app-toast";
 import { RouterEvent, ShowToast } from "@/utils/services/app.event";
-import TestForm from "./app/test-form";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -48,7 +48,7 @@ function App() {
         <Routes>
           <Route element={<Login />} path={AppRouter.DEFAULT} />
           <Route element={<Login />} path={AppRouter.LOGIN} />
-          <Route element={<SignUp />} path={AppRouter.SIGN_UP} />
+          <Route element={<SignUp />} path={AppRouter.SIGNUP} />
           <Route
             element={<ForgotPassword />}
             path={AppRouter.FORGOT_PASSWORD}
@@ -56,7 +56,7 @@ function App() {
           <Route element={<Account />} path={AppRouter.ACCOUNT} />
           <Route element={<Profile />} path={AppRouter.PROFILE} />
           <Route element={<Permissions />} path={AppRouter.PERMISSIONS} />
-          <Route element={<TestForm />} path={AppRouter.TESTFORM} />
+          <Route element={<TestForm />} path={AppRouter.TEST_FORM} />
         </Routes>
       </DefaultLayout>
     </>

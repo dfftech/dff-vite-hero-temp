@@ -4,8 +4,8 @@ import { HomePage } from "@/modules/home/page";
 import { ArticleLayout } from "@/layouts/article-layout";
 import { ContentLayout } from "@/layouts/content-layout";
 import { FloatLayout } from "@/layouts/float-layout";
-import { SkeletonTable } from "@/skeleton/skeletion-table";
-import { SkeletonFloat } from "@/skeleton/skeletion-float";
+import { SkeletonTable } from "@/skeleton/skeleton-table";
+import { SkeletonFloat } from "@/skeleton/skeleton-float";
 import { SkeletonArticle } from "@/skeleton/skeleton-article";
 
 export default function Index() {

@@ -8,12 +8,12 @@ import {
   useDisclosure,
 } from "@heroui/react";
 
-import TestForm from "./test-form";
+import TestForm from "./test.form";
 
 import { GridLayout } from "@/layouts/grid-layout";
 import { FloatLayout } from "@/layouts/float-layout";
 
-export default function TestFormPage() {
+export default function TestPage() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (

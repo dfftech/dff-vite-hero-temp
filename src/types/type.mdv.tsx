@@ -5,9 +5,13 @@ import remarkGfm from "remark-gfm";
 
 interface MarkdownViewerProps {
   markdownText: string;
+  className?: string;
 }
 
-const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ markdownText }) => {
+const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
+  markdownText,
+  className = " rounded-lg shadow-md w-full h-[250px]",
+}) => {
   const [markdownContent, setMarkdownContent] = useState<string>("");
 
   useEffect(() => {
@@ -16,7 +20,12 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ markdownText }) => {
   }, [markdownText]);
 
   return (
-    <div className="mx-auto p-4 bg-white dark:bg-gray-900 rounded-lg shadow-md text-justify text-black dark:text-white">
+    <div
+      className={
+        "mx-auto p-4 bg-white dark:bg-gray-900 text-black dark:text-white " +
+        className
+      }
+    >
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {markdownContent}
       </ReactMarkdown>
