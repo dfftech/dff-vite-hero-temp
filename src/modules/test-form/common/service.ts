@@ -7,6 +7,8 @@ import { ShowToast } from "@/utils/services/app.event";
 import { TestType } from "./types";
 import { counties } from "./data";
 
+export const drawerOpen = signal<boolean>(false);
+
 export const testDefaultValue = {
   name: null,
 } as unknown as TestType;
@@ -35,10 +37,7 @@ export const testDataValue: TestType = {
 
 export const countryIsLoading = signal<boolean>(false);
 export const countryOptions = signal<OptionType[]>([]);
-export const countryLoadCall = async (
-  id: string,
-  params?: Record<string, string>
-) => {
+export const countryLoadCall = async (id: string, params?: Record<string, string>) => {
   try {
     console.log(id, params);
     countryIsLoading.value = true;

@@ -1,4 +1,8 @@
-import AppStorage, { TOKEN } from "./app.storage";
+import AppStorage, { SCREEN_ACCESS, TOKEN } from "./app.storage";
+import { ScreenAccessType } from "./app.types";
+import { ScreenAccess } from "./app.event";
+
+import { SiteConfig } from "@/config/site-config";
 
 // for getting Date in format of '12 Jun 2003 11:45 AM'
 export const formatDateTime = (timestamp: Date, showDate: boolean = true, showTime?: boolean): string => {
@@ -97,6 +101,7 @@ export const debounce = (func: (...args: any[]) => void, wait: number): ((...arg
 };
 export const checkLoginUser = () => {
   const decoded = AppStorage.getData(TOKEN, true);
+
   // const current_time = new Date().getTime() / 1000;
   // || current_time > decoded.exp
   if (!decoded) {
@@ -104,4 +109,47 @@ export const checkLoginUser = () => {
   } else {
     return true;
   }
+};
+
+let accessList: Record<string, ScreenAccessType> = {};
+
+export const screenAccessInit = () => {
+  accessList = {};
+  SiteConfig.map((item) => {
+    if (item.children) {
+      item.children.map((child) => {
+        accessList[child.href] = {
+          name: child.name,
+          read: child.permissions?.read || false,
+          create: child.permissions?.create || false,
+          update: child.permissions?.update || false,
+          delete: child.permissions?.delete || false,
+        };
+      });
+    } else {
+      accessList[item.href] = {
+        name: item.name,
+        read: item.permissions?.read || false,
+        create: item.permissions?.create || false,
+        update: item.permissions?.update || false,
+        delete: item.permissions?.delete || false,
+      };
+    }
+  });
+  screenAccessCall(window.location.pathname);
+};
+
+export const screenAccessCall = (key: string) => {
+  console.log(key, accessList);
+  const access = accessList[key] || {
+    name: "none",
+    read: false,
+    create: false,
+    update: false,
+    delete: false,
+  };
+
+  ScreenAccess.value = access;
+  console.log(ScreenAccess.value);
+  AppStorage.setData(SCREEN_ACCESS, ScreenAccess.value);
 };

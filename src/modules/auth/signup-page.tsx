@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { SignUpValidate } from "./common/validate";
 import { verifySignUp } from "./common/services";
 
-import { checkLoginUser } from "@/utils/services/app.methods";
+import { checkLoginUser } from "@/utils/services/app.util";
 import { RouterChange } from "@/utils/services/app.event";
 import { AppRouter } from "@/utils/services/app.router";
 import TypeInput from "@/types/type.input";

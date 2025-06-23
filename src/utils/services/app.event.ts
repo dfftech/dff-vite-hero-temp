@@ -2,23 +2,17 @@ import { signal } from "@preact/signals-react";
 
 import { langDirection } from "../../i18n";
 
-import AppStorage, {
-  SESSION_INFO,
-  TOKEN,
-  GOOGLE_ACCESS_TOKEN,
-  LANG,
-  DIR,
-  THEME,
-} from "./app.storage";
+import AppStorage, { SESSION_INFO, TOKEN, GOOGLE_ACCESS_TOKEN, LANG, DIR, THEME } from "./app.storage";
 import { AppRouter } from "./app.router";
-
+import { ScreenAccessType } from "./app.types";
+import { screenAccessCall, screenAccessInit } from "./app.util";
+export const ScreenAccess = signal<ScreenAccessType>({} as ScreenAccessType);
+screenAccessInit();
 export const SessionToken = signal(AppStorage.getData(TOKEN) || null);
 export const SessionLang = signal<string>(AppStorage.getData(LANG) || "en-US");
 export const ThemeMode = signal(AppStorage.getData(THEME) || "light");
 
-export const RtlDir = signal<boolean>(
-  langDirection(AppStorage.getData(DIR) || "en-US") === "rtl"
-);
+export const RtlDir = signal<boolean>(langDirection(AppStorage.getData(DIR) || "en-US") === "rtl");
 
 type RouterType = {
   pathname: string;
@@ -29,11 +23,9 @@ type RouterType = {
  *  routerEffect
  */
 export const RouterEvent = signal({} as RouterType);
-export const RouterChange = (
-  pathname: string,
-  query?: Record<string, string>
-) => {
+export const RouterChange = (pathname: string, query?: Record<string, string>) => {
   RouterEvent.value = { pathname, query };
+  screenAccessCall(pathname);
   if (pathname == AppRouter.LOGIN) {
     AppStorage.removeData(TOKEN);
     AppStorage.removeData(SESSION_INFO);
@@ -45,14 +37,7 @@ export const RouterChange = (
 type ToastType = {
   show: boolean;
   message: string;
-  type:
-    | "success"
-    | "default"
-    | "foreground"
-    | "primary"
-    | "secondary"
-    | "warning"
-    | "danger";
+  type: "success" | "default" | "foreground" | "primary" | "secondary" | "warning" | "danger";
 };
 
 export const ToastMessage = signal({
@@ -67,14 +52,7 @@ export const ToastMessage = signal({
 
 export const ShowToast = (
   message: string,
-  type:
-    | "success"
-    | "default"
-    | "foreground"
-    | "primary"
-    | "secondary"
-    | "warning"
-    | "danger" = "warning"
+  type: "success" | "default" | "foreground" | "primary" | "secondary" | "warning" | "danger" = "warning",
 ) => {
   ToastMessage.value = {
     show: true,

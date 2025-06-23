@@ -37,6 +37,7 @@ function App() {
         if (window.location.pathname + window.location.search !== fullPath) {
           navigate(fullPath);
         }
+
       }
     });
   }, []);

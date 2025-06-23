@@ -12,6 +12,7 @@ import {
   testDataValue,
   countryOptions,
   countryLoadCall,
+  drawerOpen,
 } from "./common/service";
 
 import TypeButton from "@/types/type.button";
@@ -62,6 +63,7 @@ export default function TestForm() {
 
   const onCancel = () => {
     onResetTest();
+    drawerOpen.value = false;
   };
 
   const [isToggleOn, setIsToggleOn] = React.useState(false);
@@ -102,6 +104,7 @@ export default function TestForm() {
 
   const cancelProps = useMemo(
     () => ({
+      action: "secondary" as const,
       isLoading: isSubmitLoading.value,
       label: t("cancel"),
       name: "CircleX" as const,
@@ -256,8 +259,8 @@ export default function TestForm() {
             >
               With Data
             </Switch>
-            <TypeButton {...submitProps} />
             <TypeButton {...cancelProps} />
+            <TypeButton {...submitProps} />
           </div>
         </div>
       </ArticleLayout>

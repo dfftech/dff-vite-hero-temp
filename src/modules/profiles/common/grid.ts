@@ -2,67 +2,21 @@ import { IDatasource, IGetRowsParams, ColDef } from "ag-grid-community";
 import { GridOptions } from "ag-grid-community";
 import { TFunction } from "i18next";
 
-import { onData } from "./service";
+import { testFetchCall } from "./service";
 
-import ActionCellRenderer from "@/components/action-cell";
+import ActionCellRenderer from "@/grid/action-cell";
 import { SkeletonTable } from "@/skeleton/skeleton-table";
 import NoRowsComponent from "@/components/no-rows";
-
-export const columnDefs = (t: TFunction, onAction: Function): ColDef<any>[] => [
-  { field: "id", maxWidth: 100 },
-  { field: "name", headerName: t("name") },
-  { field: "email" },
-  {
-    headerName: "Actions",
-    maxWidth: 120,
-    cellRendererSelector: (params) => {
-      if (params.data) {
-        return { component: ActionCellRenderer, params: { onAction } };
-      }
-    },
-    cellRendererParams: { onAction },
-    sortable: false,
-    filter: false,
-  },
-];
-
-export const getDataSource = (searchTerm: string): IDatasource => ({
-  getRows: async (params: IGetRowsParams) => {
-    const query = {
-      startRow: params.startRow,
-      endRow: params.endRow,
-      searchTerm: searchTerm,
-    };
-
-    try {
-      const data = await onData(query);
-      const rowsThisBlock: any[] = data.map((user: any) => ({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        isActive: user.id % 2 === 0, // Mock active status (replace with actual API field)
-      }));
-
-      // Calculate last row for infinite scrolling
-      // const lastRow = data.length < endRow - startRow ? startRow + data.length : -1;
-      const lastRow = 1000;
-
-      // params.successCallback([], 0);
-      params.successCallback(rowsThisBlock, lastRow);
-    } catch (error) {
-      console.error("Error fetching rows:", error);
-      params.failCallback();
-    }
-  },
-});
+import { ShowToast } from "@/utils/services/app.event";
+import { t, trans } from "@/i18n";
 
 export const gridOptions: GridOptions = {
   rowModelType: "infinite",
-  infiniteInitialRowCount: 10, // Initial row count matches page size
-  pagination: true, // Enable pagination
-  paginationPageSize: 10, // Display 10 rows per page
+  infiniteInitialRowCount: 10,
+  pagination: true,
+  paginationPageSize: 10,
   loadingCellRenderer: SkeletonTable,
-  paginationPageSizeSelector: false, // Allow user to change page size
+  paginationPageSizeSelector: false,
   noRowsOverlayComponent: NoRowsComponent,
   defaultColDef: {
     flex: 1,
@@ -72,3 +26,50 @@ export const gridOptions: GridOptions = {
     minWidth: 100,
   },
 };
+
+export const columnDefs = (t: TFunction, onAction: Function): ColDef<any>[] => [
+  {
+    field: "id",
+    headerName: t("id"),
+    maxWidth: 100,
+  },
+  {
+    field: "nameLang",
+    headerName: t("name"),
+    flex: 1,
+    valueGetter: (params) => trans(params.data?.nameLang),
+  },
+  {
+    headerName: t("actions"),
+    field: "actions",
+    maxWidth: 120,
+    cellRenderer: ActionCellRenderer,
+    cellRendererParams: { onAction },
+    sortable: false,
+    filter: false,
+  },
+];
+
+export const getDataSource = (searchTerm: string): IDatasource => ({
+  getRows: async (params: IGetRowsParams) => {
+    const query = {
+      orderby: "createdAt",
+      skip: params.startRow,
+      limit: 100,
+      searchTerm: searchTerm,
+      query: {
+        name: searchTerm,
+      },
+    };
+
+    try {
+      const respData: any = await testFetchCall(query);
+      const lastRow = respData.total || -1;
+
+      params.successCallback(respData.data, lastRow);
+    } catch (error) {
+      ShowToast(t((error as any)?.message), "warning");
+      params.failCallback();
+    }
+  },
+});

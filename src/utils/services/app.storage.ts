@@ -2,13 +2,14 @@ const APP_ID = "AS";
 
 export const TOKEN = "TOKEN";
 export const SESSION_INFO = "SESSION_INFO";
+export const SCREEN_ACCESS = "SCREEN_ACCESS";
 export const GOOGLE_ACCESS_TOKEN = "GOOGLE_ACCESS_TOKEN";
 export const NAV = "NAV";
 export const REMEMBER_ME = "remember-me";
-export const TRANS = 'TRANS';
-export const DIR = 'DIR';
-export const LANG = 'LANG';
-export const THEME = 'THEME';
+export const TRANS = "TRANS";
+export const DIR = "DIR";
+export const LANG = "LANG";
+export const THEME = "THEME";
 
 const setData = (setName: string, setObject: any, isLocal = false) => {
   setName = APP_ID + "-" + setName;

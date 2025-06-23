@@ -41,18 +41,19 @@ const TypeButton: React.FC<ButtonProps> = ({
   radius = "full",
 }: ButtonProps) => {
   const IconComponent: LucideIcon | null = name ? icons[name] : null;
+  const isDisabled = disabled || isLoading;
 
   return (
     <Button
       className={className}
       color={action}
-      disabled={disabled}
+      isDisabled={isDisabled}
       isLoading={isLoading}
       radius={radius}
       variant={variant}
       onPress={onPress}
     >
-      {IconComponent && <IconComponent size={18} />}
+      {IconComponent && <IconComponent size={16} />}
       {label && <span>{label}</span>}
     </Button>
   );

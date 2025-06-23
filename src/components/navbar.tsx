@@ -18,7 +18,7 @@ export const Navbar = ({ onToggle }: { onToggle: () => void }) => {
   return (
     <>
       <HeroUINavbar
-        className="container mx-auto "
+        className="container mx-auto bg-white dark:bg-black"
         maxWidth="full"
         position="sticky"
       >
@@ -61,13 +61,13 @@ export const Navbar = ({ onToggle }: { onToggle: () => void }) => {
 
         {/* <NavbarMenu >
         <div className="mx-4 mt-2 flex flex-col gap-2">
-          {siteConfig.navMenuItems.map((item, index) => (
+          {siteConfig.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
                 color={
                   index === 2
                     ? "primary"
-                    : index === siteConfig.navMenuItems.length - 1
+                    : index === siteConfig.length - 1
                       ? "danger"
                       : "foreground"
                 }

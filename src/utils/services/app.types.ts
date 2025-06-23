@@ -2,7 +2,13 @@ import { AllLanguageCodesType } from "dff-util/dist/main/const-type";
 
 export type RolesType = "USER" | "PRACTITIONER" | "ADMIN";
 
-export type CurrencyCodeType = "INR" | "USD" | "JPY";
+export type ScreenAccessType = {
+  name: string;
+  read: boolean;
+  create: boolean;
+  update: boolean;
+  delete: boolean;
+};
 
 export type AuthStateType = {
   token: string | null;

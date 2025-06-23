@@ -16,7 +16,8 @@ import { ThemeMode, RouterChange } from "@/utils/services/app.event";
 import { AppRouter } from "@/utils/services/app.router";
 import TypeButton from "@/types/type.button";
 import TypeIcon from "@/types/type.icon";
-import { siteConfig } from "@/config/siteConfig";
+import { SiteConfig } from "@/config/site-config";
+import { ScreenAccessType } from "@/utils/services/app.types";
 
 type Theme = "light" | "dark";
 
@@ -122,7 +123,7 @@ export const Sidebar = ({
       <Menu
         menuItemStyles={menuItemStyles} // Apply the defined styles
       >
-        {siteConfig.navMenuItems.map((item, index) => {
+        {SiteConfig.map((item, index) => {
           // Check if the current user has read permission for this top-level item
           const canReadParent = item.permissions?.read ?? true; // Default to true if permissions are not defined
 
@@ -136,7 +137,7 @@ export const Sidebar = ({
             ? item.children.some(
               (child) =>
                 location.pathname === child.href &&
-                (child.permissions?.read ?? true)
+                (child.permissions?.read ?? true),
             ) || // Check child active only if readable
             location.pathname === item.href
             : location.pathname === item.href;

@@ -4,34 +4,31 @@
 @source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 @custom-variant dark (&:is(.dark *));
 
-@theme {
-  --color-bg-light: #e8f0ff; /* White for light mode */
-  --color-bg-dark: #1f2937; /* Dark gray for dark mode */
-  --bg-image: url("/world-map.svg");
-}
-
-/* Base styles for :root (outside utilities layer) */
 @layer base {
   :root {
-    background-color: var(--color-bg-light);
+    --color-bg-light: #f3f4f6;
+    --color-bg-dark: #1f2937;
+
+    background-color: var(--color-bg-light) !important;
+    background-image: var(--bg-image);
   }
 
-  :root[class~="dark"] {
-    background-color: var(--color-bg-dark);
+  :root.dark {
+    background-color: var(--color-bg-dark) !important;
   }
 }
 
 /* Utility classes */
 @layer utilities {
   .bg-auth-light {
-    background-image: var(--bg-image);
+    background-image: url("/world-map.svg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
   }
 
   .bg-auth-dark {
-    background-image: var(--bg-image);
+    background-image: url("/world-map.svg");
     background-size: cover;
     background-position: center;
     background-repeat: repeat; /* Repeat for geometric pattern */
