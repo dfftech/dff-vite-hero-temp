@@ -140,7 +140,6 @@ export const screenAccessInit = () => {
 };
 
 export const screenAccessCall = (key: string) => {
-  console.log(key, accessList);
   const access = accessList[key] || {
     name: "none",
     read: false,
@@ -150,6 +149,5 @@ export const screenAccessCall = (key: string) => {
   };
 
   ScreenAccess.value = access;
-  console.log(ScreenAccess.value);
   AppStorage.setData(SCREEN_ACCESS, ScreenAccess.value);
 };

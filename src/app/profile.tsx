@@ -5,13 +5,15 @@ import { ContentLayout } from "@/layouts/content-layout";
 import { FloatLayout } from "@/layouts/float-layout";
 import { SkeletonFloat } from "@/skeleton/skeleton-float";
 import { SkeletonArticle } from "@/skeleton/skeleton-article";
-import { SkeletonAccountForm } from "@/skeleton/skeleton-account-form";
-import { ProfilesPage } from "@/modules/profiles/page";
+import { ProfilesPage } from "@/modules/profiles/profile.page";
+import { SkeletonTable } from "@/skeleton/skeleton-table";
+import { ScreenAccess } from "@/utils/services/app.event";
+import PermissionDenied from "@/components/permission-denied";
 
 export default function Profile() {
   return (
     <Suspense fallback={<SkeletonPage />}>
-      <ProfilesPage />
+      {ScreenAccess.value.read ? <ProfilesPage /> : <PermissionDenied />}
     </Suspense>
   );
 }
@@ -23,7 +25,7 @@ function SkeletonPage() {
         <SkeletonArticle />
       </ArticleLayout>
       <ContentLayout>
-        <SkeletonAccountForm />
+        <SkeletonTable />
       </ContentLayout>
       <FloatLayout>
         <SkeletonFloat />

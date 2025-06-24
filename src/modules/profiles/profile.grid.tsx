@@ -1,9 +1,16 @@
 import { useTranslation } from "react-i18next";
 import { AgGridReact } from "ag-grid-react";
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, useEffect } from "react";
 import { useSignals } from "@preact/signals-react/runtime";
 
 import { columnDefs, getDataSource, gridOptions } from "./common/grid";
+import {
+  editModeUpdate,
+  profileIsPopupOpen,
+  profileSelectedId,
+  profileIsEditMode,
+  profileStatusCall,
+} from "./common/service";
 
 import { ArticleLayout } from "@/layouts/article-layout";
 import { FloatLayout } from "@/layouts/float-layout";
@@ -18,9 +25,27 @@ export function ProfilesGrid() {
   const { t } = useTranslation();
   const gridRef = useRef<AgGridReact>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const dataSource = useMemo(() => getDataSource(searchTerm), [searchTerm]);
 
-  const handleAction = (data: any, action: "edit" | "status") => {
-    console.log(`Action: ${action}, Data:`, data);
+  useEffect(() => {
+    editModeUpdate(undefined, "edit");
+  }, []);
+
+  const handleAction = async (data: any, action: "edit" | "status") => {
+    if (action === "edit") {
+      profileSelectedId.value = data.id;
+      profileIsEditMode.value = false;
+      profileIsPopupOpen.value = true;
+    } else if (action === "status") {
+      const resp = await profileStatusCall({
+        id: data.id,
+        active: data.active,
+      });
+
+      if (resp) {
+        handleReload();
+      }
+    }
   };
 
   const handleReload = () => {
@@ -28,9 +53,9 @@ export function ProfilesGrid() {
       gridRef.current.api.purgeInfiniteCache();
     }
   };
-  const dataSource = useMemo(() => getDataSource(searchTerm), [searchTerm]);
+
   const onAdd = () => {
-    console.log("Add button clicked");
+    editModeUpdate(undefined, "add");
   };
 
   return (

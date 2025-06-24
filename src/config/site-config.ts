@@ -1,6 +1,7 @@
 // src/config/siteConfig.ts
 
 import { IconName } from "@/types/type.icon";
+import { trace } from "console";
 
 // Define the MenuItem type here and export it
 export type MenuItem = {
@@ -82,9 +83,9 @@ export const SiteConfig: MenuItem[] = [
         icon: "Users",
         permissions: {
           read: true,
-          create: false,
-          update: true,
-          delete: true,
+          create: true,
+          update: false,
+          delete: false,
         },
       },
       {

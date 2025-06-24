@@ -2,7 +2,7 @@ import { IDatasource, IGetRowsParams, ColDef } from "ag-grid-community";
 import { GridOptions } from "ag-grid-community";
 import { TFunction } from "i18next";
 
-import { testFetchCall } from "./service";
+import { profileListCall } from "./service";
 
 import ActionCellRenderer from "@/grid/action-cell";
 import { SkeletonTable } from "@/skeleton/skeleton-table";
@@ -63,7 +63,7 @@ export const getDataSource = (searchTerm: string): IDatasource => ({
     };
 
     try {
-      const respData: any = await testFetchCall(query);
+      const respData: any = await profileListCall(query);
       const lastRow = respData.total || -1;
 
       params.successCallback(respData.data, lastRow);
