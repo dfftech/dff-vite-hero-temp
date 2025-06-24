@@ -1,7 +1,7 @@
 import { Drawer, DrawerContent, DrawerBody } from "@heroui/react";
 import { useSignals } from "@preact/signals-react/runtime";
 
-import { ProfilesGrid } from "./profile.grid";
+import { ProfileList } from "./profile.list";
 import {
   profileIsPopupOpen,
   profileIsEditMode,
@@ -15,7 +15,7 @@ export function ProfilesPage() {
 
   return (
     <>
-      <ProfilesGrid />
+      <ProfileList />
       <Drawer
         hideCloseButton
         isOpen={profileIsPopupOpen.value}

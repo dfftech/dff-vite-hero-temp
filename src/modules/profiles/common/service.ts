@@ -3,7 +3,6 @@ import { ConstKeys } from "dff-util";
 
 import { ShowToast } from "@/utils/services/app.event";
 import AppHttp, { MsUrl, ApiUrl } from "@/utils/services/app.http";
-import { GridData } from "@/config/grid-data";
 import { t } from "@/i18n";
 
 export const profileIsPopupOpen = signal<boolean>(false);
@@ -11,7 +10,6 @@ export const profileIsEditMode = signal<boolean>(false);
 export const profileSelectedId = signal<string | undefined>();
 
 export const editModeUpdate = (id: string | undefined, mode?: "edit" | "add") => {
-  console.log(id, mode);
   if (mode === "add") {
     profileSelectedId.value = undefined;
     profileIsEditMode.value = true;
@@ -33,12 +31,9 @@ export const profileListIsLoading = signal<boolean>(false);
 export const profileListCall = async (params: any) => {
   try {
     profileListIsLoading.value = true;
-    //const url = MsUrl.sor + ApiUrl.load;
-
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    const resp = { data: GridData, total: GridData.length };
-
-    resp;
+    const url = MsUrl.sor + ApiUrl.load;
+    const resp = await AppHttp.Post(url, params);
+    //const resp = { data: GridData, total: GridData.length };
 
     return resp;
   } catch (error: any) {

@@ -20,7 +20,7 @@ import TypeSearch from "@/types/type.search";
 import { darkGridTheme, lightGridTheme } from "@/styles/ag.theme";
 import { GridLayout } from "@/layouts/grid-layout";
 
-export function ProfilesGrid() {
+export function ProfileList() {
   useSignals();
   const { t } = useTranslation();
   const gridRef = useRef<AgGridReact>(null);
