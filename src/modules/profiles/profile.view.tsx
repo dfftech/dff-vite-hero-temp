@@ -2,11 +2,13 @@ import { useSignal } from "@preact/signals-react";
 import { useSignals } from "@preact/signals-react/runtime";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { Skeleton } from "@heroui/react";
 
 import {
   editModeUpdate,
   profileSelectedId,
   profileEntityCall,
+  profileEntityIsLoading,
 } from "./common/service";
 import { ProfileType, profileInitValues } from "./common/types";
 
@@ -80,7 +82,12 @@ export default function ProfileView() {
       <ContentLayout>
         <div className="flex flex-col gap-4 w-full">
           <div className="flex flex-col gap-4">
-            {profile.value.active ? t("active") : t("inActive")}
+            <Skeleton
+              className="h-9 rounded-lg"
+              isLoaded={!profileEntityIsLoading.value}
+            >
+              {profile.value.active ? t("active") : t("inActive")}
+            </Skeleton>
           </div>
         </div>
       </ContentLayout>

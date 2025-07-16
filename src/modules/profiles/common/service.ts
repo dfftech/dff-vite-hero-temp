@@ -4,6 +4,7 @@ import { ConstKeys } from "dff-util";
 import { ShowToast } from "@/utils/services/app.event";
 import AppHttp, { MsUrl, ApiUrl } from "@/utils/services/app.http";
 import { t } from "@/i18n";
+import { GridData } from "@/config/grid-data";
 
 export const profileIsPopupOpen = signal<boolean>(false);
 export const profileIsEditMode = signal<boolean>(false);
@@ -32,8 +33,8 @@ export const profileListCall = async (params: any) => {
   try {
     profileListIsLoading.value = true;
     const url = MsUrl.sor + ApiUrl.load;
-    const resp = await AppHttp.Post(url, params);
-    //const resp = { data: GridData, total: GridData.length };
+    //const resp = await AppHttp.Post(url, params);
+    const resp = { data: GridData, total: GridData.length };
 
     return resp;
   } catch (error: any) {

@@ -4,6 +4,7 @@ import { useSignals } from "@preact/signals-react/runtime";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ConstKeys } from "dff-util";
+import { Skeleton } from "@heroui/react";
 
 import { profileInitValues, ProfileType } from "./common/types";
 import { profileValidation } from "./common/validation";
@@ -13,6 +14,7 @@ import {
   profileSaveIsLoading,
   profileEntityCall,
   profileSaveCall,
+  profileEntityIsLoading,
 } from "./common/service";
 
 import { ArticleLayout } from "@/layouts/article-layout";
@@ -116,6 +118,12 @@ export default function ProfileForm() {
         <form>
           <div className="flex flex-col gap-4 w-full">
             <div className="flex flex-col gap-4">
+              <Skeleton
+                className="h-9 rounded-lg"
+                isLoaded={!profileEntityIsLoading.value}
+              >
+                <TypeSwitch {...activeProps} />
+              </Skeleton>
               <TypeSwitch {...activeProps} />
             </div>
           </div>
