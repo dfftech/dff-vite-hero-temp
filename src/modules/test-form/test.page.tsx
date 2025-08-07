@@ -1,10 +1,4 @@
-import {
-  Button,
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerBody,
-} from "@heroui/react";
+import { Button, Drawer, DrawerContent, DrawerBody } from "@heroui/react";
 import { useSignals } from "@preact/signals-react/runtime";
 
 import TestForm from "./test.form";
@@ -12,12 +6,13 @@ import { drawerOpen } from "./common/service";
 
 import { GridLayout } from "@/layouts/grid-layout";
 import { FloatLayout } from "@/layouts/float-layout";
+import { PageLayout } from "@/layouts/page-layout";
 
 export default function TestPage() {
   useSignals();
 
   return (
-    <>
+    <PageLayout>
       <GridLayout>
         <TestForm />
         <FloatLayout>
@@ -25,17 +20,18 @@ export default function TestPage() {
         </FloatLayout>
       </GridLayout>
       <Drawer
+        hideCloseButton={true}
         isOpen={drawerOpen.value}
         size="4xl"
         onOpenChange={(val) => (drawerOpen.value = val)}
       >
         <DrawerContent>
-          <DrawerHeader>Drawer Header</DrawerHeader>
-          <DrawerBody className="w-full">
+          {/* <DrawerHeader>Drawer Header</DrawerHeader> */}
+          <DrawerBody>
             <TestForm />
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-    </>
+    </PageLayout>
   );
 }

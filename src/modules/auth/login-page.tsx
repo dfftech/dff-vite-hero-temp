@@ -11,6 +11,7 @@ import TypeInput from "@/types/type.input";
 import TypeButton from "@/types/type.button";
 import AppStorage, { TOKEN } from "@/utils/services/app.storage";
 import { AuthLayout } from "@/layouts/auth-layout";
+import { PageLayout } from "@/layouts/page-layout";
 
 export function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +44,7 @@ export function LoginPage() {
   };
 
   return (
-    <>
+    <PageLayout>
       <AuthLayout>
         <div className="flex flex-col items-center justify-center p-4">
           <section className="w-full p-2">
@@ -104,6 +105,6 @@ export function LoginPage() {
           </section>
         </div>
       </AuthLayout>
-    </>
+    </PageLayout>
   );
 }

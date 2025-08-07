@@ -1,7 +1,6 @@
 // src/config/siteConfig.ts
 
 import { IconName } from "@/types/type.icon";
-import { trace } from "console";
 
 // Define the MenuItem type here and export it
 export type MenuItem = {

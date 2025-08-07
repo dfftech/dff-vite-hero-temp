@@ -63,5 +63,6 @@
   "time": "Time",
   "country": "Country",
   "countries": "Countries",
-  "lang": "Language"
+  "lang": "Language",
+  "testForm": "Test Form"
 }

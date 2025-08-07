@@ -1,4 +1,4 @@
 // env-config.js
 window.env = {
-  REACT_APP_MODULE_BASE_URL: "https://apidev.tenant.org",
+  REACT_APP_PROJECT_TEMP_BASE_URL: "https://apidev.rndpro.in",
 };

@@ -31,6 +31,7 @@ import TypeLangMd from "@/types/type.lang-md";
 import TypeSearch from "@/types/type.search";
 import TypeMdxEditor from "@/types/type.mdx";
 import MarkdownViewer from "@/types/type.mdv";
+import { PageLayout } from "@/layouts/page-layout";
 
 const isSubmitLoading = signal(false);
 
@@ -248,10 +249,10 @@ export default function TestForm() {
   );
 
   return (
-    <section className="w-full">
+    <PageLayout>
       <ArticleLayout>
         <div className="flex flex-row justify-between gap-4">
-          <h3>Test Form</h3>
+          <h3 className="text-2xl font-semibold">{t("testForm")}</h3>
           <div className="flex flex-row gap-4">
             <Switch
               checked={isToggleOn}
@@ -293,6 +294,6 @@ export default function TestForm() {
           </div>
         </form>
       </ContentLayout>
-    </section>
+    </PageLayout>
   );
 }

@@ -23,7 +23,7 @@ function App() {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    AppHttp.getInstance();
+    AppHttp.BaseUrl();
     ShowToast("Welcome message !!!!", "success");
     effect(() => {
       const path = RouterEvent.value.pathname;

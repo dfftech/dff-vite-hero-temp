@@ -2,7 +2,7 @@ import { signal } from "@preact/signals";
 import { ConstKeys } from "dff-util";
 
 import { ShowToast } from "@/utils/services/app.event";
-import AppHttp, { MsUrl, ApiUrl } from "@/utils/services/app.http";
+import AppHttp from "@/utils/services/app.http";
 import { t } from "@/i18n";
 import { GridData } from "@/config/grid-data";
 
@@ -10,7 +10,10 @@ export const profileIsPopupOpen = signal<boolean>(false);
 export const profileIsEditMode = signal<boolean>(false);
 export const profileSelectedId = signal<string | undefined>();
 
-export const editModeUpdate = (id: string | undefined, mode?: "edit" | "add") => {
+export const editModeUpdate = (
+  id: string | undefined,
+  mode?: "edit" | "add",
+) => {
   if (mode === "add") {
     profileSelectedId.value = undefined;
     profileIsEditMode.value = true;
@@ -32,7 +35,7 @@ export const profileListIsLoading = signal<boolean>(false);
 export const profileListCall = async (params: any) => {
   try {
     profileListIsLoading.value = true;
-    const url = MsUrl.sor + ApiUrl.load;
+    const url = AppHttp.MsUrl.main + "/";
     //const resp = await AppHttp.Post(url, params);
     const resp = { data: GridData, total: GridData.length };
 
@@ -50,7 +53,7 @@ export const profileEntityIsLoading = signal<boolean>(false);
 export const profileEntityCall = async (params: Record<string, string>) => {
   try {
     profileEntityIsLoading.value = true;
-    const url = MsUrl.sor + ApiUrl.load;
+    const url = AppHttp.MsUrl.main + "/";
     const resp = await AppHttp.Post(url, params);
 
     return resp;
@@ -67,7 +70,7 @@ export const profileSaveIsLoading = signal<boolean>(false);
 export const profileSaveCall = async (params: any) => {
   try {
     profileSaveIsLoading.value = true;
-    const url = MsUrl.sor + ApiUrl.load;
+    const url = AppHttp.MsUrl.main + "/";
     const resp = await AppHttp.Post(url, params);
 
     return resp;
@@ -84,7 +87,7 @@ export const profileStatusIsLoading = signal<boolean>(false);
 export const profileStatusCall = async (params: Record<string, string>) => {
   try {
     profileStatusIsLoading.value = true;
-    const url = MsUrl.sor + ApiUrl.load;
+    const url = AppHttp.MsUrl.main + "/";
     const resp = await AppHttp.Post(url, params);
 
     return resp;
