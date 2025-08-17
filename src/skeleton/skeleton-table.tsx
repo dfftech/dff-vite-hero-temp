@@ -4,10 +4,7 @@ export const SkeletonTable = () => (
       <thead>
         <tr className="light:bg-gray-100 dark:bg-gray-800 border-b border-gray-400">
           {Array.from({ length: 6 }).map((_, index) => (
-            <th
-              key={index}
-              className="px-2 sm:px-4 py-2 sm:py-3 text-right sm:text-left"
-            >
+            <th key={index} className="px-2 sm:px-4 py-2 sm:py-3 text-right sm:text-left">
               <div className="h-4 w-16 sm:w-24 max-w-[60px] sm:max-w-[100px] bg-gray-400 rounded animate-pulse truncate text-sm sm:text-base" />
             </th>
           ))}

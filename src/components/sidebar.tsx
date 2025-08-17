@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
-import {
-  Sidebar as ProSidebar,
-  Menu,
-  MenuItem,
-  SubMenu,
-} from "react-pro-sidebar";
+import { Sidebar as ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import React from "react";
-import { effect } from "@preact/signals";
+import { effect, signal } from "@preact/signals";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSignals } from "@preact/signals-react/runtime";
@@ -15,9 +10,9 @@ import { trans } from "@/i18n";
 import { ThemeMode, RouterChange } from "@/utils/services/app.event";
 import { AppRouter } from "@/utils/services/app.router";
 import TypeButton from "@/types/type.button";
-import TypeIcon from "@/types/type.icon";
+import TypeIcon, { IconName } from "@/types/type.icon";
 import { SiteConfig } from "@/config/site-config";
-import { ScreenAccessType } from "@/utils/services/app.types";
+import { SkeletonMenu } from "@/skeleton/skeleton-menu";
 
 type Theme = "light" | "dark";
 
@@ -29,13 +24,41 @@ const hexToRgba = (hex: string, alpha: number) => {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
-export const Sidebar = ({
-  isOpen = false,
-  onToggle,
-}: {
-  isOpen: boolean;
-  onToggle: () => void;
-}) => {
+type RoleMenuAccessType = {
+  id?: string;
+  menuId?: string;
+  name: string; // Default name (English)
+  nameLang: Record<string, string>;
+  href?: string;
+  icon?: IconName;
+  permissions?: {
+    read: boolean;
+    create: boolean;
+    update: boolean;
+    delete: boolean;
+  };
+  children?: RoleMenuAccessType[];
+  priority?: number;
+  type?: string;
+  active?: boolean;
+};
+
+export const menuAccessIsLoading = signal<boolean>(false);
+export const menuAccessData = signal<RoleMenuAccessType[]>([]);
+export const menuAccessCall = async () => {
+  try {
+    menuAccessIsLoading.value = true;
+    // const url = AppHttp.MsUrl.main + "/";
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    const resp = await Promise.resolve(SiteConfig);
+
+    menuAccessData.value = resp;
+  } finally {
+    menuAccessIsLoading.value = false;
+  }
+};
+
+export const Sidebar = ({ isOpen = false, onToggle }: { isOpen: boolean; onToggle: () => void }) => {
   useSignals();
   const [theme, setTheme] = React.useState<Theme>("dark");
   const [toggled, setToggled] = useState(isOpen);
@@ -52,35 +75,26 @@ export const Sidebar = ({
 
   useEffect(() => {
     effect(() => setTheme(ThemeMode.value === "light" ? "light" : "dark"));
+    menuAccessCall();
   }, []);
 
-  function handleMenu(href: string): void {
+  function handleMenu(href: string | undefined): void {
     handleToggle();
+    if (!href) return;
     RouterChange(href, {});
   }
 
   // Define menu item styles based on the current theme
   const menuItemStyles = {
     // Styles for the button element within MenuItem/SubMenu
-    button: ({
-      active,
-      disabled,
-    }: {
-      level: number;
-      active: boolean;
-      disabled: boolean;
-    }) => {
+    button: ({ active, disabled }: { level: number; active: boolean; disabled: boolean }) => {
       // Determine base background color for the item based on theme
       const baseBackgroundColor = themes[theme].menu.menuContent; // Use menuContent for item background
 
       return {
-        color: disabled
-          ? themes[theme].menu.disabled.color
-          : themes[theme].menu.color,
+        color: disabled ? themes[theme].menu.disabled.color : themes[theme].menu.color,
         // Apply hover background, active background, or base background
-        backgroundColor: active
-          ? themes[theme].menu.hover.backgroundColor
-          : baseBackgroundColor,
+        backgroundColor: active ? themes[theme].menu.hover.backgroundColor : baseBackgroundColor,
         "&:hover": {
           backgroundColor: themes[theme].menu.hover.backgroundColor,
           color: themes[theme].menu.hover.color,
@@ -94,9 +108,7 @@ export const Sidebar = ({
     },
     // Styles for the icon - Using a function here allows dynamic color based on item state if needed
     icon: ({ disabled }: { active: boolean; disabled: boolean }) => ({
-      color: disabled
-        ? themes[theme].menu.disabled.color
-        : themes[theme].menu.icon, // Use disabled color if needed
+      color: disabled ? themes[theme].menu.disabled.color : themes[theme].menu.icon, // Use disabled color if needed
     }),
     // Styles for the label
     // label: ({ open }: { open: boolean }) => ({}),
@@ -123,7 +135,8 @@ export const Sidebar = ({
       <Menu
         menuItemStyles={menuItemStyles} // Apply the defined styles
       >
-        {SiteConfig.map((item, index) => {
+        {menuAccessIsLoading.value && <SkeletonMenu />}
+        {menuAccessData.value.map((item, index) => {
           // Check if the current user has read permission for this top-level item
           const canReadParent = item.permissions?.read ?? true; // Default to true if permissions are not defined
 
@@ -134,11 +147,7 @@ export const Sidebar = ({
 
           // Determine if a top-level item or any of its children are active
           const isParentActive = item.children
-            ? item.children.some(
-              (child) =>
-                location.pathname === child.href &&
-                (child.permissions?.read ?? true),
-            ) || // Check child active only if readable
+            ? item.children.some((child) => location.pathname === child.href && (child.permissions?.read ?? true)) || // Check child active only if readable
             location.pathname === item.href
             : location.pathname === item.href;
 
@@ -164,9 +173,7 @@ export const Sidebar = ({
                   <MenuItem
                     key={`${child.name}-${childIndex}`}
                     active={location.pathname === child.href} // Mark child as active if its href matches current path
-                    icon={
-                      child.icon ? <TypeIcon name={child.icon} /> : undefined
-                    } // Pass icon to child MenuItem
+                    icon={child.icon ? <TypeIcon name={child.icon} /> : undefined} // Pass icon to child MenuItem
                     onClick={() => handleMenu(child.href)}
                   >
                     {trans(child.nameLang, child.name)}
