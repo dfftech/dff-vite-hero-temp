@@ -53,7 +53,7 @@ const TypeButton: React.FC<ButtonProps> = ({
       variant={variant}
       onPress={onPress}
     >
-      {IconComponent && <IconComponent />}
+      {IconComponent && <IconComponent color="#1890ff" />}
       {label && <span>{label}</span>}
     </Button>
   );

@@ -157,7 +157,7 @@ export const Sidebar = ({ isOpen = false, onToggle }: { isOpen: boolean; onToggl
               key={`${item.name}-${index}`}
               active={isParentActive} // Mark the submenu as active if parent or child is active
               defaultOpen={isParentActive} // Optionally open the submenu if a child is active
-              icon={item.icon ? <TypeIcon name={item.icon} /> : undefined} // Pass icon to SubMenu
+              icon={item.icon ? <TypeIcon name={item.icon} color="#1890ff" /> : undefined} // Pass icon to SubMenu
               label={trans(item.nameLang, item.name)}
             >
               {item.children.map((child, childIndex) => {
@@ -173,7 +173,7 @@ export const Sidebar = ({ isOpen = false, onToggle }: { isOpen: boolean; onToggl
                   <MenuItem
                     key={`${child.name}-${childIndex}`}
                     active={location.pathname === child.href} // Mark child as active if its href matches current path
-                    icon={child.icon ? <TypeIcon name={child.icon} /> : undefined} // Pass icon to child MenuItem
+                    icon={child.icon ? <TypeIcon name={child.icon} color="#1890ff" /> : undefined} // Pass icon to child MenuItem
                     onClick={() => handleMenu(child.href)}
                   >
                     {trans(child.nameLang, child.name)}
@@ -182,14 +182,17 @@ export const Sidebar = ({ isOpen = false, onToggle }: { isOpen: boolean; onToggl
               })}
             </SubMenu>
           ) : (
-            <MenuItem
-              key={`${item.name}-${index}`}
-              active={location.pathname === item.href} // Mark item as active if its href matches current path
-              icon={item.icon ? <TypeIcon name={item.icon} /> : undefined} // Pass icon to MenuItem
-              onClick={() => handleMenu(item.href)}
-            >
-              {trans(item.nameLang, item.name)}
-            </MenuItem>
+            <section>
+              <hr className="w-full" />
+              <MenuItem
+                key={`${item.name}-${index}`}
+                active={location.pathname === item.href} // Mark item as active if its href matches current path
+                icon={item.icon ? <TypeIcon name={item.icon} color="#1890ff" /> : undefined} // Pass icon to MenuItem
+                onClick={() => handleMenu(item.href)}
+              >
+                {trans(item.nameLang, item.name)}
+              </MenuItem>
+            </section>
           );
         })}
       </Menu>
